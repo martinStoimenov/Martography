@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Martography", "Martography\Martography.csproj", "{098A7594-742E-45BE-8CDF-991E110C3485}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Martography", "Martography\Martography.csproj", "{098A7594-742E-45BE-8CDF-991E110C3485}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{2D175CCD-03D7-4088-AD02-9FD34913EC12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{D18606EE-C291-4C77-B56E-04EEB32A427D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{098A7594-742E-45BE-8CDF-991E110C3485}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{098A7594-742E-45BE-8CDF-991E110C3485}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{098A7594-742E-45BE-8CDF-991E110C3485}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D175CCD-03D7-4088-AD02-9FD34913EC12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D175CCD-03D7-4088-AD02-9FD34913EC12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D175CCD-03D7-4088-AD02-9FD34913EC12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D175CCD-03D7-4088-AD02-9FD34913EC12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D18606EE-C291-4C77-B56E-04EEB32A427D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D18606EE-C291-4C77-B56E-04EEB32A427D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D18606EE-C291-4C77-B56E-04EEB32A427D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D18606EE-C291-4C77-B56E-04EEB32A427D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
