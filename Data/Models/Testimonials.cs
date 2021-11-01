@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Data.Common;
+using System;
 
 namespace Data.Models
 {
-    public class Testimonials
+    public class Testimonials : BaseDeletableModel<string>
     {
         public Testimonials()
         {
             this.Id = Guid.NewGuid().ToString();
         }
-        public string Id { get; set; }
         public string Content { get; set; }
         public string PersonName { get; set; }
         public string Position { get; set; }
@@ -16,7 +16,5 @@ namespace Data.Models
 
         //public string ImageId { get; set; }
         //public Image Image { get; set; }
-        public DateTime CreatedDateTime { get; set; }
-        public DateTime? DeletedDateTime { get; set; }
     }
 }

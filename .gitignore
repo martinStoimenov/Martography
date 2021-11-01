@@ -361,3 +361,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Custom ignores
+**/wwwroot/lib/
+appsettings.Production.json
+appsettings.json
+*.min.css
+*.min.js
