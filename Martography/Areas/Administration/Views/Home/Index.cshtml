@@ -2,3 +2,91 @@
 }
 
 <h1>Welcome to the Admin Home Page</h1>
+
+<div class="text-center">
+    <a href="#" onclick="showUploadWidget()" class="btn btn-pastel-green">Upload Images</a>
+    <a asp-area="Administration" asp-controller="Home" asp-action="GetUploadImagesComponent" class="btn btn-pastel-green">Upload Images view component</a>
+    <a href="#" onclick="getGallery()" class="btn btn-pastel-green">Get Gallery</a>
+    <a href="#" class="btn btn-pastel-green">Create new Gallery</a>
+    <a href="#" class="btn btn-pastel-green">Edit Gallery</a>
+    <a href="#" class="btn btn-pastel-green">Create new Project</a>
+    <a href="#" class="btn btn-pastel-green">Edit Project</a>
+    <a href="#" class="btn btn-pastel-green">Upload Images to Project</a>
+    <a href="#" class="btn btn-pastel-green">Change Home page images</a>
+</div>
+
+<div id="renderComponent">
+
+</div>
+
+@section Scripts
+{
+    <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+
+    <script>
+        function showUploadWidget() {
+            cloudinary.openUploadWidget({
+                cloudName: "marteto",
+                uploadPreset: "martography-unsigned-profile",
+                sources: [
+                    "image_search",
+                    "google_drive",
+                    "url",
+                    "instagram",
+                    "dropbox",
+                    "facebook",
+                    "shutterstock",
+                    "local"
+                ],
+                googleApiKey: "<image_search_google_api_key>",
+                showAdvancedOptions: false,
+                cropping: false,
+                multiple: true,
+                defaultSource: "local",
+                styles: {
+                    palette: {
+                        window: "#F5F5F5",
+                        sourceBg: "#FFFFFF",
+                        windowBorder: "#90a0b3",
+                        tabIcon: "#0094c7",
+                        inactiveTabIcon: "#69778A",
+                        menuIcons: "#0094C7",
+                        link: "#53ad9d",
+                        action: "#8F5DA5",
+                        inProgress: "#0194c7",
+                        complete: "#53ad9d",
+                        error: "#c43737",
+                        textDark: "#000000",
+                        textLight: "#FFFFFF"
+                    },
+                    fonts: {
+                        default: null,
+                        "'Poppins', sans-serif": {
+                            url: "https://fonts.googleapis.com/css?family=Poppins",
+                            active: true
+                        }
+                    }
+                }
+            },
+                (err, info) => {
+                    if (!err) {
+                        console.log("Upload Widget event - ", info);
+                    }
+                });
+        }
+
+        function getGallery() {
+            //$("#renderComponent").html(`await Component.InvokeAsync("Gallery")`);
+
+            // IT DOESNT CREATE REQUEST FOR THE IMAGES SO THEY CANT LOAD
+            var _url = '@Url.Action("GetGalleryComponent", "Home")';
+                $.ajax({
+                    type: "GET",
+                    url: _url,
+                    success: function (result) {
+                        $("#renderComponent").html(result);
+                    },
+                });
+        }
+    </script>
+}

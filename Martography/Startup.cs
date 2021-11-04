@@ -15,6 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using System.Reflection;
+using Services.Data.Interfaces;
+using Services.Data;
 
 namespace Martography
 {
@@ -54,6 +56,8 @@ namespace Martography
 
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+
+            services.AddTransient<IGalleryService, GalleryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
