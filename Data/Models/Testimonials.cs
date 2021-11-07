@@ -13,6 +13,8 @@ namespace Data.Models
         public string PersonName { get; set; }
         public string Position { get; set; }
         public string Company { get; set; }
+        public bool IsVisible { get; set; }
+        public string EmailAddress { get; set; }
 
         //public string ImageId { get; set; }
         //public Image Image { get; set; }

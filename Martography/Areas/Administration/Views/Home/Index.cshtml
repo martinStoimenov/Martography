@@ -1,22 +1,142 @@
 ﻿@{
+    @using Martography.Areas.Administration.Controllers
+    @model HomePageViewModel
 }
+<div class="container">
+    <div class="text-center"><h1>Admin</h1></div>
+    
+    <div class="row">
+        <div class="text-center d-none">
+            <a href="#" onclick="showUploadWidget()" class="btn btn-pastel-green">Upload Images</a>
+            <a asp-area="Administration" asp-controller="Home" asp-action="GetUploadImagesComponent" class="btn btn-pastel-green">Upload Images view component</a>
+            <a href="#" onclick="getGallery()" class="btn btn-pastel-green">Get Gallery</a>
+            <a href="#" class="btn btn-pastel-green">Create new Gallery</a>
+            <a href="#" class="btn btn-pastel-green">Edit Gallery</a>
+            <a href="#" class="btn btn-pastel-green">Create new Project</a>
+            <a href="#" class="btn btn-pastel-green">Edit Project</a>
+            <a href="#" class="btn btn-pastel-green">Upload Images to Project</a>
+            <a href="#" class="btn btn-pastel-green">Change Home page images</a>
+        </div>
 
-<h1>Welcome to the Admin Home Page</h1>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editForm" method="post" asp-action="UpdateGallery">
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Name:</label>
+                                    <input name="name" type="text" class="form-control" id="recipient-name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label">Description:</label>
+                                    <textarea name="description" class="form-control" id="message-text"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" name="isDeleted" class="custom-control-input" id="deletedCheck">
+                                        <label class="custom-control-label" for="deletedCheck">Delete</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" name="isPrivate" class="custom-control-input" id="privateCheck">
+                                        <label class="custom-control-label" for="privateCheck">Private</label>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="id" id="hiddenId" />
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <a id="saveBtn" class="btn btn-primary" >Save</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<div class="text-center">
-    <a href="#" onclick="showUploadWidget()" class="btn btn-pastel-green">Upload Images</a>
-    <a asp-area="Administration" asp-controller="Home" asp-action="GetUploadImagesComponent" class="btn btn-pastel-green">Upload Images view component</a>
-    <a href="#" onclick="getGallery()" class="btn btn-pastel-green">Get Gallery</a>
-    <a href="#" class="btn btn-pastel-green">Create new Gallery</a>
-    <a href="#" class="btn btn-pastel-green">Edit Gallery</a>
-    <a href="#" class="btn btn-pastel-green">Create new Project</a>
-    <a href="#" class="btn btn-pastel-green">Edit Project</a>
-    <a href="#" class="btn btn-pastel-green">Upload Images to Project</a>
-    <a href="#" class="btn btn-pastel-green">Change Home page images</a>
-</div>
+        <div id="renderComponent">
 
-<div id="renderComponent">
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col">
+            <div class="space50"></div>
+            <div class="text-center">
+                <h5>All Galleries</h5>
+            </div>
+            <table class="table table-bordered table-responsive-lg table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Private</th>
+                        <th scope="col">Deleted</th>
+                        <th scope="col">Modified</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var gallery in Model.Galleries)
+                    {
+                    <tr>
+                        <td><a data-toggle="modal" data-target="#exampleModal" data-name="@gallery.Name" data-id="@gallery.Id" 
+                               data-action="UpdateGallery" data-private="@gallery.IsPrivate" data-deleted="@gallery.IsDeleted" 
+                               data-description="@gallery.Description" >
+                            @gallery.Name
+                            </a>
+                        </td>
+                        <td>@gallery.Description</td>
+                        <td>@gallery.IsPrivate</td>
+                        <td>@gallery.IsDeleted</td>
+                        <td>@gallery.ModifiedOn?.ToString("d")</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="space50"></div>
+            <div class="text-center">
+                <h5>All Projects</h5>
+            </div>
+            <table class="table table-bordered table-responsive-lg table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col"> </th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Gallery</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">Modified</th>
+                        <th scope="col">Deleted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var proj in Model.Projects)
+                    {
+                        <tr>
+                            <td><a data-toggle="modal" data-target="#exampleModal" data-name="@proj.Name">Edit</a></td>
+                            <td><a href="#">@proj.Name</a></td> @*view the project when clicked*@
+                            <td>@proj.Description</td>
+                            <td><a href="#">@proj.GalleryName</a></td>
+                            <td>@proj.CreatedOn.ToShortDateString()</td>
+                            <td>@proj.ModifiedOn?.ToString("d")</td>
+                            <td>@proj.IsDeleted</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 @section Scripts
@@ -88,5 +208,31 @@
                     },
                 });
         }
+
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+
+            // Extract info from data-* attributes
+            var action = button.data('action')
+            var name = button.data('name')
+            var Id = button.data('id')
+            var private = button.data('private')
+            var deleted = button.data('deleted')
+            var description = button.data('description')
+
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+
+            var modal = $(this)
+            modal.find('.modal-title').text('Edit ' + name)
+            modal.find('.modal-body input').val(name)
+            modal.find('.modal-body textarea').val(description)
+            modal.find('.modal-body #hiddenId').val(Id)
+            modal.find('.modal-body #deletedCheck').val(deleted)
+            modal.find('.modal-body #privateCheck').val(private)
+
+            //$('#saveBtn').attr('href', `Administration/Home/${action}`)
+        })
+            $('#saveBtn').click(function () { $('#editForm').submit() })
     </script>
 }

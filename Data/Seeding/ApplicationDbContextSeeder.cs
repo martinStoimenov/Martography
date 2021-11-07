@@ -27,6 +27,7 @@ namespace Data.Seeding
                           {
                               new RolesSeeder(),
                               new UsersSeeder(),
+                              new InitialMartographyData()
                           };
 
             foreach (var seeder in seeders)

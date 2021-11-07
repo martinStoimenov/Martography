@@ -58,6 +58,7 @@ namespace Martography
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
             services.AddTransient<IGalleryService, GalleryService>();
+            services.AddTransient<IProjectsService, ProjectsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

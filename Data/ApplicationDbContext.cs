@@ -76,6 +76,23 @@ namespace Data
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+            // set tables
+            builder.Entity<Gallery>().Property(x => x.Name).HasMaxLength(200).IsRequired();
+            builder.Entity<Gallery>().Property(x => x.Description).HasMaxLength(2000);
+
+            builder.Entity<Project>().Property(x => x.Name).HasMaxLength(200).IsRequired();
+            builder.Entity<Project>().Property(x => x.Description).HasMaxLength(5000);
+
+            builder.Entity<Image>().Property(x => x.Description).HasMaxLength(5000);
+
+            builder.Entity<BlogPost>().Property(x => x.Title).HasMaxLength(500).IsRequired();
+
+            builder.Entity<Testimonials>().Property(x => x.PersonName).HasMaxLength(300).IsRequired();
+            builder.Entity<Testimonials>().Property(x => x.Content).HasMaxLength(3000).IsRequired();
+            builder.Entity<Testimonials>().Property(x => x.Position).HasMaxLength(300);
+            builder.Entity<Testimonials>().Property(x => x.Company).HasMaxLength(300);
+            builder.Entity<Testimonials>().Property(x => x.EmailAddress).HasMaxLength(350);
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)

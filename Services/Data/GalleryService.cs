@@ -42,7 +42,13 @@ namespace Services.Data
             }
         }
 
-        public async Task<IEnumerable<T>> GetAllForPublicGallery<T>(string galleryId)
+        public async Task<IEnumerable<T>> GetAllGalleriesForAdmin<T>()
+        {
+            var res = await galleryRepository.All().To<T>().ToListAsync();
+            return res;
+        }
+
+        public async Task<IEnumerable<T>> GetListOfAllProjectsForPublicGallery<T>(string galleryId)
         {
             var result = await this.projectRepository.All().Where(a => a.GalleryId == galleryId && a.Gallery.IsPrivate == false).OrderByDescending(x=>x.Name).To<T>().ToListAsync();
 

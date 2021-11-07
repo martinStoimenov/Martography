@@ -9,7 +9,8 @@ namespace Services.Data.Interfaces
 {
     public interface IGalleryService
     {
-        Task<IEnumerable<T>> GetAllForPublicGallery<T>(string galleryId);
+        Task<IEnumerable<T>> GetListOfAllProjectsForPublicGallery<T>(string galleryId);
         Task<bool> CreateGallery(string galleryName, string description, bool isPrivate);
+        Task<IEnumerable<T>> GetAllGalleriesForAdmin<T>();
     }
 }
