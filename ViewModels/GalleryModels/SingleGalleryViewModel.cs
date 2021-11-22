@@ -2,7 +2,7 @@
 using Services.Mapping;
 using System;
 
-namespace Martography.ViewModels.GalleryModels
+namespace ViewModels.GalleryModels
 {
     public class SingleGalleryViewModel : IMapFrom<Gallery>
     {

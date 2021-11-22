@@ -299,3 +299,40 @@
     </div>
     <!-- /.container -->
 </div>
+
+@section Scripts{
+    <script>
+        function postToGeneral() {
+            //var post = $.post('api/general/GalleryUpdate');
+            //post.done(function (data) { console.log(data) })
+            //post.fail(function (req, status, error) {
+            //        console.log(error);
+            //        console.log(req);
+            //        console.log(status);
+            //    })
+            var token = $("#generalForm input[name=__RequestVerificationToken]").val();
+
+            $.ajax({
+                url: 'api/general/GalleryUpdate',
+                type: "POST",
+                headers: { 'RequestVerificationToken': token },
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    name: "Cars",
+                    id: "2588e750-6b71-463d-87f7-851af23a316a",
+                    isPrivate: true,
+                    isDeleted: false,
+                    description: "asdasas"
+                }),
+                success: function (data) {
+                    console.log(data)
+                },
+                error: function (req, status, error) {
+                    console.log(error);
+                    console.log(req);
+                    console.log(status);
+                }
+            });
+        }
+    </script>
+} 

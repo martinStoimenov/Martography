@@ -2,7 +2,7 @@
 using Data.Models;
 using System;
 
-namespace Martography.ViewModels.ProjectModels
+namespace ViewModels.ProjectModels
 {
     public class SingleProjectViewModel : IMapFrom<Project>
     {

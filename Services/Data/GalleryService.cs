@@ -42,6 +42,26 @@ namespace Services.Data
             }
         }
 
+        public async Task<bool> EditGalleryForAdmin(string galleryId, string name, string description, bool isDeleted, bool isPrivate)
+        {
+            try
+            {
+                var res = await galleryRepository.All().FirstOrDefaultAsync(g => g.Id == galleryId);
+                res.Name = name;
+                res.Description = description;
+                res.IsDeleted = isDeleted;
+                res.IsPrivate = isPrivate;
+
+                galleryRepository.Update(res);
+                await galleryRepository.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public async Task<IEnumerable<T>> GetAllGalleriesForAdmin<T>()
         {
             var res = await galleryRepository.All().To<T>().ToListAsync();
@@ -50,7 +70,7 @@ namespace Services.Data
 
         public async Task<IEnumerable<T>> GetListOfAllProjectsForPublicGallery<T>(string galleryId)
         {
-            var result = await this.projectRepository.All().Where(a => a.GalleryId == galleryId && a.Gallery.IsPrivate == false).OrderByDescending(x=>x.Name).To<T>().ToListAsync();
+            var result = await this.projectRepository.All().Where(a => a.GalleryId == galleryId && a.Gallery.IsPrivate == false).OrderByDescending(x => x.Name).To<T>().ToListAsync();
 
             return result;
         }

@@ -1,4 +1,4 @@
-﻿namespace Martography.ViewModels
+﻿namespace ViewModels
 {
     public class ErrorViewModel
     {

@@ -4,8 +4,8 @@ using CloudinaryDotNet;
 using Services.Data.Interfaces;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Martography.ViewModels.GalleryModels;
-using Martography.ViewModels.ProjectModels;
+using ViewModels.GalleryModels;
+using ViewModels.ProjectModels;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Martography.Areas.Administration.Controllers
@@ -41,13 +41,6 @@ namespace Martography.Areas.Administration.Controllers
         public IActionResult GetGalleryComponent()
         {
             return ViewComponent("Gallery");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> UpdateGallery(string name, string description, string id, bool isDeleted, bool isPrivate)
-        {
-            var a = 0;
-            return Ok();
         }
     }
 

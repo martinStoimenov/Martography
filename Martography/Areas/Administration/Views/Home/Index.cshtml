@@ -3,9 +3,10 @@
     @model HomePageViewModel
 }
 <div class="container">
-    <div class="text-center"><h1>Admin</h1></div>
+    <div class="text-center"><h1>Admin dashboard</h1></div>
     
     <div class="row">
+
         <div class="text-center d-none">
             <a href="#" onclick="showUploadWidget()" class="btn btn-pastel-green">Upload Images</a>
             <a asp-area="Administration" asp-controller="Home" asp-action="GetUploadImagesComponent" class="btn btn-pastel-green">Upload Images view component</a>
@@ -18,47 +19,47 @@
             <a href="#" class="btn btn-pastel-green">Change Home page images</a>
         </div>
 
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="editForm" method="post" asp-action="UpdateGallery">
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Name:</label>
-                                    <input name="name" type="text" class="form-control" id="recipient-name">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="adminForm" method="post">
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Name:</label>
+                                <input name="name" type="text" class="form-control" id="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Description:</label>
+                                <textarea name="description" class="form-control" id="description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" name="isDeleted" class="custom-control-input" id="deletedCheck">
+                                    <label class="custom-control-label" for="deletedCheck">Delete</label>
                                 </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">Description:</label>
-                                    <textarea name="description" class="form-control" id="message-text"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" name="isPrivate" class="custom-control-input" id="privateCheck">
+                                    <label class="custom-control-label" for="privateCheck">Private</label>
                                 </div>
-                                <div class="form-group">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="isDeleted" class="custom-control-input" id="deletedCheck">
-                                        <label class="custom-control-label" for="deletedCheck">Delete</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="isPrivate" class="custom-control-input" id="privateCheck">
-                                        <label class="custom-control-label" for="privateCheck">Private</label>
-                                    </div>
-                                </div>
-                                <input type="hidden" name="id" id="hiddenId" />
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <a id="saveBtn" class="btn btn-primary" >Save</a>
-                        </div>
+                            </div>
+                            <input type="hidden" name="id" id="hiddenId" />
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="saveBtn" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>
+        </div>
 
         <div id="renderComponent">
 
@@ -209,8 +210,10 @@
                 });
         }
 
+        var button = null;
         $('#exampleModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
+            button = button
 
             // Extract info from data-* attributes
             var action = button.data('action')
@@ -233,6 +236,40 @@
 
             //$('#saveBtn').attr('href', `Administration/Home/${action}`)
         })
-            $('#saveBtn').click(function () { $('#editForm').submit() })
+
+        $('#saveBtn').click(function () {
+            var name = $('#name').val()
+            var id = $('#hiddenId').val()
+            var isPrivate = $('#privateCheck').is(":checked")
+            var isDeleted = $('#deletedCheck').is(":checked")
+            var description = $('#description').val()
+
+            var data = {
+                name,
+                id,
+                isPrivate,
+                isDeleted,
+                description
+            }
+            console.log(data);
+
+            var token = $("#adminForm input[name=__RequestVerificationToken]").val();
+
+            $.ajax({
+                url: 'api/admin/GalleryEdit',
+                type: "POST",
+                headers: { 'RequestVerificationToken': token },
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data) {
+                    console.log(data)
+                    // if true - successfull edit (maybe show popup)
+                },
+                error: function (req, status, error) {
+                    console.log(error);
+                }
+            });
+        })
+
     </script>
 }

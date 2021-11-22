@@ -12,5 +12,6 @@ namespace Services.Data.Interfaces
         Task<IEnumerable<T>> GetListOfAllProjectsForPublicGallery<T>(string galleryId);
         Task<bool> CreateGallery(string galleryName, string description, bool isPrivate);
         Task<IEnumerable<T>> GetAllGalleriesForAdmin<T>();
+        Task<bool> EditGalleryForAdmin(string galleryId, string name, string description, bool isDeleted, bool isPrivate);
     }
 }

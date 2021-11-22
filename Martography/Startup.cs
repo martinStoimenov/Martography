@@ -3,7 +3,6 @@ using Data.Models;
 using Data.Seeding;
 using Data.Repositories;
 using Services.Mapping;
-using Martography.ViewModels;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Services.Data.Interfaces;
 using Services.Data;
+using Microsoft.Extensions.Logging;
+using ViewModels;
 
 namespace Martography
 {
@@ -47,12 +48,12 @@ namespace Martography
                     options.MinimumSameSitePolicy = SameSiteMode.None;
                 });
 
+            services.AddRazorPages();
+
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             }).AddRazorRuntimeCompilation();
-
-            services.AddRazorPages();
 
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -62,7 +63,7 @@ namespace Martography
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
@@ -78,6 +79,7 @@ namespace Martography
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                loggerFactory.CreateLogger("");
             }
             else
             {
@@ -97,9 +99,11 @@ namespace Martography
 
             app.UseEndpoints(endpoints =>
             {
+                //endpoints.MapControllerRoute("MyareaRoute", "Administration", "api/{controller}/{action}/{id?}");
+                endpoints.MapRazorPages();
+                endpoints.MapControllers();
                 endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
             });
         }
     }
