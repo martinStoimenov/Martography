@@ -1,0 +1,92 @@
+﻿@{
+    @using ViewModels.ProjectModels;
+    @model ProjectModel
+}
+
+<div class="wrapper light-wrapper">
+    <div class="container inner pt-70 text-center">
+
+        <form asp-action="Upload" method="post" enctype="multipart/form-data" class="mb-70">
+            <div class="row border border-secondary rounded p-2">
+                <div class="col">
+                    <label for="formFileMultiple" class="form-label">Choose images to upload in current project:</label>
+                </div>
+                <div class="col">
+                    <input class="form-control-file" type="file" name="Image" id="formFileMultiple" multiple style="width: auto;">
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-outline-primary float-left">Upload</button>
+                </div>
+            </div>
+        </form>
+
+        <h1 class="post-title">@Model.singleProject.Name in <span class="small"><i>@Model.singleProject.GalleryName</i></span></h1>
+        <p>
+            Nullam id dolor id nibh ultricies vehicula ut id elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna.
+        </p>
+        <div class="space30"></div>
+        <div id="cube-grid" class="cbp light-gallery">
+            <div class="cbp-item">
+                <figure class="overlay overlay3 rounded">
+                    <a href="~/style/images/art/jp1-full.jpg" data-sub-html="#caption1">
+                        <img src="~/style/images/art/jp1.jpg" alt="" />
+                        <div id="caption1" class="d-none">
+                            <p>Cras mattis consectetur purus sit amet fermentum.</p>
+                        </div>
+                    </a>
+                </figure>
+            </div>
+            <!--/.cbp-item -->
+            <div class="cbp-item">
+                <figure class="overlay overlay3 rounded"><a href="~/style/images/art/jp2-full.jpg"><img src="~/style/images/art/jp2.jpg" alt="" /></a></figure>
+            </div>
+            <!--/.cbp-item -->
+            <div class="cbp-item">
+                <figure class="overlay overlay3 rounded">
+                    <a href="~/style/images/art/jp3-full.jpg" data-sub-html="#caption2">
+                        <img src="~/style/images/art/jp3.jpg" alt="" />
+                        <div id="caption2" class="d-none">
+                            <p>Nulla vitae elit libero, a pharetra augue.</p>
+                        </div>
+                    </a>
+                </figure>
+            </div>
+            <!--/.cbp-item -->
+            <div class="cbp-item">
+                <figure class="overlay overlay3 rounded"><a href="~/style/images/art/jp4-full.jpg"><img src="~/style/images/art/jp4.jpg" alt="" /></a></figure>
+            </div>
+            <!--/.cbp-item -->
+            <div class="cbp-item">
+                <figure class="overlay overlay3 rounded"><a href="~/style/images/art/jp5-full.jpg"><img src="~/style/images/art/jp5.jpg" alt="" /></a></figure>
+            </div>
+            <!--/.cbp-item -->
+            <div class="cbp-item">
+                <figure class="overlay overlay3 rounded"><a href="~/style/images/art/jp6-full.jpg"><img src="~/style/images/art/jp6.jpg" alt="" /></a></figure>
+            </div>
+            <!--/.cbp-item -->
+            <div class="cbp-item">
+                <figure class="overlay overlay3 rounded"><a href="~/style/images/art/jp7-full.jpg"><img src="~/style/images/art/jp7.jpg" alt="" /></a></figure>
+            </div>
+            <!--/.cbp-item -->
+            <div class="cbp-item">
+                <figure class="overlay overlay3 rounded"><a href="~/style/images/art/jp8-full.jpg"><img src="~/style/images/art/jp8.jpg" alt="" /></a></figure>
+            </div>
+            <!--/.cbp-item -->
+            <div class="cbp-item">
+                <figure class="overlay overlay3 rounded"><a href="~/style/images/art/jp9-full.jpg"><img src="~/style/images/art/jp9.jpg" alt="" /></a></figure>
+            </div>
+            <!--/.cbp-item -->
+            <div class="cbp-item">
+                <figure class="overlay overlay3 rounded"><a href="~/style/images/art/jp10-full.jpg"><img src="~/style/images/art/jp10.jpg" alt="" /></a></figure>
+            </div>
+            <!--/.cbp-item -->
+            <div class="cbp-item">
+                <figure class="overlay overlay3 rounded"><a href="~/style/images/art/jp11-full.jpg"><img src="~/style/images/art/jp11.jpg" alt="" /></a></figure>
+            </div>
+            <!--/.cbp-item -->
+        </div>
+        <!--/.cbp -->
+    </div>
+    <!-- /.container -->
+</div>

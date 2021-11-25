@@ -23,5 +23,11 @@ namespace Services.Data
             var res = await projectRepository.All().To<T>().ToListAsync();
             return res;
         }
+
+        public async Task<T> GetProjectByIdForAdmin<T>(string projectId)
+        {
+            var res = await projectRepository.All().Where(p => p.Id == projectId).To<T>().FirstOrDefaultAsync();
+            return res;
+        }
     }
 }
