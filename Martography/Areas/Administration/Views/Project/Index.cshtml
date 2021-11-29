@@ -7,15 +7,17 @@
     <div class="container inner pt-70 text-center">
 
         <form asp-action="Upload" method="post" enctype="multipart/form-data" class="mb-70">
-            <div class="row border border-secondary rounded p-2">
+            <div class="row border border-secondary rounded p-2 align-items-center">
                 <div class="col">
                     <label for="formFileMultiple" class="form-label">Choose images to upload in current project:</label>
                 </div>
-                <div class="col">
-                    <input class="form-control-file" type="file" name="Image" id="formFileMultiple" multiple style="width: auto;">
+                <div class="col" align="center">
+                    <input class="form-control-file" name="Images" type="file" asp-for="ImagesUploadViewModel.Images" id="formFileMultiple" multiple style="width: auto;">
+                    <span asp-validation-for="ImagesUploadViewModel.Images"></span>
                 </div>
+                <input type="hidden" value="@Model.singleProject.Id" name="projectId" />
                 <div class="col">
-                    <button type="submit" class="btn btn-outline-primary float-left">Upload</button>
+                    <button type="submit" class="btn btn-outline-primary float-left mb-0">Upload</button>
                 </div>
             </div>
         </form>

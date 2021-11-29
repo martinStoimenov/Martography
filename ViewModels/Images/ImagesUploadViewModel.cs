@@ -7,11 +7,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ViewModels.Images
 {
-    public class ImagesUploadViewModel : IMapTo<Image>
+    public class ImagesUploadViewModel
     {
+        public string projectId { get; set; }
+
         [Required]
         [MaxFileSize(24 * 1024 * 1024)]
         [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" })]
-        public IEnumerable<IFormFile> Image { get; set; }
+        public IEnumerable<IFormFile> Images { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CloudinaryDotNet;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Services.Data.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,12 @@ namespace Martography.Areas.Administration.Controllers
     public class ProjectController : AdministrationController
     {
         private readonly IProjectsService projectsService;
+        private readonly IConfiguration configuration;
 
-        public ProjectController(IProjectsService projectsService)
+        public ProjectController(IProjectsService projectsService, IConfiguration configuration)
         {
             this.projectsService = projectsService;
+            this.configuration = configuration;
         }
 
         public async Task<IActionResult> Index(string id)
@@ -28,14 +32,20 @@ namespace Martography.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Upload(IEnumerable<ImagesUploadViewModel> model)
+        public async Task<IActionResult> Upload(ImagesUploadViewModel model)
         {
-            // FIX THE model
-            var res = new ProjectModel()
-            {
-                //singleProject = await projectsService.GetProjectByIdForAdmin<SingleProjectViewModel>(id)
-            };
-            return View();
+            var cloudinarySection = configuration.GetSection("CloudinaryAPI");
+            var apiKey = cloudinarySection.GetValue<string>("APIKey");
+            var apiSecret = cloudinarySection.GetValue<string>("APISecret");
+            var cloudName = cloudinarySection.GetValue<string>("CloudName");
+
+            Account account = new Account( cloudName, apiKey, apiSecret);
+
+            Cloudinary cloudinary = new Cloudinary(account);
+            cloudinary.Api.Secure = true;
+            //var resources = cloudinary.ListResources();
+            var res = 0;
+            return RedirectToAction(nameof(this.Index), new { id = model.projectId });
         }
     }
 }

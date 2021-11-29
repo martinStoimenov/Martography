@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
@@ -18,13 +19,16 @@ namespace Common.ValidationAttributes
         protected override ValidationResult IsValid(
         object value, ValidationContext validationContext)
         {
-            var file = value as IFormFile;
-            var extension = Path.GetExtension(file.FileName);
-            if (!(file == null))
+            var files = value as List<IFormFile>;
+            foreach (var file in files)
             {
-                if (!this.extensions.Contains(extension.ToLower()))
+                var extension = Path.GetExtension(file.FileName);
+                if (!(files == null))
                 {
-                    return new ValidationResult($"This image extension is not allowed!");
+                    if (!this.extensions.Contains(extension.ToLower()))
+                    {
+                        return new ValidationResult($"This image extension is not allowed!");
+                    }
                 }
             }
 
