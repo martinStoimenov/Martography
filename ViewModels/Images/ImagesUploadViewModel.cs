@@ -10,6 +10,8 @@ namespace ViewModels.Images
     public class ImagesUploadViewModel
     {
         public string projectId { get; set; }
+        public string projectName { get; set; }
+        public string galleryName { get; set; }
 
         [Required]
         [MaxFileSize(24 * 1024 * 1024)]

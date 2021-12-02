@@ -1,10 +1,12 @@
 ﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Services.Data.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using ViewModels.Images;
 using ViewModels.ProjectModels;
@@ -43,7 +45,29 @@ namespace Martography.Areas.Administration.Controllers
 
             Cloudinary cloudinary = new Cloudinary(account);
             cloudinary.Api.Secure = true;
-            //var resources = cloudinary.ListResources();
+
+            foreach (var image in model.Images)
+            {
+                var stream = image.OpenReadStream();
+
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(image.FileName, stream),
+                    PublicId = image.FileName,
+                    Folder = string.Join("/", new string[] { Common.GlobalConstants.BaseImagesCloudinaryFolder, Common.GlobalConstants.CloudinaryImagesFolder, model.galleryName, model.projectName }),
+                    Overwrite = true
+                };
+
+                var uploadResult = cloudinary.Upload(uploadParams);
+
+                if (uploadResult.StatusCode == HttpStatusCode.OK)
+                    //Upload the Image to the DB
+                    Console.WriteLine("uploaded: " + uploadResult.PublicId);
+                else
+                    Console.WriteLine("Failed: " + uploadResult.Error);
+            }
+
+
             var res = 0;
             return RedirectToAction(nameof(this.Index), new { id = model.projectId });
         }

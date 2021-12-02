@@ -16,13 +16,15 @@
                     <span asp-validation-for="ImagesUploadViewModel.Images"></span>
                 </div>
                 <input type="hidden" value="@Model.singleProject.Id" name="projectId" />
+                <input type="hidden" value="@Model.singleProject.Name" name="projectName" />
+                <input type="hidden" value="@Model.singleProject.GalleryName" name="galleryName" />
                 <div class="col">
                     <button type="submit" class="btn btn-outline-primary float-left mb-0">Upload</button>
                 </div>
             </div>
         </form>
 
-        <h1 class="post-title">@Model.singleProject.Name in <span class="small"><i>@Model.singleProject.GalleryName</i></span></h1>
+        <h1 class="post-title">@Model.singleProject.Name<span class="small"><i> in @Model.singleProject.GalleryName</i></span></h1>
         <p>
             Nullam id dolor id nibh ultricies vehicula ut id elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur
             adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna.
