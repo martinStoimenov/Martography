@@ -18,6 +18,7 @@ using Services.Data.Interfaces;
 using Services.Data;
 using Microsoft.Extensions.Logging;
 using ViewModels;
+using System;
 
 namespace Martography
 {
@@ -60,6 +61,7 @@ namespace Martography
 
             services.AddTransient<IGalleryService, GalleryService>();
             services.AddTransient<IProjectsService, ProjectsService>();
+            services.AddTransient<IImageService, ImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,7 +91,22 @@ namespace Martography
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    var headers = ctx.Context.Response.GetTypedHeaders();
+
+                    headers.CacheControl = new Microsoft.Net.Http.Headers.CacheControlHeaderValue
+                    {
+                        Public = true,
+                        MaxAge = TimeSpan.FromDays(15)
+                    };
+                    headers.Expires = new DateTimeOffset(DateTime.UtcNow.AddDays(15));
+                }
+            });
+
             app.UseCookiePolicy();
 
             app.UseRouting();

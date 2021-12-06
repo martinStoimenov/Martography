@@ -1,0 +1,28 @@
+﻿@{
+    @using ViewModels.ProjectModels;
+    @model SingleProjectViewModel
+}
+
+<div class="wrapper light-wrapper">
+    <div class="container inner pt-70 text-center">
+        <h1 class="post-title">@Model.Name<span class="small"><i> in @Model.GalleryName</i></span></h1>
+
+        @* Make each row form and submit all or use ajax or FIND another solution *@
+        <table>
+            <tbody>
+                @foreach (var image in Model.Images)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/@image.ImageBaseUrl" width="80" />
+                        </td>
+                        <td><textarea style="height: 5rem;" placeholder="Description">@image.Description</textarea></td>
+                        <td><label asp-for="@image.ShowOnHomePageCarousel"></label><input type="checkbox" value="Home Page image" /></td>
+                        <td><input type="checkbox" value="Project thumbnail" /></td>
+                        <td><input type="checkbox" value="Delete" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

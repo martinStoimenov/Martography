@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-using CloudinaryDotNet;
 using Services.Data.Interfaces;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using ViewModels.GalleryModels;
 using ViewModels.ProjectModels;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Martography.Areas.Administration.Controllers
 {
@@ -22,9 +19,6 @@ namespace Martography.Areas.Administration.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            //var cloudinary = new Cloudinary();
-            //cloudinary.Api.ApiUrl.BuildUrl();
-
             var galleries = await galleryService.GetAllGalleriesForAdmin<SingleGalleryViewModel>();
             var projects = await projectsService.GetAllProjectsForAdmin<SingleProjectViewModel>();
 

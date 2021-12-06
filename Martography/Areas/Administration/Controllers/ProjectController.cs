@@ -1,75 +1,69 @@
-﻿using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
+﻿using ViewModels.Images;
+using ViewModels.ProjectModels;
+using Services.Data.Interfaces;
+
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Services.Data.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Threading.Tasks;
-using ViewModels.Images;
-using ViewModels.ProjectModels;
+using System.Collections.Generic;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using System.Linq;
 
 namespace Martography.Areas.Administration.Controllers
 {
     public class ProjectController : AdministrationController
     {
         private readonly IProjectsService projectsService;
-        private readonly IConfiguration configuration;
+        private readonly IImageService imageService;
 
-        public ProjectController(IProjectsService projectsService, IConfiguration configuration)
+        public ProjectController(IProjectsService projectsService, IImageService imageService)
         {
             this.projectsService = projectsService;
-            this.configuration = configuration;
+            this.imageService = imageService;
         }
 
         public async Task<IActionResult> Index(string id)
         {
-            var model = new ProjectModel()
-            {
-                singleProject = await projectsService.GetProjectByIdForAdmin<SingleProjectViewModel>(id)
-            };
-            return View(model);
+            var singleProject = await projectsService.GetProjectByIdForAdmin<SingleProjectViewModel>(id);
+            
+            return View(singleProject);
         }
 
         [HttpPost]
         public async Task<IActionResult> Upload(ImagesUploadViewModel model)
         {
-            var cloudinarySection = configuration.GetSection("CloudinaryAPI");
-            var apiKey = cloudinarySection.GetValue<string>("APIKey");
-            var apiSecret = cloudinarySection.GetValue<string>("APISecret");
-            var cloudName = cloudinarySection.GetValue<string>("CloudName");
+            var imagesList = new List<ImageUploadViewModel>();
 
-            Account account = new Account( cloudName, apiKey, apiSecret);
-
-            Cloudinary cloudinary = new Cloudinary(account);
-            cloudinary.Api.Secure = true;
+            foreach (var i in model.Images)
+            {
+                imagesList.Add(new ImageUploadViewModel()
+                {
+                    Name = i.FileName,
+                    GalleryName = model.galleryName,
+                    ProjectName = model.projectName,
+                    Type = i.ContentType,
+                    Content = i.OpenReadStream()
+                });
+            }
+            //Upload to the File System
+            await imageService.SaveImageToFileSystem(imagesList);
 
             foreach (var image in model.Images)
             {
-                var stream = image.OpenReadStream();
-
-                var uploadParams = new ImageUploadParams()
-                {
-                    File = new FileDescription(image.FileName, stream),
-                    PublicId = image.FileName,
-                    Folder = string.Join("/", new string[] { Common.GlobalConstants.BaseImagesCloudinaryFolder, Common.GlobalConstants.CloudinaryImagesFolder, model.galleryName, model.projectName }),
-                    Overwrite = true
-                };
-
-                var uploadResult = cloudinary.Upload(uploadParams);
-
-                if (uploadResult.StatusCode == HttpStatusCode.OK)
-                    //Upload the Image to the DB
-                    Console.WriteLine("uploaded: " + uploadResult.PublicId);
-                else
-                    Console.WriteLine("Failed: " + uploadResult.Error);
+                //Upload to the databse
+                await imageService.InsertImage(image.FileName, model.projectId);
             }
 
-
-            var res = 0;
             return RedirectToAction(nameof(this.Index), new { id = model.projectId });
+        }
+
+        public async Task<IActionResult> Edit(string projectId)
+        {
+            var singleProject = await projectsService.GetProjectByIdForAdmin<SingleProjectViewModel>(projectId);
+
+            return View(singleProject);
         }
     }
 }

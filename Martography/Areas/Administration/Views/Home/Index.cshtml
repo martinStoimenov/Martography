@@ -125,7 +125,7 @@
                     @foreach (var proj in Model.Projects)
                     {
                         <tr>
-                            <td><a data-toggle="modal" data-target="#exampleModal" data-name="@proj.Name">Edit</a></td>
+                            <td><a class="hover pe-auto" data-toggle="modal" data-target="#exampleModal" data-name="@proj.Name">Edit</a></td>
                             <td><a asp-controller="Project" asp-action="Index" asp-route-id="@proj.Id">@proj.Name</a></td> @*view the project when clicked*@
                             <td>@proj.Description</td>
                             <td><a href="#">@proj.GalleryName</a></td>

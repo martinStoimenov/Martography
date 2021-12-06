@@ -2,12 +2,10 @@
 {
     public static class GlobalConstants
     {
-        public const string BaseImagesCloudinaryFolder = "Martography";
+        public const string BaseImagesFolder = "Martography Images";
 
         public const string AdministratorRoleName = "Administrator";
 
-        public const string CloudinaryImagesFolder = "Images";
-
-        public const string CloudinaryHomeFolder = "Home";
+        public const string HomeFolder = "Home";
     }
 }

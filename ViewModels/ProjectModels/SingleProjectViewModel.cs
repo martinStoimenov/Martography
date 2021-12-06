@@ -1,6 +1,9 @@
-﻿using Services.Mapping;
-using Data.Models;
+﻿using Data.Models;
+using Services.Mapping;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using ViewModels.Images;
 
 namespace ViewModels.ProjectModels
 {
@@ -14,5 +17,6 @@ namespace ViewModels.ProjectModels
         public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public bool IsDeleted { get; set; }
+        public IEnumerable<ImageViewModel> Images { get; set; }
     }
 }

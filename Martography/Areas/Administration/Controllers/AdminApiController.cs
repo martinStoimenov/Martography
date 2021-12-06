@@ -36,6 +36,7 @@ namespace Martography.Areas.Administration.Controllers
             var res = await galleryService.EditGalleryForAdmin(model.id, model.name, model.description, model.isDeleted, model.isPrivate);
             return Ok(res);
         }
+
         [HttpGet(nameof(GalleryUpdate))]
         public async Task<IActionResult> GalleryUpdate()
         {
