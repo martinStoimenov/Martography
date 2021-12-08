@@ -15,10 +15,12 @@ namespace Martography.Areas.Administration.Controllers
     public class AdminApiController : AdministrationController
     {
         private readonly IGalleryService galleryService;
+        private readonly IImageService imagesService;
 
-        public AdminApiController(IGalleryService galleryService)
+        public AdminApiController(IGalleryService galleryService, IImageService imagesService)
         {
             this.galleryService = galleryService;
+            this.imagesService = imagesService;
         }
 
         public IActionResult Index()
@@ -44,6 +46,20 @@ namespace Martography.Areas.Administration.Controllers
             return Ok("Gallery Update GET retun");
         }
 
+        [HttpPost(nameof(EditImages))]
+        public async Task<IActionResult> EditImages(IEnumerable<EditImagesModel> images)
+        {
+            if(images == null || images.Count() <= 0)
+            {
+                return Content("There was no images :(");
+            }
+
+            // TODO:
+            //imagesService.UpdateImages(images);
+
+            return Ok();
+        }
+
         public class UpdateGalleryModel
         {
             public string name { get; set; }
@@ -51,6 +67,15 @@ namespace Martography.Areas.Administration.Controllers
             public string id { get; set; }
             public bool isDeleted { get; set; }
             public bool isPrivate { get; set; }
+        }
+
+        public class EditImagesModel
+        {
+            public string Id { get; set; }
+            public string Description { get; set; }
+            public bool IsThumbnail { get; set; }
+            public bool IsOnHomePageCarousel { get; set; }
+            public bool IsDeleted { get; set; }
         }
     }
 }

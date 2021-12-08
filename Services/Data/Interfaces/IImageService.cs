@@ -8,5 +8,6 @@ namespace Services.Data.Interfaces
     {
         Task InsertImage(string imageName, string projectId, bool showOnHomePage = false, bool isProjectThumbnail = false);
         Task SaveImageToFileSystem(IEnumerable<ImageUploadViewModel> images);
+        Task UpdateImages(IEnumerable<int> images);
     }
 }

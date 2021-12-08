@@ -100,5 +100,10 @@ namespace Services.Data
                     image.ProjectName));
             }
         }
+
+        public Task UpdateImages(IEnumerable<int> images)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

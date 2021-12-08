@@ -8,21 +8,92 @@
         <h1 class="post-title">@Model.Name<span class="small"><i> in @Model.GalleryName</i></span></h1>
 
         @* Make each row form and submit all or use ajax or FIND another solution *@
-        <table>
-            <tbody>
+        <form id="editForm" method="post">
+            <input type="hidden" />
+            <div class="row">
                 @foreach (var image in Model.Images)
                 {
-                    <tr>
-                        <td>
-                            <img src="~/@image.ImageBaseUrl" width="80" />
-                        </td>
-                        <td><textarea style="height: 5rem;" placeholder="Description">@image.Description</textarea></td>
-                        <td><label asp-for="@image.ShowOnHomePageCarousel"></label><input type="checkbox" value="Home Page image" /></td>
-                        <td><input type="checkbox" value="Project thumbnail" /></td>
-                        <td><input type="checkbox" value="Delete" /></td>
-                    </tr>
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div class="col">
+                                <img src="~/@image.ImageBaseUrl" width="115" />
+                                <input type="hidden" value="@image.Id" />
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <textarea style="height: 5rem; width:auto;" id="@(image.Id + "description")" placeholder="Description">@image.Description</textarea>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <label for="@(image.Id + "projThumbnail")">Project thumbnail</label>
+                            <input type="checkbox" class="thumbnailCheckbox" id="@(image.Id + "projThumbnail")" value="@image.IsProjectThumbnail" />
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <label class="text-success" for="@(image.Id + "home")">Show on home page carousel.</label>
+                                <input type="checkbox" id="@(image.Id + "home")" value="@image.ShowOnHomePageCarousel" />
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <label class="text-danger" for="@(image.Id + "delete")">Delete</label>
+                            <input type="checkbox" id="@(image.Id + "delete")" value="@image.IsDeleted" />
+                        </div>
+                    </div>
                 }
-            </tbody>
-        </table>
+            </div>
+        </form>
+        <div class="text-center"><button class="btn btn-outline-primary" onclick="postToProject()">Save changes</button></div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+
+        var checkboxes = $('.thumbnailCheckbox');
+
+        checkboxes.change(function () {
+            if ($(checkboxes).is(':checked')) { checkboxes.not(this).prop('checked', false); }
+        });
+
+        function postToProject() {
+            var colDivs = $('.col-md-3');
+            var dataSet = new Array();
+
+            for (col of colDivs) {
+                var id = col.children[0].children[0].children[1].value
+                var description = $(`#${id}description`).val();
+                var isThumbnail = $(`#${id}projThumbnail`).is(":checked");
+                var isOnHomePageCarousel = $(`#${id}home`).is(":checked");
+                var isDeleted = $(`#${id}delete`).is(":checked");
+
+                dataSet.push({
+                    id,
+                    description,
+                    isThumbnail,
+                    isOnHomePageCarousel,
+                    isDeleted
+                });
+            }
+
+            var token = $("#editForm input[name=__RequestVerificationToken]").val();
+
+            $.ajax({
+                url: '/api/admin/EditImages',
+                type: "POST",
+                headers: { 'RequestVerificationToken': token },
+                contentType: 'application/json',
+                data: JSON.stringify(dataSet),
+                success: function (data) {
+                    console.log(data)
+                },
+                error: function (req, status, error) {
+                    console.log(error);
+                    console.log(req);
+                    console.log(status);
+                }
+            });
+        }
+    </script>
+}
