@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using System.Linq;
+using ViewModels.GalleryModels;
 
 namespace Martography.Areas.Administration.Controllers
 {
@@ -17,17 +18,20 @@ namespace Martography.Areas.Administration.Controllers
     {
         private readonly IProjectsService projectsService;
         private readonly IImageService imageService;
+        private readonly IGalleryService galleryService;
 
-        public ProjectController(IProjectsService projectsService, IImageService imageService)
+        public ProjectController(IProjectsService projectsService, IImageService imageService, IGalleryService galleryService)
         {
             this.projectsService = projectsService;
             this.imageService = imageService;
+            this.galleryService = galleryService;
         }
 
         public async Task<IActionResult> Index(string id)
         {
             var singleProject = await projectsService.GetProjectByIdForAdmin<SingleProjectViewModel>(id);
-            
+            singleProject.AllGalleries = await galleryService.GetAllGalleriesForAdmin<GalleryDropDownViewModel>();
+
             return View(singleProject);
         }
 
@@ -64,6 +68,13 @@ namespace Martography.Areas.Administration.Controllers
             var singleProject = await projectsService.GetProjectByIdForAdmin<SingleProjectViewModel>(projectId);
 
             return View(singleProject);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeToGallery(string galleryId, string projectId)
+        {
+            await projectsService.MoveProjectToGalleryForAdmin(galleryId, projectId);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

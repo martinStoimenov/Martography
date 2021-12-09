@@ -127,8 +127,8 @@
                         <tr>
                             <td><a class="hover pe-auto" data-toggle="modal" data-target="#exampleModal" data-name="@proj.Name">Edit</a></td>
                             <td><a asp-controller="Project" asp-action="Index" asp-route-id="@proj.Id">@proj.Name</a></td> @*view the project when clicked*@
-                            <td>@proj.Description</td>
                             <td><a href="#">@proj.GalleryName</a></td>
+                            <td>@proj.Description</td>
                             <td>@proj.CreatedOn.ToShortDateString()</td>
                             <td>@proj.ModifiedOn?.ToString("d")</td>
                             <td>@proj.IsDeleted</td>

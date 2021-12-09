@@ -3,6 +3,7 @@ using Services.Mapping;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using ViewModels.GalleryModels;
 using ViewModels.Images;
 
 namespace ViewModels.ProjectModels
@@ -18,5 +19,6 @@ namespace ViewModels.ProjectModels
         public DateTime? ModifiedOn { get; set; }
         public bool IsDeleted { get; set; }
         public IEnumerable<ImageViewModel> Images { get; set; }
+        public IEnumerable<GalleryDropDownViewModel> AllGalleries { get; set; }
     }
 }

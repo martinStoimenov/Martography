@@ -1,10 +1,13 @@
 ﻿using Data.Models;
 using Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Services.Data.Interfaces;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using ViewModels.Images;
 using Image = Data.Models.Image;
@@ -101,9 +104,29 @@ namespace Services.Data
             }
         }
 
-        public Task UpdateImages(IEnumerable<int> images)
+        public async Task<string> UpdateImages(IEnumerable<ImagesInProjectUpdateModel> images)
         {
-            throw new System.NotImplementedException();
+            var imagesFromDBtoUpdate = await imageRepository.All().Where(x => images.Select(i => i.Id).Contains(x.Id)).ToListAsync();
+
+            foreach (var image in imagesFromDBtoUpdate)
+            {
+                if (images.Select(i => i.Id).Contains(image.Id))
+                {
+                    var changedImage = images.FirstOrDefault(x => x.Id == image.Id);
+
+                    image.Description = changedImage.Description;
+                    image.IsDeleted = changedImage.IsDeleted;
+                    image.IsProjectThumbnail = changedImage.IsThumbnail;
+                    image.ShowOnHomePageCarousel = changedImage.IsOnHomePageCarousel;
+                    image.DeletedOn = changedImage.IsDeleted ? DateTime.UtcNow : null;
+
+                    imageRepository.Update(image);
+                }
+            }
+
+            await imageRepository.SaveChangesAsync();
+
+            return imagesFromDBtoUpdate.ElementAtOrDefault(0).ProjectId;
         }
     }
 }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ViewModels.Images;
 
 namespace Martography.Areas.Administration.Controllers
 {
@@ -47,17 +48,16 @@ namespace Martography.Areas.Administration.Controllers
         }
 
         [HttpPost(nameof(EditImages))]
-        public async Task<IActionResult> EditImages(IEnumerable<EditImagesModel> images)
+        public async Task<IActionResult> EditImages(IEnumerable<ImagesInProjectUpdateModel> images)
         {
             if(images == null || images.Count() <= 0)
             {
                 return Content("There was no images :(");
             }
 
-            // TODO:
-            //imagesService.UpdateImages(images);
+            var projId = await imagesService.UpdateImages(images);
 
-            return Ok();
+            return RedirectToAction("Index", "Project", new { id = projId });
         }
 
         public class UpdateGalleryModel
@@ -69,13 +69,5 @@ namespace Martography.Areas.Administration.Controllers
             public bool isPrivate { get; set; }
         }
 
-        public class EditImagesModel
-        {
-            public string Id { get; set; }
-            public string Description { get; set; }
-            public bool IsThumbnail { get; set; }
-            public bool IsOnHomePageCarousel { get; set; }
-            public bool IsDeleted { get; set; }
-        }
     }
 }

@@ -24,21 +24,25 @@
                             <textarea style="height: 5rem; width:auto;" id="@(image.Id + "description")" placeholder="Description">@image.Description</textarea>
                         </div>
 
-                        <div class="row justify-content-center">
-                            <label for="@(image.Id + "projThumbnail")">Project thumbnail</label>
-                            <input type="checkbox" class="thumbnailCheckbox" id="@(image.Id + "projThumbnail")" value="@image.IsProjectThumbnail" />
+                        <div class="row">
+                            <div class="col">
+                                <label for="@(image.Id + "projThumbnail")">Project thumbnail</label>
+                                <input type="checkbox" class="thumbnailCheckbox" id="@(image.Id + "projThumbnail")" checked="@image.IsProjectThumbnail" />
+                            </div>
                         </div>
 
                         <div class="row">
                             <div class="col">
                                 <label class="text-success" for="@(image.Id + "home")">Show on home page carousel.</label>
-                                <input type="checkbox" id="@(image.Id + "home")" value="@image.ShowOnHomePageCarousel" />
+                                <input type="checkbox" id="@(image.Id + "home")" checked="@image.ShowOnHomePageCarousel" />
                             </div>
                         </div>
 
-                        <div class="row justify-content-center">
-                            <label class="text-danger" for="@(image.Id + "delete")">Delete</label>
-                            <input type="checkbox" id="@(image.Id + "delete")" value="@image.IsDeleted" />
+                        <div class="row">
+                            <div class="col">
+                                <label class="text-danger" for="@(image.Id + "delete")">Delete</label>
+                                <input type="checkbox" id="@(image.Id + "delete")" checked="@image.IsDeleted" />
+                            </div>
                         </div>
                     </div>
                 }

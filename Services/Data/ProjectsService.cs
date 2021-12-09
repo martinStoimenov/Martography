@@ -29,5 +29,17 @@ namespace Services.Data
             var res = await projectRepository.All().Where(p => p.Id == projectId).To<T>().FirstOrDefaultAsync();
             return res;
         }
+
+        public async Task MoveProjectToGalleryForAdmin(string galleryId, string projectId)
+        {
+            var project = await projectRepository.All().FirstOrDefaultAsync(x => x.Id == projectId);
+
+            if (project.GalleryId != galleryId)
+            {
+                project.GalleryId = galleryId;
+                projectRepository.Update(project);
+                await projectRepository.SaveChangesAsync();
+            }
+        }
     }
 }

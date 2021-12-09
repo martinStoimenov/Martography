@@ -7,5 +7,6 @@ namespace Services.Data.Interfaces
     {
         Task<IEnumerable<T>> GetAllProjectsForAdmin<T>();
         Task<T> GetProjectByIdForAdmin<T>(string projectId);
+        Task MoveProjectToGalleryForAdmin(string galleryId ,string projectId);
     }
 }
