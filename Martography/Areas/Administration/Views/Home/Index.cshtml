@@ -3,20 +3,15 @@
     @model HomePageViewModel
 }
 <div class="container">
+    <div class="space30"></div>
     <div class="text-center"><h1>Admin dashboard</h1></div>
-    
+    <div class="space30"></div>
+
     <div class="row">
 
-        <div class="text-center d-none">
-            <a href="#" onclick="showUploadWidget()" class="btn btn-pastel-green">Upload Images</a>
-            <a asp-area="Administration" asp-controller="Home" asp-action="GetUploadImagesComponent" class="btn btn-pastel-green">Upload Images view component</a>
-            <a href="#" onclick="getGallery()" class="btn btn-pastel-green">Get Gallery</a>
-            <a href="#" class="btn btn-pastel-green">Create new Gallery</a>
-            <a href="#" class="btn btn-pastel-green">Edit Gallery</a>
-            <a href="#" class="btn btn-pastel-green">Create new Project</a>
-            <a href="#" class="btn btn-pastel-green">Edit Project</a>
-            <a href="#" class="btn btn-pastel-green">Upload Images to Project</a>
-            <a href="#" class="btn btn-pastel-green">Change Home page images</a>
+        <div class="col text-center">
+            <a data-toggle="modal" data-target="#createGalleryModal" class="btn btn-pastel-green">Create Gallery</a>
+            <a data-toggle="modal" data-target="#createProjectModal" class="btn btn-pastel-green">Create Project</a>
         </div>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -51,6 +46,7 @@
                                 </div>
                             </div>
                             <input type="hidden" name="id" id="hiddenId" />
+                            <input type="hidden" name="controllerAction" id="controllerAction" />
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -60,10 +56,82 @@
                 </div>
             </div>
         </div>
-
-        <div id="renderComponent">
-
+        
+        <div class="modal fade" id="createGalleryModal" tabindex="-1" role="dialog" aria-labelledby="createGalleryModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createGalleryModalLabel">Create Gallery</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="adminForm" method="post">
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Name:</label>
+                                <input name="name" type="text" class="form-control" id="createGalleryModalName">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Description:</label>
+                                <textarea name="description" class="form-control" id="createGalleryModalDescription"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" name="isPrivate" class="custom-control-input" id="createGalleryModalPrivateCheck">
+                                    <label class="custom-control-label" for="createGalleryModalPrivateCheck">Private</label>
+                                </div>
+                            </div>
+                            <input type="hidden" name="controllerAction" id="controllerAction" />
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="saveBtn" class="btn btn-primary">Create</button>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="createProjectModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createProjectModalLabel">Create Project</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="adminForm" method="post">
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Name:</label>
+                                <input name="name" type="text" class="form-control" id="createProjectModalName">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Gallery:</label>
+                                <select name="name" type="text" class="custom-select" id="createProjectModalName">
+                                    @foreach (var gallery in Model.Galleries)
+                                    {
+                                        <option value="@gallery.Id">@gallery.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Description:</label>
+                                <textarea name="description" class="form-control" id="createProjectModalDescription"></textarea>
+                            </div>
+                            <input type="hidden" name="controllerAction" id="controllerAction" />
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="saveBtn" class="btn btn-primary">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="row">
@@ -78,25 +146,33 @@
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
                         <th scope="col">Private</th>
-                        <th scope="col">Deleted</th>
                         <th scope="col">Modified</th>
+                        <th scope="col">Deleted</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var gallery in Model.Galleries)
                     {
-                    <tr>
-                        <td><a data-toggle="modal" data-target="#exampleModal" data-name="@gallery.Name" data-id="@gallery.Id" 
-                               data-action="UpdateGallery" data-private="@gallery.IsPrivate" data-deleted="@gallery.IsDeleted" 
-                               data-description="@gallery.Description" >
-                            @gallery.Name
-                            </a>
-                        </td>
-                        <td>@gallery.Description</td>
-                        <td>@gallery.IsPrivate</td>
-                        <td>@gallery.IsDeleted</td>
-                        <td>@gallery.ModifiedOn?.ToString("d")</td>
-                    </tr>
+                        <tr>
+                            <td>
+                                <a data-toggle="modal" data-target="#exampleModal" data-name="@gallery.Name" data-id="@gallery.Id"
+                                   data-action="GalleryEdit" data-private="@gallery.IsPrivate" data-deleted="@gallery.IsDeleted"
+                                   data-description="@gallery.Description">
+                                    @gallery.Name
+                                </a>
+                            </td>
+                            <td>@gallery.Description</td>
+                            <td>@gallery.IsPrivate</td>
+                            <td>@gallery.ModifiedOn?.ToString("d")</td>
+                            @if (gallery.IsDeleted)
+                            {
+                                <td class="bg-danger">@gallery.IsDeleted</td>
+                            }
+                            else
+                            {
+                                <td class="bg-success">@gallery.IsDeleted</td>
+                            }
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -114,8 +190,8 @@
                     <tr>
                         <th scope="col"> </th>
                         <th scope="col">Name</th>
-                        <th scope="col">Description</th>
                         <th scope="col">Gallery</th>
+                        <th scope="col">Description</th>
                         <th scope="col">Created</th>
                         <th scope="col">Modified</th>
                         <th scope="col">Deleted</th>
@@ -125,13 +201,23 @@
                     @foreach (var proj in Model.Projects)
                     {
                         <tr>
-                            <td><a class="hover pe-auto" data-toggle="modal" data-target="#exampleModal" data-name="@proj.Name">Edit</a></td>
-                            <td><a asp-controller="Project" asp-action="Index" asp-route-id="@proj.Id">@proj.Name</a></td> @*view the project when clicked*@
-                            <td><a href="#">@proj.GalleryName</a></td>
+                            <td>
+                                <a class="hover pe-auto" data-toggle="modal" data-target="#exampleModal" data-name="@proj.Name"
+                                   data-action="UpdateProject" data-deleted="@proj.IsDeleted" data-description="@proj.Description">Edit</a>
+                            </td>
+                            <td><a asp-controller="Project" asp-action="Index" asp-route-id="@proj.Id">@proj.Name</a></td>
+                            <td>@proj.GalleryName</td>
                             <td>@proj.Description</td>
                             <td>@proj.CreatedOn.ToShortDateString()</td>
                             <td>@proj.ModifiedOn?.ToString("d")</td>
-                            <td>@proj.IsDeleted</td>
+                            @if (proj.IsDeleted)
+                            {
+                                <td class="bg-danger">@proj.IsDeleted</td>
+                            }
+                            else
+                            {
+                                <td class="bg-success">@proj.IsDeleted</td>
+                            }
                         </tr>
                     }
                 </tbody>
@@ -145,72 +231,8 @@
     <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
 
     <script>
-        function showUploadWidget() {
-            cloudinary.openUploadWidget({
-                cloudName: "marteto",
-                uploadPreset: "martography-unsigned-profile",
-                sources: [
-                    "image_search",
-                    "google_drive",
-                    "url",
-                    "instagram",
-                    "dropbox",
-                    "facebook",
-                    "shutterstock",
-                    "local"
-                ],
-                googleApiKey: "<image_search_google_api_key>",
-                showAdvancedOptions: false,
-                cropping: false,
-                multiple: true,
-                defaultSource: "local",
-                styles: {
-                    palette: {
-                        window: "#F5F5F5",
-                        sourceBg: "#FFFFFF",
-                        windowBorder: "#90a0b3",
-                        tabIcon: "#0094c7",
-                        inactiveTabIcon: "#69778A",
-                        menuIcons: "#0094C7",
-                        link: "#53ad9d",
-                        action: "#8F5DA5",
-                        inProgress: "#0194c7",
-                        complete: "#53ad9d",
-                        error: "#c43737",
-                        textDark: "#000000",
-                        textLight: "#FFFFFF"
-                    },
-                    fonts: {
-                        default: null,
-                        "'Poppins', sans-serif": {
-                            url: "https://fonts.googleapis.com/css?family=Poppins",
-                            active: true
-                        }
-                    }
-                }
-            },
-                (err, info) => {
-                    if (!err) {
-                        console.log("Upload Widget event - ", info);
-                    }
-                });
-        }
 
-        function getGallery() {
-            //$("#renderComponent").html(`await Component.InvokeAsync("Gallery")`);
-
-            // IT DOESNT CREATE REQUEST FOR THE IMAGES SO THEY CANT LOAD
-            var _url = '@Url.Action("GetGalleryComponent", "Home")';
-                $.ajax({
-                    type: "GET",
-                    url: _url,
-                    success: function (result) {
-                        $("#renderComponent").html(result);
-                    },
-                });
-        }
-
-        var button = null;
+        //var button = null;
         $('#exampleModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
             button = button
@@ -233,6 +255,7 @@
             modal.find('.modal-body #hiddenId').val(Id)
             modal.find('.modal-body #deletedCheck').val(deleted)
             modal.find('.modal-body #privateCheck').val(private)
+            modal.find('.modal-body #controllerAction').val(action)
 
             //$('#saveBtn').attr('href', `Administration/Home/${action}`)
         })
@@ -243,6 +266,8 @@
             var isPrivate = $('#privateCheck').is(":checked")
             var isDeleted = $('#deletedCheck').is(":checked")
             var description = $('#description').val()
+
+            var action = $('#controllerAction').val()
 
             var data = {
                 name,
@@ -256,19 +281,20 @@
             var token = $("#adminForm input[name=__RequestVerificationToken]").val();
 
             $.ajax({
-                url: 'api/admin/GalleryEdit',
+                url: `api/admin/${action}`,
                 type: "POST",
                 headers: { 'RequestVerificationToken': token },
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data) {
                     console.log(data)
-                    // if true - successfull edit (maybe show popup)
+                    location.reload(true);
                 },
                 error: function (req, status, error) {
                     console.log(error);
                 }
             });
+            $('#exampleModal').modal('hide')
         })
 
     </script>

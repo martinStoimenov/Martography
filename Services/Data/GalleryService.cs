@@ -1,13 +1,13 @@
-﻿using Data.Models;
-using Data.Repositories;
-using Microsoft.EntityFrameworkCore;
-using Services.Data.Interfaces;
-using Services.Mapping;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
+using Data.Models;
+using Data.Repositories;
+using Services.Mapping;
+using Services.Data.Interfaces;
 
 namespace Services.Data
 {
@@ -22,7 +22,7 @@ namespace Services.Data
             this.projectRepository = projectRepository;
         }
 
-        public async Task<bool> CreateGallery(string galleryName, string description, bool isPrivate)
+        public async Task CreateGallery(string galleryName, string description, bool isPrivate)
         {
             try
             {
@@ -32,13 +32,12 @@ namespace Services.Data
                     Description = description,
                     IsPrivate = isPrivate
                 };
-                galleryRepository.Update(gallery);
+                await galleryRepository.AddAsync(gallery);
                 await galleryRepository.SaveChangesAsync();
-                return true;
             }
             catch (Exception)
             {
-                return false;
+                // TODO: throw error and send email notification (add error handler middleware)
             }
         }
 
@@ -50,16 +49,17 @@ namespace Services.Data
                 res.Name = name;
                 res.Description = description;
                 res.IsDeleted = isDeleted;
+                res.DeletedOn = DateTime.UtcNow;
                 res.IsPrivate = isPrivate;
 
                 galleryRepository.Update(res);
                 await galleryRepository.SaveChangesAsync();
+                return true;
             }
             catch (Exception)
             {
                 return false;
             }
-            return true;
         }
 
         public async Task<IEnumerable<T>> GetAllGalleriesForAdmin<T>()

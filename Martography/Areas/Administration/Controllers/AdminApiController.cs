@@ -40,13 +40,6 @@ namespace Martography.Areas.Administration.Controllers
             return Ok(res);
         }
 
-        [HttpGet(nameof(GalleryUpdate))]
-        public async Task<IActionResult> GalleryUpdate()
-        {
-            var a = 0;
-            return Ok("Gallery Update GET retun");
-        }
-
         [HttpPost(nameof(EditImages))]
         public async Task<IActionResult> EditImages(IEnumerable<ImagesInProjectUpdateModel> images)
         {
@@ -60,6 +53,12 @@ namespace Martography.Areas.Administration.Controllers
             return RedirectToAction("Index", "Project", new { id = projId });
         }
 
+        [HttpPost(nameof(UpdateProject))]
+        public async Task<IActionResult> UpdateProject(UpdateProjectModel model)
+        {
+            return Ok();   
+        }
+
         public class UpdateGalleryModel
         {
             public string name { get; set; }
@@ -69,5 +68,12 @@ namespace Martography.Areas.Administration.Controllers
             public bool isPrivate { get; set; }
         }
 
+        public class UpdateProjectModel
+        {
+            public string name { get; set; }
+            public string description { get; set; }
+            public string id { get; set; }
+            public bool isDeleted { get; set; }
+        }
     }
 }

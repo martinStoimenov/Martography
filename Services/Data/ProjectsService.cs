@@ -3,6 +3,7 @@ using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Services.Data.Interfaces;
 using Services.Mapping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,21 +19,43 @@ namespace Services.Data
         {
             this.projectRepository = projectRepository;
         }
+
+        public async Task CreateProject(string name, string descriptiom, string galleryId)
+        {
+            var proj = new Project()
+            {
+                GalleryId = galleryId,
+                Name = name,
+                Description = descriptiom
+            };
+
+            await projectRepository.AddAsync(proj);
+            await projectRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteProject(string projectId)
+        {
+            var proj = await projectRepository.All().FirstOrDefaultAsync(x => x.Id == projectId);
+
+            projectRepository.Delete(proj);
+            await projectRepository.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<T>> GetAllProjectsForAdmin<T>()
         {
-            var res = await projectRepository.All().To<T>().ToListAsync();
+            var res = await projectRepository.AllWithDeleted().To<T>().ToListAsync();
             return res;
         }
 
         public async Task<T> GetProjectByIdForAdmin<T>(string projectId)
         {
-            var res = await projectRepository.All().Where(p => p.Id == projectId).To<T>().FirstOrDefaultAsync();
+            var res = await projectRepository.AllWithDeleted().Where(p => p.Id == projectId).To<T>().FirstOrDefaultAsync();
             return res;
         }
 
         public async Task MoveProjectToGalleryForAdmin(string galleryId, string projectId)
         {
-            var project = await projectRepository.All().FirstOrDefaultAsync(x => x.Id == projectId);
+            var project = await projectRepository.AllWithDeleted().FirstOrDefaultAsync(x => x.Id == projectId);
 
             if (project.GalleryId != galleryId)
             {
@@ -40,6 +63,14 @@ namespace Services.Data
                 projectRepository.Update(project);
                 await projectRepository.SaveChangesAsync();
             }
+        }
+
+        public async Task UnDeleteProject(string projectId)
+        {
+            var proj = await projectRepository.AllWithDeleted().FirstOrDefaultAsync(x => x.Id == projectId);
+
+            projectRepository.Undelete(proj);
+            await projectRepository.SaveChangesAsync();
         }
     }
 }

@@ -4,12 +4,7 @@ using Services.Data.Interfaces;
 
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 using System.Collections.Generic;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Jpeg;
-using System.Linq;
 using ViewModels.GalleryModels;
 
 namespace Martography.Areas.Administration.Controllers
@@ -71,9 +66,17 @@ namespace Martography.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangeToGallery(string galleryId, string projectId)
+        public async Task<IActionResult> ChangeToGallery(string galleryId, string projectId, bool setDeleted)
         {
-            await projectsService.MoveProjectToGalleryForAdmin(galleryId, projectId);
+            if (setDeleted == false)
+            {
+                await projectsService.UnDeleteProject(projectId);
+                await projectsService.MoveProjectToGalleryForAdmin(galleryId, projectId);
+            }
+            else
+            {
+                await projectsService.DeleteProject(projectId);
+            }
             return RedirectToAction("Index", "Home");
         }
     }

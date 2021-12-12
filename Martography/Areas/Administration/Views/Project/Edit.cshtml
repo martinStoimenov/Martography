@@ -40,7 +40,7 @@
 
                         <div class="row">
                             <div class="col">
-                                <label class="text-danger" for="@(image.Id + "delete")">Delete</label>
+                                <label class="text-danger" for="@(image.Id + "delete")">Set as deleted</label>
                                 <input type="checkbox" id="@(image.Id + "delete")" checked="@image.IsDeleted" />
                             </div>
                         </div>
@@ -91,6 +91,7 @@
                 data: JSON.stringify(dataSet),
                 success: function (data) {
                     console.log(data)
+                    location.reload(true);
                 },
                 error: function (req, status, error) {
                     console.log(error);

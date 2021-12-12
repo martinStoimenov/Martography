@@ -42,10 +42,23 @@
                             }
                         </select>
                     </div>
+                    <div class="form-group">
+                        @if (Model.IsDeleted)
+                        {
+                            <label for="setDeletedProj" class="text-success">Undelete project</label>
+                        }
+                        else
+                        {
+                            <label for="setDeletedProj" class="text-danger">Set as DELETED</label>
+                        }
+                            <input id="setDeletedProj" type="checkbox" name="setDeleted" asp-for="@Model.IsDeleted" />
+                    </div>
                 </form>
             </div>
         </div>
-        <div><button form="changeGalleryForm" type="submit" class="btn" asp-controller="Project" asp-action="ChangeToGallery">Change to gallery</button></div>
+        <div><button form="changeGalleryForm" type="submit" class="btn" asp-controller="Project" asp-action="ChangeToGallery">Submit changes</button></div>
+
+
 
         <h1 class="post-title">@Model.Name<span class="small"><i> in @Model.GalleryName</i></span></h1>
         <p>

@@ -9,7 +9,7 @@
 </style>*@
 
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="4000" data-pause="false">
-    <div class="carousel-inner">
+    <div class="carousel-inner w-100">
         <div class="carousel-item active">
             <img class="d-block w-100" src="~/style/images/art/slider-bg49.jpg" alt="First slide">
         </div>
@@ -48,7 +48,7 @@
         <div class="space30"></div>
         <div class="tiles">
             <div class="items row boxed grid-view text-center">
-                <div class="item col-md-4">
+                <div class="item col-md-4" data-aos="fade-right">
                     <div class="box bg-white shadow p-30">
                         <figure class="main mb-25"><img src="style/images/art/si26.jpg" alt="" /></figure>
                         <h4 class="text-uppercase mb-5">Advertorial</h4>
@@ -56,7 +56,7 @@
                     <!-- /.box -->
                 </div>
                 <!--/.item -->
-                <div class="item col-md-4">
+                <div class="item col-md-4" data-aos="fade-up">
                     <div class="box bg-white shadow p-30">
                         <figure class="main mb-25"><img src="style/images/art/si27.jpg" alt="" /></figure>
                         <h4 class="text-uppercase mb-5">Product</h4>
@@ -64,7 +64,7 @@
                     <!-- /.box -->
                 </div>
                 <!--/.item -->
-                <div class="item col-md-4">
+                <div class="item col-md-4" data-aos="fade-left">
                     <div class="box bg-white shadow p-30">
                         <figure class="main mb-25"><img src="style/images/art/si28.jpg" alt="" /></figure>
                         <h4 class="text-uppercase mb-5">Still-Life</h4>
@@ -303,13 +303,6 @@
 @section Scripts{
     <script>
         function postToGeneral() {
-            //var post = $.post('api/general/GalleryUpdate');
-            //post.done(function (data) { console.log(data) })
-            //post.fail(function (req, status, error) {
-            //        console.log(error);
-            //        console.log(req);
-            //        console.log(status);
-            //    })
             var token = $("#generalForm input[name=__RequestVerificationToken]").val();
 
             $.ajax({
