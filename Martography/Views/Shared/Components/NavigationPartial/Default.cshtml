@@ -1,6 +1,9 @@
-﻿@{ 
+﻿@{
     var urlPath = Context.Request.Path;
     string classContent = urlPath == "/" ? "navbar wide transparent absolute inverse-text navbar-expand-lg" : "navbar wide transparent absolute text navbar-expand-lg";
+    
+    @using Data.Models;
+    @model IEnumerable<Gallery>
 }
 
 <nav class="navbar wide bg-light navbar-expand-lg">
@@ -18,10 +21,10 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle magic-hover magic-hover__square" asp-controller="Portfolio" asp-action="Index">Portfolio</a>
                     <ul class="dropdown-menu">
-                        <li class="nav-item"><a asp-controller="Gallery" asp-action="Index" class="dropdown-item magic-hover magic-hover__square" >Portraits</a></li>
-                        <li class="nav-item"><a asp-controller="Gallery" asp-action="Index" class="dropdown-item magic-hover magic-hover__square" >Landscapes</a></li>
-                        <li class="nav-item"><a asp-controller="Gallery" asp-action="Index" class="dropdown-item magic-hover magic-hover__square" >Cars</a></li>
-                        <li class="nav-item"><a asp-controller="Gallery" asp-action="Index" class="dropdown-item magic-hover magic-hover__square" >Nature</a></li>
+                        @foreach (var gallery in Model)
+                        {
+                            <li class="nav-item"><a asp-controller="Gallery" asp-action="Index" asp-route-id="@gallery.Id" class="dropdown-item magic-hover magic-hover__square">@gallery.Name</a></li>
+                        }
                     </ul>
                 </li>
                 <li class="nav-item dropdown magic-hover magic-hover__square">

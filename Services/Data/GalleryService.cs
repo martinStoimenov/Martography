@@ -8,15 +8,17 @@ using Data.Models;
 using Data.Repositories;
 using Services.Mapping;
 using Services.Data.Interfaces;
+using Z.EntityFramework.Plus;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Services.Data
 {
     public class GalleryService : IGalleryService
     {
-        private readonly IRepository<Gallery> galleryRepository;
+        private readonly IDeletableEntityRepository<Gallery> galleryRepository;
         private readonly IRepository<Project> projectRepository;
 
-        public GalleryService(IRepository<Gallery> galleryRepository, IRepository<Project> projectRepository)
+        public GalleryService(IDeletableEntityRepository<Gallery> galleryRepository, IRepository<Project> projectRepository)
         {
             this.galleryRepository = galleryRepository;
             this.projectRepository = projectRepository;
@@ -64,15 +66,23 @@ namespace Services.Data
 
         public async Task<IEnumerable<T>> GetAllGalleriesForAdmin<T>()
         {
-            var res = await galleryRepository.All().To<T>().ToListAsync();
+            var res = await galleryRepository.AllWithDeleted().To<T>().ToListAsync();
             return res;
         }
 
-        public async Task<IEnumerable<T>> GetListOfAllProjectsForPublicGallery<T>(string galleryId)
+        public IEnumerable<Gallery> GetAllGalleriesCached()
         {
-            var result = await this.projectRepository.All().Where(a => a.GalleryId == galleryId && a.Gallery.IsPrivate == false).OrderByDescending(x => x.Name).To<T>().ToListAsync();
+            var options = new MemoryCacheEntryOptions() { SlidingExpiration = TimeSpan.FromDays(7) };
+            QueryCacheManager.DefaultMemoryCacheEntryOptions = options;
+
+            var result = galleryRepository.All().FromCache().ToList();
 
             return result;
+        }
+
+        public Task<T> GetGallery<T>(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
