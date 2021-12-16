@@ -34,6 +34,7 @@
                 <form id="changeGalleryForm" method="post">
                     <input type="hidden" />
                     <input type="hidden" name="projectId" value="@Model.Id" />
+                        <label class="custom-control-label" for="galleryId">Change to gallery:</label>
                     <div class="form-group custom-select-wrapper">
                         <select class="custom-select w-25" name="galleryId">
                             @foreach (var gallery in Model.AllGalleries)

@@ -31,6 +31,7 @@ namespace Martography.Areas.Administration.Controllers
         }
 
         [HttpPost]
+        //[DisableRequestSizeLimit]
         public async Task<IActionResult> Upload(ImagesUploadViewModel model)
         {
             var imagesList = new List<ImageUploadViewModel>();
@@ -78,6 +79,20 @@ namespace Martography.Areas.Administration.Controllers
                 await projectsService.DeleteProject(projectId);
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProject(string name, string galleryId, string description)
+        {
+            await projectsService.CreateProject(name, description, galleryId);
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateGallery(string name, string description, bool isPrivate)
+        {
+            return RedirectToAction("Index","Home");
         }
     }
 }

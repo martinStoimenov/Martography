@@ -10,6 +10,7 @@ namespace Services.Data.Interfaces
         Task MoveProjectToGalleryForAdmin(string galleryId ,string projectId);
         Task DeleteProject(string projectId);
         Task UnDeleteProject(string projectId);
+        Task Edit(string projectId, string name, string description, bool isDeleted);
         Task CreateProject(string name, string descriptiom, string galleryId);
     }
 }

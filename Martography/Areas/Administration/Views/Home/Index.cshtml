@@ -67,7 +67,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="adminForm" method="post">
+                        <form id="createGalleryForm" method="post" asp-controller="Project" asp-action="CreateGallery">
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">Name:</label>
                                 <input name="name" type="text" class="form-control" id="createGalleryModalName">
@@ -78,8 +78,9 @@
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="isPrivate" class="custom-control-input" id="createGalleryModalPrivateCheck">
-                                    <label class="custom-control-label" for="createGalleryModalPrivateCheck">Private</label>
+                                    @*<input type="checkbox" name="isPrivate" class="custom-control-input" id="createGalleryModalPrivateCheck">*@
+                                    @Html.CheckBox("isPrivate")
+                                    <label class="custom-control-label" for="isPrivate">Private</label>
                                 </div>
                             </div>
                             <input type="hidden" name="controllerAction" id="controllerAction" />
@@ -87,7 +88,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" id="saveBtn" class="btn btn-primary">Create</button>
+                        <button type="submit" form="createGalleryForm" id="saveBtn" class="btn btn-primary">Create</button>
                     </div>
                 </div>
             </div>
@@ -103,14 +104,14 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="adminForm" method="post">
+                        <form id="createProjectForm" method="post" asp-controller="Project" asp-action="CreateProject">
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">Name:</label>
                                 <input name="name" type="text" class="form-control" id="createProjectModalName">
                             </div>
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">Gallery:</label>
-                                <select name="name" type="text" class="custom-select" id="createProjectModalName">
+                                <select name="galleryId" type="text" class="custom-select" id="createProjectModalName">
                                     @foreach (var gallery in Model.Galleries)
                                     {
                                         <option value="@gallery.Id">@gallery.Name</option>
@@ -121,12 +122,13 @@
                                 <label for="message-text" class="col-form-label">Description:</label>
                                 <textarea name="description" class="form-control" id="createProjectModalDescription"></textarea>
                             </div>
-                            <input type="hidden" name="controllerAction" id="controllerAction" />
-                        </form>
-                    </div>
+                            @*<input type="hidden" name="controllerAction" id="controllerAction" />*@
+                            <input type="hidden" />
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" id="saveBtn" class="btn btn-primary">Create</button>
+                        <button type="submit" form="createProjectForm" id="saveBtn" class="btn btn-primary">Create</button>
+                    </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -202,7 +204,7 @@
                     {
                         <tr>
                             <td>
-                                <a class="hover pe-auto" data-toggle="modal" data-target="#exampleModal" data-name="@proj.Name"
+                                <a class="hover pe-auto" data-toggle="modal" data-target="#exampleModal" data-id="@proj.Id" data-name="@proj.Name"
                                    data-action="UpdateProject" data-deleted="@proj.IsDeleted" data-description="@proj.Description">Edit</a>
                             </td>
                             <td><a asp-controller="Project" asp-action="Index" asp-route-id="@proj.Id">@proj.Name</a></td>

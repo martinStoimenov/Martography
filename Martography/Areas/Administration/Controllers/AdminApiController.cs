@@ -17,11 +17,13 @@ namespace Martography.Areas.Administration.Controllers
     {
         private readonly IGalleryService galleryService;
         private readonly IImageService imagesService;
+        private readonly IProjectsService projectsService;
 
-        public AdminApiController(IGalleryService galleryService, IImageService imagesService)
+        public AdminApiController(IGalleryService galleryService, IImageService imagesService, IProjectsService projectsService)
         {
             this.galleryService = galleryService;
             this.imagesService = imagesService;
+            this.projectsService = projectsService;
         }
 
         public IActionResult Index()
@@ -56,7 +58,12 @@ namespace Martography.Areas.Administration.Controllers
         [HttpPost(nameof(UpdateProject))]
         public async Task<IActionResult> UpdateProject(UpdateProjectModel model)
         {
-            return Ok();   
+            if (!ModelState.IsValid)
+            {
+                return NotFound();
+            }
+            await projectsService.Edit(model.id, model.name, model.description, model.isDeleted);
+            return RedirectToAction("Index", "Home");
         }
 
         public class UpdateGalleryModel

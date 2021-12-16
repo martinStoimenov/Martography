@@ -41,6 +41,21 @@ namespace Services.Data
             await projectRepository.SaveChangesAsync();
         }
 
+        public async Task Edit(string projectId, string name, string description, bool isDeleted)
+        {
+            var proj = await projectRepository.All().FirstOrDefaultAsync(x => x.Id == projectId);
+
+            proj.Name = name;
+            proj.Description = description;
+
+            projectRepository.Update(proj);
+
+            if (isDeleted == true)
+                projectRepository.Delete(proj);
+
+            await projectRepository.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<T>> GetAllProjectsForAdmin<T>()
         {
             var res = await projectRepository.AllWithDeleted().To<T>().ToListAsync();
