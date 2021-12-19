@@ -102,10 +102,10 @@
         <!--/.cbp -->
     </div>
     <!-- /.container -->
-    @{var gallery = Model.GalleryDropDowns.Where(x => x.Id != Model.Id).FirstOrDefault();}
+    @*@{var gallery = Model.GalleryDropDowns.Where(x => x.Id != Model.Id).Skip(1).FirstOrDefault();}
 
     <div class="text-right text-decoration-none text-black-50" style="font-size: xx-large; width: 95%">
         <a asp-action="Index" asp-route-id="@gallery.Id"><span class="text-dark">@gallery.Name</span></a><i class="si-arrows_double-arrow-right"></i>
     </div>
-    <div class="space10"></div>
+    <div class="space10"></div>*@
 </div>

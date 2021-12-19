@@ -44,7 +44,7 @@ namespace Services.Data
 
         public async Task Edit(string projectId, string name, string description, bool isDeleted)
         {
-            var proj = await projectRepository.All().FirstOrDefaultAsync(x => x.Id == projectId);
+            var proj = await projectRepository.All().Where(x => x.Id == projectId).Include(x=>x.Gallery).FirstOrDefaultAsync();
 
             if (proj.Name.ToLower() != name.ToLower())
                 ChangeProjectFolderName(proj, name);

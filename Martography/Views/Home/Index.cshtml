@@ -1,27 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Home page";
+    @model ViewModels.HomePage.HomePageViewModel;
 }
 
 <div class="wrapper white-wrapper">
     <div class="flickity-carousel-container">
         <div class="flickity flickity-carousel flickity-viewport-mode">
-            <div class="item mr-15"><img src="~/style/images/art/fc1.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="~/style/images/art/fc2.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="~/style/images/art/fc3.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="~/style/images/art/fc4.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="~/style/images/art/fc5.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="~/style/images/art/fc6.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="~/style/images/art/fc7.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="~/style/images/art/fc8.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="~/style/images/art/fc9.jpg" alt="" /></div>
+            @*<div class="item mr-15"><img src="~/style/images/art/fc1.jpg" alt="" /></div>*@
+            @foreach (var image in Model.CarouselImages.OrderByDescending(i => i.Position.HasValue).ThenBy(i => i.Position))
+            {
+                <div class="item mr-15"><img src="~/@image.ThumbnailImageUrl" alt="" /></div>
+            }
         </div>
-        <!-- /.flickity-carousel click the buttons with JS to scroll automatically -->
+        <!-- /.flickity-carousel -->
+        <i class="bi bi-mouse text-center"></i>
+        <p class="flickity-status"></p>
     </div>
     <!-- /.flickity-carousel-container -->
 </div>
-<!-- /.wrapper -->
 
-<div class="wrapper bg-pastel-default">
+<div class="wrapper light-wrapper">
     <div class="container inner">
         <h2 class="title-color color-dark mb-20 text-center">My Specialties</h2>
         <h3 class="sub-heading2 text-center">I'd like to give you a unique photography experience, capturing your<br class="d-none d-xl-block" />  products with excellent composition and lighting skills.</h3>
@@ -29,27 +27,33 @@
         <div class="tiles">
             <div class="items row boxed grid-view text-center">
                 <div class="item col-md-4" data-aos="fade-right">
-                    <div class="box bg-white shadow p-30">
-                        <figure class="main mb-25"><img src="style/images/art/si26.jpg" alt="" /></figure>
-                        <h4 class="text-uppercase mb-5">Advertorial</h4>
-                    </div>
-                    <!-- /.box -->
+                    <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.First()?.ProjectGalleryId">
+                        <div class="box bg-white shadow p-30">
+                            <figure class="main mb-25"><img src="~/@Model.GalleryCards.First()?.ThumbnailImageUrl" alt="" /></figure>
+                            <h4 class="text-uppercase mb-5">@Model.GalleryCards.First()?.ProjectGalleryName</h4>
+                        </div>
+                        <!-- /.box -->
+                    </a>
                 </div>
                 <!--/.item -->
                 <div class="item col-md-4" data-aos="fade-up">
-                    <div class="box bg-white shadow p-30">
-                        <figure class="main mb-25"><img src="style/images/art/si27.jpg" alt="" /></figure>
-                        <h4 class="text-uppercase mb-5">Product</h4>
-                    </div>
-                    <!-- /.box -->
+                    <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryId">
+                        <div class="box bg-white shadow p-30">
+                            <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(1)?.ThumbnailImageUrl" alt="" /></figure>
+                            <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryName</h4>
+                        </div>
+                        <!-- /.box -->
+                    </a>
                 </div>
                 <!--/.item -->
                 <div class="item col-md-4" data-aos="fade-left">
-                    <div class="box bg-white shadow p-30">
-                        <figure class="main mb-25"><img src="style/images/art/si28.jpg" alt="" /></figure>
-                        <h4 class="text-uppercase mb-5">Still-Life</h4>
-                    </div>
-                    <!-- /.box -->
+                    <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryId">
+                        <div class="box bg-white shadow p-30">
+                            <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(2)?.ThumbnailImageUrl" alt="" /></figure>
+                            <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryName</h4>
+                        </div>
+                        <!-- /.box -->
+                    </a>
                 </div>
                 <!--/.item -->
             </div>
@@ -59,7 +63,6 @@
     </div>
     <!-- /.container -->
 </div>
-<!-- /.wrapper -->
 
 <div class="wrapper image-wrapper bg-image inverse-text" data-image-src="style/images/art/bg16.jpg">
     <div class="container inner pt-150 pb-150">
@@ -231,7 +234,7 @@
     </div>
     <!-- /.container -->
 </div>
-<!-- /.wrapper -->
+
 <div class="wrapper image-wrapper bg-image inverse-text" data-image-src="style/images/art/bg3.jpg">
     <div class="container inner pt-150 pb-150">
         <div class="row counter">
@@ -247,20 +250,20 @@
             <!--/column -->
             <div class="col-md-4">
                 <div class="d-flex flex-row justify-content-center">
-                    <div class="icon fs-58 icon-color color-dark mr-25"> <i class="si-cafe_hot-coffee"></i> </div>
+                    <div class="icon fs-58 icon-color color-dark mr-25"> <i class="si-photo_image-review"></i> </div>
                     <div>
                         <h3 class="value">3472</h3>
-                        <p>Cups of Coffee</p>
+                        <p>Edited shots</p>
                     </div>
                 </div>
             </div>
             <!--/column -->
             <div class="col-md-4">
                 <div class="d-flex flex-row justify-content-center">
-                    <div class="icon fs-58 icon-color color-dark mr-25"> <i class="si-sports_medal-2"></i> </div>
+                    <div class="icon fs-58 icon-color color-dark mr-25"> <i class="si-education_planet-orbit"></i> </div>
                     <div>
                         <h3 class="value">4523</h3>
-                        <p>Awards Won</p>
+                        <p>Projects</p>
                     </div>
                 </div>
             </div>
@@ -270,7 +273,8 @@
     </div>
     <!-- /.container -->
 </div>
-<div class="wrapper bg-pastel-default">
+
+<div class="wrapper light-wrapper">
     <div class="container inner text-center">
         <h2 class="title-color color-dark mb-20 text-center">Work with Me</h2>
         <h3 class="sub-heading2 text-center">Great photography comes with understanding customer needs.<br class="d-none d-xl-block" /> Looking for a caring, fun, passionate and creative photographer? It's me!</h3>
@@ -281,5 +285,12 @@
 </div>
 
 @section Scripts{
-    
+    @*<script>
+            $(document).ready(function () {
+                var nextCarouselBtn = $('.flickity-button.flickity-prev-next-button.next');
+                setInterval(function () {
+                    nextCarouselBtn.click();
+                }, 3000)
+            })
+        </script>*@
 } 

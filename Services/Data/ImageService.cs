@@ -1,6 +1,7 @@
 ﻿using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Services.Data.Interfaces;
+using Services.Mapping;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Processing;
@@ -74,7 +75,7 @@ namespace Services.Data
             var width = image.Width;
             var height = image.Height;
 
-            if(width > resizeWidth)
+            if (width > resizeWidth)
             {
                 height = (int)((double)resizeWidth / width * height);
                 width = resizeWidth;
@@ -150,6 +151,44 @@ namespace Services.Data
             await imageRepository.SaveChangesAsync();
 
             return imagesFromDBtoUpdate.ElementAtOrDefault(0).ProjectId;
+        }
+
+        public async Task<IEnumerable<T>> GetAllHomePageImages<T>()
+        {
+            var allImages = await imageRepository.All().Where(i => i.ShowOnHomePageCarousel == true).To<T>().ToListAsync();
+            return allImages;
+        }
+
+        public async Task<IEnumerable<T>> GetRandomImagesForHomePageCards<T>()
+        {
+            try
+            {
+                var galleriesToDisplay = new string[] { "Portraits", "Landscapes", "Cars" };
+                var images = new List<T>();
+
+                foreach (var gallery in galleriesToDisplay)
+                {
+                    Random rand = new Random();
+                    int toSkip = rand.Next(0, imageRepository.All().Where(i => i.Project.Gallery.Name == gallery).Count());
+
+                    var image = await imageRepository.All()
+                        .Where(i => i.Project.Gallery.Name == gallery)
+                        .Skip(toSkip)
+                        .Take(1)
+                        .To<T>()
+                        .FirstOrDefaultAsync();
+
+                    if (image != null)
+                        images.Add(image);
+                }
+                return images;
+            }
+            catch (Exception ex)
+            {
+                var a = 0;
+                return new List<T>();
+                //throw;
+            }
         }
     }
 }
