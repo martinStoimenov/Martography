@@ -2,45 +2,25 @@
     ViewData["Title"] = "Home page";
 }
 
-@*<style>
-    .carousel-item{
-        height: 100vh
-    }
-</style>*@
-
-<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="4000" data-pause="false">
-    <div class="carousel-inner w-100 h-auto">
-        <div class="carousel-item active">
-            <img class="d-block w-100" src="~/style/images/art/slider-bg49.jpg" alt="First slide">
+<div class="wrapper white-wrapper">
+    <div class="flickity-carousel-container">
+        <div class="flickity flickity-carousel flickity-viewport-mode">
+            <div class="item mr-15"><img src="~/style/images/art/fc1.jpg" alt="" /></div>
+            <div class="item mr-15"><img src="~/style/images/art/fc2.jpg" alt="" /></div>
+            <div class="item mr-15"><img src="~/style/images/art/fc3.jpg" alt="" /></div>
+            <div class="item mr-15"><img src="~/style/images/art/fc4.jpg" alt="" /></div>
+            <div class="item mr-15"><img src="~/style/images/art/fc5.jpg" alt="" /></div>
+            <div class="item mr-15"><img src="~/style/images/art/fc6.jpg" alt="" /></div>
+            <div class="item mr-15"><img src="~/style/images/art/fc7.jpg" alt="" /></div>
+            <div class="item mr-15"><img src="~/style/images/art/fc8.jpg" alt="" /></div>
+            <div class="item mr-15"><img src="~/style/images/art/fc9.jpg" alt="" /></div>
         </div>
-        <div class="carousel-item">
-            <img class="d-block w-100" src="~/style/images/art/an4.jpg" alt="Second slide">
-        </div>
-        <div class="carousel-item">
-            <img class="d-block w-100" src="~/style/images/art/bg9.jpg" alt="Third slide">
-        </div>
+        <!-- /.flickity-carousel click the buttons with JS to scroll automatically -->
     </div>
+    <!-- /.flickity-carousel-container -->
 </div>
-<!--<div class="rev_slider_wrapper fullscreen-container">
-    <div id="slider4" class="rev_slider fullscreenbanner dark-wrapper" data-version="5.4.8">
-        <ul>
-            <li data-transition="fade">
-                <img src="style/images/art/slider-bg49.jpg" alt="" />
-                <div class="tp-caption font-weight-700 color-white" data-x="left" data-y="middle" data-hoffset="['500','500','300','100']" data-voffset="['-20','-20','-60','-60']" data-fontsize="['50','50','40','30']" data-lineheight="['60','60','50','40']"
-                     data-width="['500','500','500','300']" data-whitespace="['normal','normal','normal','normal']" data-frames='[{"from":"x:-50px;opacity:0;","speed":1000,"to":"o:1;","delay":1000,"ease":"Power2.easeOut"},{"delay":"wait","speed":1500,"to":"opacity:0;","ease":"Power4.easeIn"}]'
-                     data-responsive="on" data-responsive_offset="on" style="z-index: 9;">I'm Caitlyn Missio</div>
-                <div class="tp-caption font-weight-400 color-white" data-x="left" data-y="middle" data-hoffset="['500','500','300','100']" data-voffset="['70','70','30','30']" data-fontsize="['26','26','22','20']" data-lineheight="['36','36','32','30']"
-                     data-width="['500','500','500','300']" data-whitespace="['normal','normal','normal','normal']" data-frames='[{"from":"x:50px;opacity:0;","speed":1000,"to":"o:1;","delay":1500,"ease":"Power2.easeOut"},{"delay":"wait","speed":1500,"to":"opacity:0;","ease":"Power4.easeIn"}]'
-                     data-responsive="on" data-responsive_offset="on" style="z-index: 9;">I'm freelance photographer specializing in<br class="d-none d-xl-block" /> conceptual and still-life photography</div>
-                <a class="tp-caption btn btn-l btn-white scroll" data-x="left" data-y="middle" data-hoffset="['500','500','300','100']" data-voffset="['170','170','130','130']" data-width="['auto','auto','auto','auto']" data-frames='[{"delay":1700,"speed":1200,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
-                   data-startslide="0" data-endslide="3" data-responsive="on" data-responsive_offset="on" style="z-index: 9;" href="#portfolio">See My Works</a>
-            </li>
-        </ul>
-        <div class="tp-bannertimer tp-bottom"></div>
-    </div>-->
-    <!-- /.rev_slider -->
-<!--</div>-->
-<!-- /.rev_slider_wrapper -->
+<!-- /.wrapper -->
+
 <div class="wrapper bg-pastel-default">
     <div class="container inner">
         <h2 class="title-color color-dark mb-20 text-center">My Specialties</h2>
@@ -301,31 +281,5 @@
 </div>
 
 @section Scripts{
-    <script>
-        function postToGeneral() {
-            var token = $("#generalForm input[name=__RequestVerificationToken]").val();
-
-            $.ajax({
-                url: 'api/general/GalleryUpdate',
-                type: "POST",
-                headers: { 'RequestVerificationToken': token },
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    name: "Cars",
-                    id: "2588e750-6b71-463d-87f7-851af23a316a",
-                    isPrivate: true,
-                    isDeleted: false,
-                    description: "asdasas"
-                }),
-                success: function (data) {
-                    console.log(data)
-                },
-                error: function (req, status, error) {
-                    console.log(error);
-                    console.log(req);
-                    console.log(status);
-                }
-            });
-        }
-    </script>
+    
 } 

@@ -6,7 +6,7 @@ namespace Services.Data.Interfaces
 {
     public interface IGalleryService
     {
-        IEnumerable<Gallery> GetAllGalleriesCached();
+        IEnumerable<T> GetAllGalleriesCached<T>() where T : class;
         Task<T> GetGallery<T>(string id);
         Task CreateGallery(string galleryName, string description, bool isPrivate);
         Task<IEnumerable<T>> GetAllGalleriesForAdmin<T>();

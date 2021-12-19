@@ -1,9 +1,9 @@
-﻿using Data.Models;
-using Data.Repositories;
+﻿using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Services.Data.Interfaces;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,16 +18,19 @@ namespace Services.Data
     {
         private readonly IRepository<Image> imageRepository;
 
+        private static readonly int ThumbnailWidth = 700;
+
         public ImageService(IRepository<Image> imageRepository)
         {
             this.imageRepository = imageRepository;
         }
+
         public async Task InsertImage(string imageName, string projectId, bool showOnHomePage = false, bool isProjectThumbnail = false)
         {
             var image = new Image()
             {
                 ProjectId = projectId,
-                Url = imageName,
+                Name = imageName,
                 ShowOnHomePageCarousel = showOnHomePage,
                 IsProjectThumbnail = isProjectThumbnail
             };
@@ -36,26 +39,25 @@ namespace Services.Data
             await imageRepository.SaveChangesAsync();
         }
 
-        public async Task SaveImageToFileSystem(IEnumerable<ImageUploadViewModel> images)
+        public async Task SaveImagesToFileSystem(IEnumerable<ImageUploadViewModel> images)
         {
             try
             {
                 foreach (var image in images)
                 {
-                    var imageResult = await SixLabors.ImageSharp.Image.LoadAsync(image.Content);
+                    using var imageResult = await SixLabors.ImageSharp.Image.LoadAsync(image.Content);
 
                     var path = Path.Combine(
                         Directory.GetCurrentDirectory(),
                         "wwwroot",
                         Common.GlobalConstants.BaseImagesFolder,
                         image.GalleryName,
-                        image.ProjectName,
-                        image.Name);
+                        image.ProjectName);
 
                     CheckIfGalleryAndProjectDirectoriesExist(image);
 
-                    imageResult.Metadata.ExifProfile = null;
-                    await imageResult.SaveAsJpegAsync(path, new JpegEncoder() { Quality = 100 });
+                    await SaveImage(imageResult, Path.Combine(path, image.Name), imageResult.Width);
+                    await SaveImage(imageResult, Path.Combine(path, $"{Common.GlobalConstants.ThumbnailPrefix}{image.Name}"), ThumbnailWidth);
                 }
             }
             catch (System.Exception error)
@@ -64,6 +66,26 @@ namespace Services.Data
                 var a = 0;
                 throw;
             }
+        }
+
+        private async Task SaveImage(SixLabors.ImageSharp.Image image, string path, int resizeWidth)
+        {
+            var quality = 100;
+            var width = image.Width;
+            var height = image.Height;
+
+            if(width > resizeWidth)
+            {
+                height = (int)((double)resizeWidth / width * height);
+                width = resizeWidth;
+                quality = 80;
+            }
+
+            image.Mutate(i => i.Resize(new Size(width, height)));
+
+            image.Metadata.ExifProfile = null;
+
+            await image.SaveAsJpegAsync(path, new JpegEncoder() { Quality = quality });
         }
 
         /// <summary>
@@ -114,6 +136,7 @@ namespace Services.Data
                 {
                     var changedImage = images.FirstOrDefault(x => x.Id == image.Id);
 
+                    image.Position = changedImage.Position;
                     image.Description = changedImage.Description;
                     image.IsDeleted = changedImage.IsDeleted;
                     image.IsProjectThumbnail = changedImage.IsThumbnail;

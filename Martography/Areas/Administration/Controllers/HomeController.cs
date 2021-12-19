@@ -20,7 +20,7 @@ namespace Martography.Areas.Administration.Controllers
         public async Task<IActionResult> Index()
         {
             var galleries = await galleryService.GetAllGalleriesForAdmin<SingleGalleryViewModel>();
-            var projects = await projectsService.GetAllProjectsForAdmin<SingleProjectViewModel>();
+            var projects = await projectsService.GetAllProjectsForAdmin<AdminProjectViewModel>();
 
             var viewModel = new HomePageViewModel() { Galleries = galleries, Projects = projects };
 
@@ -41,6 +41,6 @@ namespace Martography.Areas.Administration.Controllers
     public class HomePageViewModel
     {
         public IEnumerable<SingleGalleryViewModel> Galleries { get; set; }
-        public IEnumerable<SingleProjectViewModel> Projects { get; set; }
+        public IEnumerable<AdminProjectViewModel> Projects { get; set; }
     }
 }

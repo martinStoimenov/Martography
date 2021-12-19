@@ -231,14 +231,17 @@ namespace Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Position")
+                        .HasColumnType("int");
+
                     b.Property<string>("ProjectId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("ShowOnHomePageCarousel")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

@@ -1,6 +1,6 @@
 ﻿@{
     @using ViewModels.ProjectModels;
-    @model SingleProjectViewModel
+    @model AdminProjectViewModel
 }
 
 <div class="wrapper light-wrapper">
@@ -100,7 +100,7 @@
             @foreach (var image in Model.Images)
             {
                 <div class="cbp-item">
-                    <figure class="overlay overlay3 rounded"><a href="~/@(image.ImageBaseUrl)"><img src="~/@(image.ImageBaseUrl)" alt="" /></a></figure>
+                    <figure class="overlay overlay3 rounded"><a href="~/@(image.ImageBaseUrl)"><img src="~/@(image.ThumbnailImageUrl)" alt="" /></a></figure>
                 </div>
             }
         </div>

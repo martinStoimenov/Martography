@@ -35,9 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Martography Images\" />
     <Folder Include="ViewModels\" />
-    <Folder Include="wwwroot\Martography Images\Cars\Golf 4\" />
   </ItemGroup>
 
 </Project>

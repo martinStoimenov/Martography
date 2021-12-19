@@ -9,10 +9,11 @@ namespace Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
         }
-        public string Url { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public bool IsProjectThumbnail { get; set; }
         public bool ShowOnHomePageCarousel { get; set; }
+        public int? Position { get; set; }
         public string ProjectId { get; set; }
         public Project Project { get; set; }
     }

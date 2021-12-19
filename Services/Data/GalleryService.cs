@@ -10,6 +10,7 @@ using Services.Mapping;
 using Services.Data.Interfaces;
 using Z.EntityFramework.Plus;
 using Microsoft.Extensions.Caching.Memory;
+using System.IO;
 
 namespace Services.Data
 {
@@ -48,6 +49,10 @@ namespace Services.Data
             try
             {
                 var res = await galleryRepository.All().FirstOrDefaultAsync(g => g.Id == galleryId);
+
+                if (res.Name.ToLower() != name)
+                    ChangeGalleryFolderName(res, name);
+
                 res.Name = name;
                 res.Description = description;
                 res.IsDeleted = isDeleted;
@@ -70,19 +75,39 @@ namespace Services.Data
             return res;
         }
 
-        public IEnumerable<Gallery> GetAllGalleriesCached()
+        public IEnumerable<T> GetAllGalleriesCached<T>()
+            where T : class
         {
+            try
+            {
+
             var options = new MemoryCacheEntryOptions() { SlidingExpiration = TimeSpan.FromDays(7) };
             QueryCacheManager.DefaultMemoryCacheEntryOptions = options;
 
-            var result = galleryRepository.All().FromCache().ToList();
+            var result = galleryRepository.All().To<T>().FromCache().ToList();
 
             return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
-        public Task<T> GetGallery<T>(string id)
+        public async Task<T> GetGallery<T>(string id)
         {
-            throw new NotImplementedException();
+            var gallery = await galleryRepository.All().Where(x => x.Id == id).To<T>().FirstOrDefaultAsync();
+            return gallery;
+        }
+
+        private void ChangeGalleryFolderName(Gallery gallery, string newName)
+        {
+            var basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", Common.GlobalConstants.BaseImagesFolder);
+            var oldPath = Path.Combine(basePath, gallery.Name);
+            var newPath = Path.Combine(basePath, newName);
+
+            Directory.Move(oldPath, newPath);
         }
     }
 }

@@ -24,14 +24,13 @@ namespace Martography.Areas.Administration.Controllers
 
         public async Task<IActionResult> Index(string id)
         {
-            var singleProject = await projectsService.GetProjectByIdForAdmin<SingleProjectViewModel>(id);
+            var singleProject = await projectsService.GetProjectByIdForAdmin<AdminProjectViewModel>(id);
             singleProject.AllGalleries = await galleryService.GetAllGalleriesForAdmin<GalleryDropDownViewModel>();
 
             return View(singleProject);
         }
 
         [HttpPost]
-        //[DisableRequestSizeLimit]
         public async Task<IActionResult> Upload(ImagesUploadViewModel model)
         {
             var imagesList = new List<ImageUploadViewModel>();
@@ -48,7 +47,7 @@ namespace Martography.Areas.Administration.Controllers
                 });
             }
             //Upload to the File System
-            await imageService.SaveImageToFileSystem(imagesList);
+            await imageService.SaveImagesToFileSystem(imagesList);
 
             foreach (var image in model.Images)
             {
@@ -61,7 +60,7 @@ namespace Martography.Areas.Administration.Controllers
 
         public async Task<IActionResult> Edit(string projectId)
         {
-            var singleProject = await projectsService.GetProjectByIdForAdmin<SingleProjectViewModel>(projectId);
+            var singleProject = await projectsService.GetProjectByIdForAdmin<AdminProjectViewModel>(projectId);
 
             return View(singleProject);
         }
@@ -92,6 +91,7 @@ namespace Martography.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateGallery(string name, string description, bool isPrivate)
         {
+            await galleryService.CreateGallery(name, description, isPrivate);
             return RedirectToAction("Index","Home");
         }
     }

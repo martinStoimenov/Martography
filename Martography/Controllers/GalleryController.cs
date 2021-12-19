@@ -19,7 +19,8 @@ namespace Martography.Controllers
         public async Task<IActionResult> Index(string id)
         {
             var gallery = await galleryService.GetGallery<SingleGalleryViewModel>(id);
-            return View();
+            gallery.GalleryDropDowns = galleryService.GetAllGalleriesCached<ViewModels.GalleryModels.GalleryDropDownViewModel>();
+            return View(gallery);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Martography.ViewComponents
         }
         public IViewComponentResult Invoke()
         {
-            var galleries = galleryService.GetAllGalleriesCached();
+            var galleries = galleryService.GetAllGalleriesCached<ViewModels.GalleryModels.GalleryDropDownViewModel>();
             return View(galleries);
         }
     }

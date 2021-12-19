@@ -1,24 +1,29 @@
 ﻿@{
-
+    @using ViewModels.GalleryModels;
+    @model SingleGalleryViewModel
 }
 
 <div class="wrapper light-wrapper">
     <div class="inner pt-70 pb-15 pl-15 pr-15">
-        <h1 class="heading text-center">Gallery name</h1>
-        <h2 class="sub-heading2 text-center">secondary heading</h2>
+        <h1 class="heading text-center">@Model.Name</h1>
+        <h2 class="sub-heading2 text-center">@Model.Description</h2>
         <div class="space50"></div>
-        <div id="cube-grid-full-filter" class="cbp-filter-container text-center">
+        <div id="cube-grid-full-filter" class="cbp-filter-container text-center position-sticky">
             <div data-filter="*" class="cbp-filter-item">All</div>
-            <div data-filter=".food" class="cbp-filter-item">Food</div>
-            <div data-filter=".drink" class="cbp-filter-item">Drink</div>
-            <div data-filter=".event" class="cbp-filter-item-active cbp-filter-item">Event</div>
-            <div data-filter=".pastry" class="cbp-filter-item">Pastry</div>
-            <div data-filter=".product" class="cbp-filter-item">Product</div>
+            @foreach (var project in Model.Projects)
+            {
+                <div data-filter=".@project.Id" class="cbp-filter-item">@project.Name</div>
+            }
+            @*<div data-filter=".food" class="cbp-filter-item">Food</div>
+                <div data-filter=".drink" class="cbp-filter-item">Drink</div>
+                <div data-filter=".event" class="cbp-filter-item-active cbp-filter-item">Event</div>
+                <div data-filter=".pastry" class="cbp-filter-item">Pastry</div>
+                <div data-filter=".product" class="cbp-filter-item">Product</div>*@
         </div>
         <div class="clearfix"></div>
         <div class="space20"></div>
         <div id="cube-grid-full" class="cbp light-gallery">
-            <div class="cbp-item food">
+            <!--<div class="cbp-item food">
                 <figure class="overlay overlay3 rounded">
                     <a href="style/images/art/jp1-full.jpg" data-sub-html="#caption1">
                         <img src="~/style/images/art/jp1.jpg" alt="" />
@@ -27,13 +32,13 @@
                         </div>
                     </a>
                 </figure>
-            </div>
+            </div>-->
             <!--/.cbp-item -->
-            <div class="cbp-item product">
+            <!--<div class="cbp-item product">
                 <figure class="overlay overlay3 rounded"><a href="style/images/art/jp2-full.jpg"><img src="~/style/images/art/jp2.jpg" alt="" /></a></figure>
-            </div>
+            </div>-->
             <!--/.cbp-item -->
-            <div class="cbp-item drink">
+            <!--<div class="cbp-item drink">
                 <figure class="overlay overlay3 rounded">
                     <a href="style/images/art/jp3-full.jpg" data-sub-html="#caption2">
                         <img src="~/style/images/art/jp3.jpg" alt="" />
@@ -42,46 +47,65 @@
                         </div>
                     </a>
                 </figure>
-            </div>
+            </div>-->
             <!--/.cbp-item -->
-            <div class="cbp-item food">
+            <!--<div class="cbp-item food">
                 <figure class="overlay overlay3 rounded"><a href="~/style/images/art/jp4-full.jpg"><img src="~/style/images/art/jp4.jpg" alt="" /></a></figure>
-            </div>
+            </div>-->
             <!--/.cbp-item -->
-            <div class="cbp-item event">
+            <!--<div class="cbp-item event">
                 <figure class="overlay overlay3 rounded"><a href="~/style/images/art/jp5-full.jpg"><img src="~/style/images/art/jp5.jpg" alt="" /></a></figure>
-            </div>
+            </div>-->
             <!--/.cbp-item -->
-            <div class="cbp-item product event">
+            <!--<div class="cbp-item product event">
                 <figure class="overlay overlay3 rounded"><a href="~/style/images/art/jp6-full.jpg"><img src="~/style/images/art/jp6.jpg" alt="" /></a></figure>
-            </div>
+            </div>-->
             <!--/.cbp-item -->
-            <div class="cbp-item drink">
+            <!--<div class="cbp-item drink">
                 <figure class="overlay overlay3 rounded"><a href="style/images/art/jp7-full.jpg"><img src="~/style/images/art/jp7.jpg" alt="" /></a></figure>
-            </div>
+            </div>-->
             <!--/.cbp-item -->
-            <div class="cbp-item event">
+            <!--<div class="cbp-item event">
                 <figure class="overlay overlay3 rounded"><a href="style/images/art/jp8-full.jpg"><img src="~/style/images/art/jp8.jpg" alt="" /></a></figure>
-            </div>
+            </div>-->
             <!--/.cbp-item -->
-            <div class="cbp-item pastry">
+            <!--<div class="cbp-item pastry">
                 <figure class="overlay overlay3 rounded"><a href="style/images/art/jp9-full.jpg"><img src="~/style/images/art/jp9.jpg" alt="" /></a></figure>
-            </div>
+            </div>-->
             <!--/.cbp-item -->
-            <div class="cbp-item pastry">
+            <!--<div class="cbp-item pastry">
                 <figure class="overlay overlay3 rounded"><a href="style/images/art/jp10-full.jpg"><img src="~/style/images/art/jp10.jpg" alt="" /></a></figure>
-            </div>
+            </div>-->
             <!--/.cbp-item -->
-            <div class="cbp-item food">
+            <!--<div class="cbp-item food">
                 <figure class="overlay overlay3 rounded"><a href="style/images/art/jp11-full.jpg"><img src="~/style/images/art/jp11.jpg" alt="" /></a></figure>
-            </div>
+            </div>-->
             <!--/.cbp-item -->
-            <div class="cbp-item food">
+            <!--<div class="cbp-item food">
                 <figure class="overlay overlay3 rounded"><a href="style/images/art/jp12-full.jpg"><img src="~/style/images/art/jp12.jpg" alt="" /></a></figure>
-            </div>
+            </div>-->
             <!--/.cbp-item -->
+            @foreach (var project in Model.Projects)
+            {
+                @foreach (var image in project.Images.OrderByDescending(i => i.Position.HasValue).ThenBy(i => i.Position))
+                {
+                    <div class="cbp-item @project.Id">
+                        <figure class="overlay overlay3 rounded">
+                            <a href="~/@image.ImageBaseUrl">
+                                <img src="~/@image.ThumbnailImageUrl" alt="" />
+                            </a>
+                        </figure>
+                    </div>
+                }
+            }
         </div>
         <!--/.cbp -->
     </div>
     <!-- /.container -->
+    @{var gallery = Model.GalleryDropDowns.Where(x => x.Id != Model.Id).FirstOrDefault();}
+
+    <div class="text-right text-decoration-none text-black-50" style="font-size: xx-large; width: 95%">
+        <a asp-action="Index" asp-route-id="@gallery.Id"><span class="text-dark">@gallery.Name</span></a><i class="si-arrows_double-arrow-right"></i>
+    </div>
+    <div class="space10"></div>
 </div>

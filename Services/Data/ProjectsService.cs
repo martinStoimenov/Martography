@@ -5,6 +5,7 @@ using Services.Data.Interfaces;
 using Services.Mapping;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +45,9 @@ namespace Services.Data
         public async Task Edit(string projectId, string name, string description, bool isDeleted)
         {
             var proj = await projectRepository.All().FirstOrDefaultAsync(x => x.Id == projectId);
+
+            if (proj.Name.ToLower() != name.ToLower())
+                ChangeProjectFolderName(proj, name);
 
             proj.Name = name;
             proj.Description = description;
@@ -86,6 +90,15 @@ namespace Services.Data
 
             projectRepository.Undelete(proj);
             await projectRepository.SaveChangesAsync();
+        }
+
+        private void ChangeProjectFolderName(Project project, string newName)
+        {
+            var basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", Common.GlobalConstants.BaseImagesFolder, project.Gallery.Name);
+            var oldPath = Path.Combine(basePath, project.Name);
+            var newPath = Path.Combine(basePath, newName);
+
+            Directory.Move(oldPath, newPath);
         }
     }
 }

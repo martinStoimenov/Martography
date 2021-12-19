@@ -1,6 +1,8 @@
 ﻿using Data.Models;
 using Services.Mapping;
 using System;
+using System.Collections.Generic;
+using ViewModels.ProjectModels;
 
 namespace ViewModels.GalleryModels
 {
@@ -12,5 +14,7 @@ namespace ViewModels.GalleryModels
         public bool IsPrivate { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public bool IsDeleted { get; set; }
+        public IEnumerable<ProjectViewModel> Projects { get; set; }
+        public IEnumerable<GalleryDropDownViewModel> GalleryDropDowns { get; set; }
     }
 }
