@@ -142,6 +142,7 @@ namespace Services.Data
                     image.IsDeleted = changedImage.IsDeleted;
                     image.IsProjectThumbnail = changedImage.IsThumbnail;
                     image.ShowOnHomePageCarousel = changedImage.IsOnHomePageCarousel;
+                    image.ShowOnHomePageGallery = changedImage.IsOnHomePageGallery;
                     image.DeletedOn = changedImage.IsDeleted ? DateTime.UtcNow : null;
 
                     imageRepository.Update(image);
@@ -155,7 +156,7 @@ namespace Services.Data
 
         public async Task<IEnumerable<T>> GetAllHomePageImages<T>()
         {
-            var allImages = await imageRepository.All().Where(i => i.ShowOnHomePageCarousel == true).To<T>().ToListAsync();
+            var allImages = await imageRepository.All().Where(i => i.ShowOnHomePageCarousel == true | i.ShowOnHomePageGallery == true).To<T>().ToListAsync();
             return allImages;
         }
 
@@ -163,7 +164,7 @@ namespace Services.Data
         {
             try
             {
-                var galleriesToDisplay = new string[] { "Portraits", "Landscapes", "Cars" };
+                var galleriesToDisplay = new string[] { "Portraits", "Nature", "Cars" };
                 var images = new List<T>();
 
                 foreach (var gallery in galleriesToDisplay)

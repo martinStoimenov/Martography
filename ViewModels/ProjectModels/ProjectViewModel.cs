@@ -11,6 +11,8 @@ namespace ViewModels.ProjectModels
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsDeleted { get; set; }
+        public string GalleryName { get; set; }
+        public string GalleryId { get; set; }
         public IEnumerable<ImageViewModel> Images { get; set; }
     }
 }

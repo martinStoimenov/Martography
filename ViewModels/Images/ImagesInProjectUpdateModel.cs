@@ -7,6 +7,7 @@
         public int? Position { get; set; }
         public bool IsThumbnail { get; set; }
         public bool IsOnHomePageCarousel { get; set; }
+        public bool IsOnHomePageGallery { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

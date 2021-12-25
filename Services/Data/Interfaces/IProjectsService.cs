@@ -6,6 +6,7 @@ namespace Services.Data.Interfaces
     public interface IProjectsService
     {
         Task<IEnumerable<T>> GetAllProjectsForAdmin<T>();
+        Task<IEnumerable<T>> GetAllProjects<T>();
         Task<T> GetProjectByIdForAdmin<T>(string projectId);
         Task MoveProjectToGalleryForAdmin(string galleryId ,string projectId);
         Task DeleteProject(string projectId);

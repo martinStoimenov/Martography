@@ -7,22 +7,21 @@
     <div class="flickity-carousel-container">
         <div class="flickity flickity-carousel flickity-viewport-mode">
             @*<div class="item mr-15"><img src="~/style/images/art/fc1.jpg" alt="" /></div>*@
-            @foreach (var image in Model.CarouselImages.OrderByDescending(i => i.Position.HasValue).ThenBy(i => i.Position))
+            @foreach (var image in Model.CarouselImages.Where(x => x.ShowOnHomePageGallery == false).OrderByDescending(i => i.Position.HasValue).ThenBy(i => i.Position))
             {
                 <div class="item mr-15"><img src="~/@image.ThumbnailImageUrl" alt="" /></div>
             }
         </div>
         <!-- /.flickity-carousel -->
-        <i class="bi bi-mouse text-center"></i>
-        <p class="flickity-status"></p>
+        @*<p class="flickity-status"></p>*@
     </div>
     <!-- /.flickity-carousel-container -->
 </div>
 
 <div class="wrapper light-wrapper">
     <div class="container inner">
-        <h2 class="title-color color-dark mb-20 text-center">My Specialties</h2>
-        <h3 class="sub-heading2 text-center">I'd like to give you a unique photography experience, capturing your<br class="d-none d-xl-block" />  products with excellent composition and lighting skills.</h3>
+        <h2 class="title-color color-dark mb-20 text-center">Photographer</h2>
+        <h3 class="sub-heading2 text-center">Based in Sofia <span class="small_thin_grey font-italic">(but not limited to)</span>.</h3>
         <div class="space30"></div>
         <div class="tiles">
             <div class="items row boxed grid-view text-center">
@@ -64,7 +63,7 @@
     <!-- /.container -->
 </div>
 
-<div class="wrapper image-wrapper bg-image inverse-text" data-image-src="style/images/art/bg16.jpg">
+<div class="wrapper image-wrapper bg-image inverse-text" data-image-src="style/images/home-page-testimonials.jpg">
     <div class="container inner pt-150 pb-150">
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
@@ -109,128 +108,44 @@
 
 <div class="wrapper light-wrapper" id="portfolio">
     <div class="container inner">
-        <h2 class="title-color color-dark mb-20 text-center">My Featured Work</h2>
-        <h3 class="sub-heading2 text-center">Photography is my passion and<br class="d-none d-xl-block" /> I love to turn ideas into beautiful things.</h3>
-        <div class="space40"></div>
+        <div class="space20"></div>
         <div id="cube-grid-filter" class="cbp-filter-container text-center">
             <div data-filter="*" class="cbp-filter-item-active cbp-filter-item">All</div>
-            <div data-filter=".food" class="cbp-filter-item">Food</div>
-            <div data-filter=".drink" class="cbp-filter-item">Drink</div>
-            <div data-filter=".event" class="cbp-filter-item">Event</div>
-            <div data-filter=".pastry" class="cbp-filter-item">Pastry</div>
-            <div data-filter=".product" class="cbp-filter-item">Product</div>
+            @foreach (var image in Model.CarouselImages
+                .Where(x => x.ShowOnHomePageCarousel == false)
+                .GroupBy(x=>x.ProjectId)
+                .Select(x=>x.First())
+                .OrderByDescending(i => i.Position.HasValue)
+                .ThenBy(i => i.Position))
+            {
+                <div data-filter=".@image.ProjectId" class="cbp-filter-item">@image.ProjectName</div>
+            }
         </div>
         <div class="clearfix"></div>
         <div class="space20"></div>
         <div id="cube-grid" class="cbp">
-            <div class="cbp-item food">
-                <figure class="overlay overlay1 light rounded">
-                    <a href="gallery-post.html"><img src="style/images/art/cp1.jpg" alt="" /></a>
-                    <figcaption>
-                        <h5 class="text-uppercase from-top mb-0">Project Name</h5>
-                    </figcaption>
-                </figure>
-            </div>
-            <!--/.cbp-item -->
-            <div class="cbp-item product">
-                <figure class="overlay overlay1 light rounded">
-                    <a href="gallery-post2.html"><img src="style/images/art/cp2.jpg" alt="" /></a>
-                    <figcaption>
-                        <h5 class="text-uppercase from-top mb-0">Project Name</h5>
-                    </figcaption>
-                </figure>
-            </div>
-            <!--/.cbp-item -->
-            <div class="cbp-item drink">
-                <figure class="overlay overlay1 light rounded">
-                    <a href="gallery-post3.html"><img src="style/images/art/cp3.jpg" alt="" /></a>
-                    <figcaption>
-                        <h5 class="text-uppercase from-top mb-0">Project Name</h5>
-                    </figcaption>
-                </figure>
-            </div>
-            <!--/.cbp-item -->
-            <div class="cbp-item food">
-                <figure class="overlay overlay1 light rounded">
-                    <a href="gallery-post4.html"><img src="style/images/art/cp4.jpg" alt="" /></a>
-                    <figcaption>
-                        <h5 class="text-uppercase from-top mb-0">Project Name</h5>
-                    </figcaption>
-                </figure>
-            </div>
-            <!--/.cbp-item -->
-            <div class="cbp-item event">
-                <figure class="overlay overlay1 light rounded">
-                    <a href="gallery-post.html"><img src="style/images/art/cp5.jpg" alt="" /></a>
-                    <figcaption>
-                        <h5 class="text-uppercase from-top mb-0">Project Name</h5>
-                    </figcaption>
-                </figure>
-            </div>
-            <!--/.cbp-item -->
-            <div class="cbp-item product event">
-                <figure class="overlay overlay1 light rounded">
-                    <a href="gallery-post2.html"><img src="style/images/art/cp6.jpg" alt="" /></a>
-                    <figcaption>
-                        <h5 class="text-uppercase from-top mb-0">Project Name</h5>
-                    </figcaption>
-                </figure>
-            </div>
-            <!--/.cbp-item -->
-            <div class="cbp-item drink">
-                <figure class="overlay overlay1 light rounded">
-                    <a href="gallery-post3.html"><img src="style/images/art/cp7.jpg" alt="" /></a>
-                    <figcaption>
-                        <h5 class="text-uppercase from-top mb-0">Project Name</h5>
-                    </figcaption>
-                </figure>
-            </div>
-            <!--/.cbp-item -->
-            <div class="cbp-item event">
-                <figure class="overlay overlay1 light rounded">
-                    <a href="gallery-post4.html"><img src="style/images/art/cp8.jpg" alt="" /></a>
-                    <figcaption>
-                        <h5 class="text-uppercase from-top mb-0">Project Name</h5>
-                    </figcaption>
-                </figure>
-            </div>
-            <!--/.cbp-item -->
-            <div class="cbp-item pastry">
-                <figure class="overlay overlay1 light rounded">
-                    <a href="gallery-post.html"><img src="style/images/art/cp9.jpg" alt="" /></a>
-                    <figcaption>
-                        <h5 class="text-uppercase from-top mb-0">Project Name</h5>
-                    </figcaption>
-                </figure>
-            </div>
-            <!--/.cbp-item -->
-            <div class="cbp-item pastry">
-                <figure class="overlay overlay1 light rounded">
-                    <a href="gallery-post2.html"><img src="style/images/art/cp10.jpg" alt="" /></a>
-                    <figcaption>
-                        <h5 class="text-uppercase from-top mb-0">Project Name</h5>
-                    </figcaption>
-                </figure>
-            </div>
-            <!--/.cbp-item -->
-            <div class="cbp-item food">
-                <figure class="overlay overlay1 light rounded">
-                    <a href="gallery-post3.html"><img src="style/images/art/cp11.jpg" alt="" /></a>
-                    <figcaption>
-                        <h5 class="text-uppercase from-top mb-0">Project Name</h5>
-                    </figcaption>
-                </figure>
-            </div>
-            <!--/.cbp-item -->
+            @foreach (var image in Model.CarouselImages.Where(x => x.ShowOnHomePageCarousel == false).OrderByDescending(i => i.Position.HasValue).ThenBy(i => i.Position))
+            {
+                <div class="cbp-item @image.ProjectId">
+                    <figure class="overlay overlay2 light rounded">
+                        <a asp-controller="Gallery" asp-route-id="@image.ProjectGalleryId"><img src="~/@image.ThumbnailImageUrl" alt="" /></a>
+                        <figcaption>
+                            <h5 class="text-uppercase from-top mb-0">@image.ProjectGalleryName</h5>
+                            <p class="from-bottom">@image.ProjectName</p>
+                        </figcaption>
+                    </figure>
+                </div>
+                <!--/.cbp-item -->
+            }
         </div>
         <!--/.cbp -->
-        <div class="space30"></div>
-        <div id="cube-grid-more" class="text-center">
-            <a href="ajax/loadmore.html" class="cbp-l-loadMore-link btn btn-white shadow" rel="nofollow">
-                <span class="cbp-l-loadMore-defaultText">Load More</span> <span class="cbp-l-loadMore-loadingText">Loading...</span>
-                <span class="cbp-l-loadMore-noMoreLoading">No More Works</span>
-            </a>
-        </div>
+        @*<div class="space30"></div>
+            <div id="cube-grid-more" class="text-center">
+                <a href="ajax/loadmore.html" class="cbp-l-loadMore-link btn btn-white shadow" rel="nofollow">
+                    <span class="cbp-l-loadMore-defaultText">Load More</span> <span class="cbp-l-loadMore-loadingText">Loading...</span>
+                    <span class="cbp-l-loadMore-noMoreLoading">No More Works</span>
+                </a>
+            </div>*@
     </div>
     <!-- /.container -->
 </div>
@@ -276,8 +191,8 @@
 
 <div class="wrapper light-wrapper">
     <div class="container inner text-center">
-        <h2 class="title-color color-dark mb-20 text-center">Work with Me</h2>
-        <h3 class="sub-heading2 text-center">Great photography comes with understanding customer needs.<br class="d-none d-xl-block" /> Looking for a caring, fun, passionate and creative photographer? It's me!</h3>
+        <h2 class="title-color color-dark mb-20 text-center">If you like what you see</h2>
+        <h3 class="sub-heading2 text-center">Work with Me</h3>
         <div class="space10"></div>
         <a asp-controller="Contact" class="btn btn-white shadow magic-hover magic-hover__square">Get in Touch</a>
     </div>

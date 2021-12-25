@@ -15,6 +15,7 @@ namespace Data.Models
         public string Company { get; set; }
         public bool IsVisible { get; set; }
         public string EmailAddress { get; set; }
+        public bool IsApproved { get; set; }
 
         //public string ImageId { get; set; }
         //public Image Image { get; set; }

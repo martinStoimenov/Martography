@@ -3,11 +3,9 @@ using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Services.Data.Interfaces;
 using Services.Mapping;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Services.Data
@@ -63,6 +61,11 @@ namespace Services.Data
         public async Task<IEnumerable<T>> GetAllProjectsForAdmin<T>()
         {
             var res = await projectRepository.AllWithDeleted().To<T>().ToListAsync();
+            return res;
+        }
+        public async Task<IEnumerable<T>> GetAllProjects<T>()
+        {
+            var res = await projectRepository.All().To<T>().ToListAsync();
             return res;
         }
 

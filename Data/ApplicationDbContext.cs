@@ -88,7 +88,7 @@ namespace Data
 
             builder.Entity<BlogPost>().Property(x => x.Title).HasMaxLength(500).IsRequired();
 
-            builder.Entity<Testimonials>().Property(x => x.PersonName).HasMaxLength(300).IsRequired();
+            builder.Entity<Testimonials>().Property(x => x.PersonName).HasMaxLength(300);
             builder.Entity<Testimonials>().Property(x => x.Content).HasMaxLength(3000).IsRequired();
             builder.Entity<Testimonials>().Property(x => x.Position).HasMaxLength(300);
             builder.Entity<Testimonials>().Property(x => x.Company).HasMaxLength(300);

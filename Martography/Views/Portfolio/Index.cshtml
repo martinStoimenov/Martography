@@ -1,4 +1,6 @@
-﻿<div class="wrapper light-wrapper">
+﻿@model IEnumerable<ViewModels.ProjectModels.ProjectViewModel>
+
+<div class="wrapper light-wrapper">
     <div class="inner pt-70 pb-0">
         <div class="container">
             <h1 class="heading text-center">Hi, This is Missio</h1>
@@ -29,18 +31,22 @@
         <div class="clearfix"></div>
         <div class="space20"></div>
         <div id="cube-inline" class="cbp cbp-images cube-inline-4">
-            <div class="cbp-item text-center family">
-                <div class="wrapper image-wrapper cbp-image-wrapper bg-image inverse-text" data-image-src="style/images/art/pw1.jpg">
-                    <div class="container inner pt-120 pb-120">
-                        <div class="meta"><span class="count">8 Photos</span><span class="category">Family</span></div>
-                        <h3>Hugging You</h3>
-                        <a href="ajax/portfolio-post1.html" class="btn btn-white cbp-singlePageInline">View Gallery</a>
+            @foreach (var project in Model)
+            {
+                var imageUrl = project.Images.ToList().Where(x => x.IsProjectThumbnail == true).FirstOrDefault().ImageBaseUrl;
+                <div class="cbp-item text-center family">
+                    <div class="wrapper image-wrapper cbp-image-wrapper bg-image inverse-text" data-image-src="@imageUrl" style="background-image: url("@imageUrl");">
+                        <div class="container inner pt-120 pb-120">
+                            <div class="meta"><span class="count">@project.Images.Count() Photos</span><span class="category">@project.GalleryName</span></div>
+                            <h3>@project.Name</h3>
+                            <a asp-controller="Gallery" asp-route-id="@project.GalleryId" class="btn btn-white cbp-singlePageInline">View Gallery</a>
+                        </div>
+                        <!-- /.container -->
                     </div>
-                    <!-- /.container -->
+                    <!-- /.wrapper -->
                 </div>
-                <!-- /.wrapper -->
-            </div>
-            <!--/.cbp-item -->
+                <!--/.cbp-item -->
+            }
             <div class="cbp-item text-center travel">
                 <div class="wrapper image-wrapper cbp-image-wrapper bg-image inverse-text" data-image-src="style/images/art/pw2.jpg">
                     <div class="container inner pt-120 pb-120">

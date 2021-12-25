@@ -15,9 +15,9 @@
         <!-- /.navbar-header -->
         <div class="navbar-collapse collapse justify-content-between align-items-center">
             <ul class="navbar-nav plain mx-auto text-center">
-                <li class="nav-item">
+                @*<li class="nav-item">
                     <a class="nav-link magic-hover magic-hover__square" href="/">Home</a>
-                </li>
+                </li>*@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle magic-hover magic-hover__square" asp-controller="Portfolio" asp-action="Index">Portfolio</a>
                     <ul class="dropdown-menu">
@@ -27,23 +27,8 @@
                         }
                     </ul>
                 </li>
-                <li class="nav-item dropdown magic-hover magic-hover__square">
-                    <a class="nav-link dropdown-toggle" asp-controller="Blog" asp-action="Index">Blog</a>
-                    <ul class="dropdown-menu">
-                        <li class="nav-item"><a class="dropdown-item" href="blog.html">Classic View No Sidebar</a></li>
-                        <li class="nav-item"><a class="dropdown-item" href="blog2.html">Classic View with Sidebar</a></li>
-                        <li class="nav-item"><a class="dropdown-item" href="blog3.html">Grid View I</a></li>
-                        <li class="nav-item"><a class="dropdown-item" href="blog4.html">Grid View II</a></li>
-                        <li class="nav-item"><a class="dropdown-item" href="blog5.html">Box Style with Sidebar</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-item dropdown-toggle" href="#">Blog Posts</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="dropdown-item" href="blog-post.html">Post No Sidebar</a></li>
-                                <li class="nav-item"><a class="dropdown-item" href="blog-post2.html">Post with Sidebar</a></li>
-                                <li class="nav-item"><a class="dropdown-item" href="blog-post3.html">Post with Box Style</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                <li class="nav-item magic-hover magic-hover__square">
+                    <a class="nav-link" asp-controller="Blog" asp-action="Index">Blog</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="About">About me</a>

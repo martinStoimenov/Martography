@@ -13,6 +13,7 @@ namespace Data.Models
         public string Description { get; set; }
         public bool IsProjectThumbnail { get; set; }
         public bool ShowOnHomePageCarousel { get; set; }
+        public bool ShowOnHomePageGallery { get; set; }
         public int? Position { get; set; }
         public string ProjectId { get; set; }
         public Project Project { get; set; }
