@@ -15,7 +15,6 @@
         <!-- /.flickity-carousel -->
         @*<p class="flickity-status"></p>*@
     </div>
-    <!-- /.flickity-carousel-container -->
 </div>
 
 <div class="wrapper light-wrapper">
@@ -31,36 +30,27 @@
                             <figure class="main mb-25"><img src="~/@Model.GalleryCards.First()?.ThumbnailImageUrl" alt="" /></figure>
                             <h4 class="text-uppercase mb-5">@Model.GalleryCards.First()?.ProjectGalleryName</h4>
                         </div>
-                        <!-- /.box -->
                     </a>
                 </div>
-                <!--/.item -->
                 <div class="item col-md-4" data-aos="fade-up">
                     <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryId">
                         <div class="box bg-white shadow p-30">
                             <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(1)?.ThumbnailImageUrl" alt="" /></figure>
                             <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryName</h4>
                         </div>
-                        <!-- /.box -->
                     </a>
                 </div>
-                <!--/.item -->
                 <div class="item col-md-4" data-aos="fade-left">
                     <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryId">
                         <div class="box bg-white shadow p-30">
                             <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(2)?.ThumbnailImageUrl" alt="" /></figure>
                             <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryName</h4>
                         </div>
-                        <!-- /.box -->
                     </a>
                 </div>
-                <!--/.item -->
             </div>
-            <!--/.row -->
         </div>
-        <!--/.tiles -->
     </div>
-    <!-- /.container -->
 </div>
 
 <div class="wrapper image-wrapper bg-image inverse-text" data-image-src="style/images/home-page-testimonials.jpg">
@@ -74,36 +64,28 @@
                             <footer class="blockquote-footer">Connor Gibson</footer>
                         </blockquote>
                     </div>
-                    <!-- /.cbp-item -->
                     <div class="cbp-item">
                         <blockquote class="icon icon-top larger text-center pl-60 pr-60">
                             <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper eget quam integer. </p>
                             <footer class="blockquote-footer">Coriss Ambady</footer>
                         </blockquote>
                     </div>
-                    <!-- /.cbp-item -->
                     <div class="cbp-item">
                         <blockquote class="icon icon-top larger text-center pl-60 pr-60">
                             <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras justo odio, dapibus ac facilisis.</p>
                             <footer class="blockquote-footer">Barclay Widerski</footer>
                         </blockquote>
                     </div>
-                    <!-- /.cbp-item -->
                     <div class="cbp-item">
                         <blockquote class="icon icon-top larger text-center pl-60 pr-60">
                             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam aenean lacinia. Curabitur blandit tempus in egestas consectetur.</p>
                             <footer class="blockquote-footer">Nikola Brooten</footer>
                         </blockquote>
                     </div>
-                    <!-- /.cbp-item -->
                 </div>
-                <!-- /.cbp -->
             </div>
-            <!-- /column -->
         </div>
-        <!-- /.row -->
     </div>
-    <!-- /.container -->
 </div>
 
 <div class="wrapper light-wrapper" id="portfolio">
@@ -112,11 +94,11 @@
         <div id="cube-grid-filter" class="cbp-filter-container text-center">
             <div data-filter="*" class="cbp-filter-item-active cbp-filter-item">All</div>
             @foreach (var image in Model.CarouselImages
-                .Where(x => x.ShowOnHomePageCarousel == false)
-                .GroupBy(x=>x.ProjectId)
-                .Select(x=>x.First())
-                .OrderByDescending(i => i.Position.HasValue)
-                .ThenBy(i => i.Position))
+               .Where(x => x.ShowOnHomePageCarousel == false)
+               .GroupBy(x => x.ProjectId)
+               .Select(x => x.First())
+               .OrderByDescending(i => i.Position.HasValue)
+               .ThenBy(i => i.Position))
             {
                 <div data-filter=".@image.ProjectId" class="cbp-filter-item">@image.ProjectName</div>
             }
@@ -150,6 +132,20 @@
     <!-- /.container -->
 </div>
 
+<div class="wrapper light-wrapper">
+    <div class="space30"></div>
+    <div class="form-container">
+        <div class="row justify-content-center">
+            <form method="post">
+                <label class="col-form-label-sm d-block text-center" style="font-size: x-large;">Subscribe to my email</label>
+                <input class="form-control" type="email" name="email" placeholder="example@@mymail.com" />
+                <button class="btn btn-success w-50" style="margin-left: 25%; margin-top: 5%;" type="submit" asp-controller="Contact" asp-action="Subscribe">Subscribe</button>
+            </form>
+        </div>
+    </div>
+    <div class="space30"></div>
+</div>
+
 <div class="wrapper image-wrapper bg-image inverse-text" data-image-src="style/images/art/bg3.jpg">
     <div class="container inner pt-150 pb-150">
         <div class="row counter">
@@ -157,36 +153,31 @@
                 <div class="d-flex flex-row justify-content-center">
                     <div class="icon fs-58 icon-color color-dark mr-25"><i class="si-photo_camera"></i></div>
                     <div>
-                        <h3 class="value">7518</h3>
+                        <h3 class="value">23,735</h3>
                         <p>Shots Taken</p>
                     </div>
                 </div>
             </div>
-            <!--/column -->
             <div class="col-md-4">
                 <div class="d-flex flex-row justify-content-center">
                     <div class="icon fs-58 icon-color color-dark mr-25"> <i class="si-photo_image-review"></i> </div>
                     <div>
-                        <h3 class="value">3472</h3>
+                        <h3 class="value">457</h3>
                         <p>Edited shots</p>
                     </div>
                 </div>
             </div>
-            <!--/column -->
             <div class="col-md-4">
                 <div class="d-flex flex-row justify-content-center">
                     <div class="icon fs-58 icon-color color-dark mr-25"> <i class="si-education_planet-orbit"></i> </div>
                     <div>
-                        <h3 class="value">4523</h3>
+                        <h3 class="value">16</h3>
                         <p>Projects</p>
                     </div>
                 </div>
             </div>
-            <!--/column -->
         </div>
-        <!--/.row -->
     </div>
-    <!-- /.container -->
 </div>
 
 <div class="wrapper light-wrapper">
@@ -196,7 +187,6 @@
         <div class="space10"></div>
         <a asp-controller="Contact" class="btn btn-white shadow magic-hover magic-hover__square">Get in Touch</a>
     </div>
-    <!-- /.container -->
 </div>
 
 @section Scripts{

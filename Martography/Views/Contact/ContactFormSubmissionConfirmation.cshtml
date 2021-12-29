@@ -1,0 +1,21 @@
+﻿@{
+    @model bool
+}
+
+<div class="container">
+    <div class="space30"></div>
+    <div class="row justify-content-center">
+        @if (Model)
+        {
+            <p>Thank you for contacting me I will review your message ASAP and get back.</p>
+        }
+        else
+        {
+            <p class="text-center">Sorry there was an error we are working on resolving it.<br />Please use one of the other methods for contacting or send me DM on <a href="https://www.instagram.com/_martography/">Instagram</a></p>
+        }
+    </div>
+    <div class="row justify-content-center">
+        <a href="/" class="btn">Go Back to home page</a>
+    </div>
+    <div class="space40"></div>
+</div>
