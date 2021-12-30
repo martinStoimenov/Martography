@@ -62,6 +62,7 @@ namespace Martography
             services.AddTransient<IGalleryService, GalleryService>();
             services.AddTransient<IProjectsService, ProjectsService>();
             services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<IBlogService, BlogService>();
             services.AddTransient<IEmailService, EmailService>();
         }
 

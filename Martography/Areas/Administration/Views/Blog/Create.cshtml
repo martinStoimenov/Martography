@@ -1,50 +1,22 @@
-﻿@{
-    @model ViewModels.Blog.BlogPostAdminViewModel
-}
+﻿<div class="space20"></div>
+<div class="text-center">
+    <h1>Create new blog post</h1>
+</div>
+<div class="space20"></div>
 
 <form id="asd" method="post">
-    <div class="space20"></div>
-    <div class="row justify-content-around">
-        <div class="dropdown">
-            <button class="btn btn-success
-                    dropdown-toggle" type="button"
-                    id="dropdownMenuButton"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false">
-                All Images
-            </button>
-
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="max-height: 800%; overflow-y:auto;">
-                @foreach (var image in Model.AllImages.OrderBy(x=>x.ProjectGalleryName).ThenBy(x=>x.ProjectName))
-                {
-                     <li class="dropdown-item">
-                         <label style="display:none;">@image.Id</label>
-                         <img src="~/@image.ThumbnailImageUrl" width="60" height="85"> @(image.ProjectGalleryName + "-" + image.ProjectName)
-                     </li>
-                }
-            </ul>
-        </div>
-
-        <input asp-for="Title" type="text" value="@Model.Title" />
-
-        <input asp-for="Author" type="text" value="@Model.Author" />
-
-        <select asp-for="GalleryId" asp-items="Model.AllGalleries" style="width:15%"></select>
+    <div class="text-center">
+        <input name="title" type="text" value="" placeholder="Blog post title" />
     </div>
     <div class="space20"></div>
-    <input id="hiddenImageId" asp-for="ImageId" type="hidden" value="@Model.ImageId" />
 
-    <textarea id="tiny-textarea" asp-for="Content">
-           @Html.Raw(Model.Content)
-    </textarea>
-    <input type="hidden" value="@Model.Id" name="id" />
+    <textarea id="tiny-textarea" name="htmlContent"></textarea>
+
+    <div class="space20"></div>
+    <div class="row justify-content-center">
+        <button asp-action="Create" type="submit" class="btn" form="asd">Save</button>
+    </div>
 </form>
-
-<div class="space20"></div>
-<div class="row justify-content-center">
-    <button asp-action="Edit" type="submit" class="btn" form="asd">Save</button>
-</div>
 
 @section Scripts{
     <script src="~/js/tinymce/tinymce.min.js"></script>
@@ -106,13 +78,5 @@
             relative_urls: false,
             remove_script_host: true,
         });
-
-        $(".dropdown-item").on("click", function () {
-            //console.log($(this).children()[0].innerHTML);
-            let chosenImageId = $(this).find('label')[0].innerHTML;
-            $('#hiddenImageId').val(chosenImageId);
-        })
-
     </script>
-
 }

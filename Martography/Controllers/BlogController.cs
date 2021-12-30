@@ -1,21 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Services.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ViewModels.Blog;
 
 namespace Martography.Controllers
 {
     public class BlogController : Controller
     {
-        public IActionResult Index()
+        private readonly IBlogService blogService;
+
+        public BlogController(IBlogService blogService)
         {
-            return View();
+            this.blogService = blogService;
         }
 
-        public IActionResult ById()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var allposts = await blogService.GetAll<BlogPostViewModel>();
+            return View(allposts);
+        }
+
+        public async Task<IActionResult> ById(string Id)
+        {
+            var post = await blogService.GetPost<BlogPostViewModel>(Id);
+            return View(post);
         }
     }
 }

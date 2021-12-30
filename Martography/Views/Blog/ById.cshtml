@@ -1,50 +1,16 @@
-﻿<div class="wrapper light-wrapper">
+﻿@model ViewModels.Blog.BlogPostViewModel
+
+<div class="wrapper light-wrapper">
     <div class="container inner pt-60">
         <div class="blog classic-view">
             <div class="post text-center">
-                <figure class="rounded"><img src="style/images/art/b1.jpg" alt="" /></figure>
+                <figure class="rounded"><img src="~/@Model.Image.ThumbnailImageUrl" alt="" /></figure>
                 <div class="space40"></div>
                 <div class="row post-content text-left">
                     <div class="col-md-8 offset-md-2">
-                        <h1 class="post-title">Ullamcorper Ridiculus Tristique Adipiscing</h1>
-                        <div class="meta"><span class="date">12 Nov 2017</span><span class="author">By <a href="#">Missio</a></span><span class="comments"><a href="#">2</a></span><span class="category"><a href="#">Journal</a></span></div>
-                        <p>
-                            Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum.
-                            Aenean lacinia bibendum nulla sed consectetur. Curabitur blandit tempus porttitor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nullam quis risus eget porta ac consectetur vestibulum.
-                        </p>
-                        <p>
-                            Donec sed odio dui consectetur adipiscing elit. Etiam adipiscing tincidunt elit, eu convallis felis suscipit ut. Phasellus rhoncus tincidunt auctor. Nullam eu sagittis mauris. Donec non dolor ac elit aliquam tincidunt at at
-                            sapien. Aenean tortor libero, condimentum ac laoreet vitae, varius tempor nisi. Duis non arcu vel lectus urna mollis ornare vel eu leo.
-                        </p>
-                        <div class="space10"></div>
-                        <blockquote class="icon icon-left">
-                            <p>
-                                Sed posuere consectetur est at lobortis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula lacinia odio sem nec elit. Cras mattis consectetur purus sit amet
-                                fermentum.
-                            </p>
-                            <footer class="blockquote-footer">Very important person</footer>
-                        </blockquote>
-                        <div class="space10"></div>
-                        <h3>Sit Vulputate Bibendum Purus</h3>
-                        <p>
-                            Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Aenean lacinia bibendum nulla sed consectetur. Cras mattis consectetur purus sit amet fermentum. Praesent commodo
-                            cursus magna, vel scelerisque nisl consectetur et. Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-                        </p>
-                        <div class="space10"></div>
-                        <div class="light-gallery">
-                            <figure class="overlay overlay3 rounded"><a href="style/images/art/bp1-full.jpg"><img src="style/images/art/bp1.jpg" alt="" /></a></figure>
-                            <div class="space30"></div>
-                            <figure class="overlay overlay3 rounded"><a href="style/images/art/bp2-full.jpg"><img src="style/images/art/bp2.jpg" alt="" /></a></figure>
-                        </div>
-                        <!-- /.light-gallery -->
-                        <div class="clearfix"></div>
-                        <div class="space20"></div>
-                        <p>
-                            Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus
-                            magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Cras mattis consectetur purus
-                            sit amet fermentum. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio
-                            sem nec elit. Cras mattis consectetur purus sit amet.
-                        </p>
+                        <h1 class="post-title">@Model.Title</h1>
+                        <div class="meta"><span class="date">@Model.CreatedOn.ToString("d")</span><span class="author">By @Model.Author</span><span class="category"><a asp-controller="Gallery" asp-route-id="@Model.GalleryId">@Model.GalleryName</a></span></div>
+                        <div>@(Html.Raw(Model.Content))</div>
                         <div class="meta tags mb-10 text-center"><a href="#">journal</a>, <a href="#">illustration</a>, <a href="#">design</a>, <a href="#">daily</a></div>
                         <ul class="social social-mute social-s text-center">
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -82,7 +48,7 @@
                     </div>
                     <!--/.row -->
                     <div class="divider-icon"><i class="si-photo_aperture"></i></div>
-                    <div id="comments">
+                    <!--<div id="comments">
                         <h4>4 Comments on "Tellus Adipiscing Nibh Mattis Ligula"</h4>
                         <ol id="singlecomments" class="commentlist">
                             <li>
@@ -156,9 +122,9 @@
                                 </div>
                             </li>
                         </ol>
-                    </div>
+                    </div>-->
                     <!-- /#comments -->
-                    <div class="divider-icon"><i class="si-photo_aperture"></i></div>
+                    <!--<div class="divider-icon"><i class="si-photo_aperture"></i></div>
                     <h4>Would you like to share your thoughts?</h4>
                     <p>Your email address will not be published. Required fields are marked *</p>
                     <div class="space20"></div>
@@ -176,7 +142,7 @@
                             <textarea name="textarea" class="form-control" rows="5" placeholder="Enter your comment here..."></textarea>
                         </div>
                         <button type="submit" class="btn">Submit</button>
-                    </form>
+                    </form>-->
                     <!-- /.comment-form -->
                 </div>
                 <!-- /column -->

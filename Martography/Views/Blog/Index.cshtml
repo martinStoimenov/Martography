@@ -1,30 +1,32 @@
-﻿<div class="wrapper light-wrapper">
+﻿@model IEnumerable<ViewModels.Blog.BlogPostViewModel>
+
+<div class="wrapper light-wrapper">
     <div class="container inner pt-60">
         <div class="blog classic-view">
-            <div class="post text-center">
-                <figure class="overlay overlay1 rounded">
-                    <a href="blog-post.html"><img src="style/images/art/b1.jpg" alt="" /></a>
-                    <figcaption>
-                        <h5 class="text-uppercase from-top mb-0">Read More</h5>
-                    </figcaption>
-                </figure>
-                <div class="space40"></div>
-                <div class="row post-content text-left">
-                    <div class="col-md-8 offset-md-2">
-                        <h2 class="post-title text-center"><a href="blog-post.html">Ullamcorper Ridiculus Tristique Adipiscing</a></h2>
-                        <div class="meta text-center"><span class="date">12 Nov 2017</span><span class="author">By <a href="#">Missio</a></span><span class="comments"><a href="#">2</a></span><span class="category"><a href="#">Journal</a></span></div>
-                        <p>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nullam quis risus eget urna mollis ornare vel. Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, vel
-                            scelerisque nisl consectetur et. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.
-                        </p>
-                        <div class="text-center"><a href="blog-post.html" class="btn btn-white shadow mt-20">Read more</a></div>
+            @foreach (var post in Model)
+            {
+                <div class="post text-center">
+                    <figure class="overlay overlay1 rounded">
+                        <a asp-action="ById" asp-route-Id="@post.Id"><img src="~/@post.Image.ThumbnailImageUrl" alt="" /></a>
+                        <figcaption>
+                            <h5 class="text-uppercase from-top mb-0">Read More</h5>
+                        </figcaption>
+                    </figure>
+                    <div class="space40"></div>
+                    <div class="row post-content text-left">
+                        <div class="col-md-8 offset-md-2">
+                            <h2 class="post-title text-center"><a asp-action="ById" asp-route-Id="@post.Id">@post.Title</a></h2>
+                            <div class="meta text-center"><span class="date">@post.CreatedOn.ToString("d")</span><span class="author">By <a asp-action="ById" asp-route-Id="@post.Id">@post.Author</a></span><span class="category"><a asp-controller="Gallery" asp-route-id="@post.GalleryId">@post.GalleryName</a></span></div>
+                                <div>@(Html.Raw(post.Content.Substring(0, post.Content.Length / 10) + "..."))</div>
+                            <div class="text-center"><a asp-action="ById" asp-route-Id="@post.Id" class="btn btn-white shadow mt-20">Read more</a></div>
+                        </div>
+                        <!-- /column -->
                     </div>
-                    <!-- /column -->
+                    <!-- /.row -->
                 </div>
-                <!-- /.row -->
-            </div>
             <!-- /.post -->
             <div class="divider-icon w300"><i class="si-photo_aperture"></i></div>
+            }
             <div class="post text-center">
                 <figure class="overlay overlay1 rounded text-center">
                     <a href="blog-post.html"><img src="style/images/art/b2.jpg" alt="" /></a>

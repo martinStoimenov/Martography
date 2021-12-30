@@ -35,10 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\js\tinymce\icons\default\icons.min.js" />
     <None Include="wwwroot\js\tinymce\jquery.tinymce.min.js" />
     <None Include="wwwroot\js\tinymce\langs\README.md" />

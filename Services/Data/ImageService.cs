@@ -191,5 +191,7 @@ namespace Services.Data
                 //throw;
             }
         }
+
+        public async Task<IEnumerable<T>> GetAll<T>() => await imageRepository.All().To<T>().ToListAsync();
     }
 }

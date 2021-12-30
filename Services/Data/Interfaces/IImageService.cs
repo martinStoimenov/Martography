@@ -11,5 +11,6 @@ namespace Services.Data.Interfaces
         Task<string> UpdateImages(IEnumerable<ImagesInProjectUpdateModel> images);
         Task<IEnumerable<T>> GetAllHomePageImages<T>();
         Task<IEnumerable<T>> GetRandomImagesForHomePageCards<T>();
+        Task<IEnumerable<T>> GetAll<T>();
     }
 }

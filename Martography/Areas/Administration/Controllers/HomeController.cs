@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Data.Interfaces;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using ViewModels.GalleryModels;
 using ViewModels.ProjectModels;
+using ViewModels.Blog;
+using Martography.Areas.Administration.ViewModels;
 
 namespace Martography.Areas.Administration.Controllers
 {
@@ -11,36 +12,24 @@ namespace Martography.Areas.Administration.Controllers
     {
         private readonly IGalleryService galleryService;
         private readonly IProjectsService projectsService;
+        private readonly IBlogService blogService;
 
-        public HomeController(IGalleryService galleryService, IProjectsService projectsService)
+        public HomeController(IGalleryService galleryService, IProjectsService projectsService,
+            IBlogService blogService)
         {
             this.galleryService = galleryService;
             this.projectsService = projectsService;
+            this.blogService = blogService;
         }
         public async Task<IActionResult> Index()
         {
             var galleries = await galleryService.GetAllGalleriesForAdmin<SingleGalleryViewModel>();
             var projects = await projectsService.GetAllProjectsForAdmin<AdminProjectViewModel>();
+            var blogPosts = await blogService.GetAllPostsWithDeletedForAdmin<AllBlogPostsAdminViewModel>();
 
-            var viewModel = new HomePageViewModel() { Galleries = galleries, Projects = projects };
+            var viewModel = new HomePageViewModel() { Galleries = galleries, Projects = projects, BlogPosts = blogPosts };
 
             return View(viewModel);
         }
-
-        public IActionResult GetUploadImagesComponent()
-        {
-            //return ViewComponent("UploadImages");
-            return ViewComponent("Gallery");
-        }
-        public IActionResult GetGalleryComponent()
-        {
-            return ViewComponent("Gallery");
-        }
-    }
-
-    public class HomePageViewModel
-    {
-        public IEnumerable<SingleGalleryViewModel> Galleries { get; set; }
-        public IEnumerable<AdminProjectViewModel> Projects { get; set; }
     }
 }

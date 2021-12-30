@@ -1,5 +1,5 @@
 ﻿@{
-    @using Martography.Areas.Administration.Controllers
+    @using Martography.Areas.Administration.ViewModels
     @model HomePageViewModel
 }
 <div class="container">
@@ -12,6 +12,7 @@
         <div class="col text-center">
             <a data-toggle="modal" data-target="#createGalleryModal" class="btn btn-pastel-green">Create Gallery</a>
             <a data-toggle="modal" data-target="#createProjectModal" class="btn btn-pastel-green">Create Project</a>
+            <a asp-controller="Blog" asp-action="Create" class="btn btn-pastel-green">Create Blog post</a>
         </div>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -226,14 +227,50 @@
             </table>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="space50"></div>
+            <div class="text-center">
+                <h5>All Blog posts</h5>
+            </div>
+            <table class="table table-bordered table-responsive-lg table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Content</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">Modified</th>
+                        <th scope="col">Deleted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var post in Model.BlogPosts)
+                    {
+                        <tr>
+                            <td><a asp-controller="Blog" asp-action="Edit" asp-route-id="@post.Id">@post.Title</a></td>
+                            <td>@(Html.Raw(post.Content.Substring(0, post.Content.Length / 10)))</td>
+                            <td>@post.CreatedOn.ToShortDateString()</td>
+                            <td>@post.ModifiedOn?.ToString("d")</td>
+                            @if (post.IsDeleted)
+                            {
+                                <td class="bg-danger">@post.IsDeleted</td>
+                            }
+                            else
+                            {
+                                <td class="bg-success">@post.IsDeleted</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 @section Scripts
 {
-    <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
-
     <script>
-
         //var button = null;
         $('#exampleModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal

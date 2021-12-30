@@ -77,7 +77,7 @@ namespace Data
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
-            // set tables
+            // configure tables
             builder.Entity<Gallery>().Property(x => x.Name).HasMaxLength(200).IsRequired();
             builder.Entity<Gallery>().Property(x => x.Description).HasMaxLength(2000);
 
@@ -87,6 +87,7 @@ namespace Data
             builder.Entity<Image>().Property(x => x.Description).HasMaxLength(5000);
 
             builder.Entity<BlogPost>().Property(x => x.Title).HasMaxLength(500).IsRequired();
+            builder.Entity<BlogPost>().Property(x => x.GalleryId).IsRequired(false);
 
             builder.Entity<Testimonials>().Property(x => x.PersonName).HasMaxLength(300);
             builder.Entity<Testimonials>().Property(x => x.Content).HasMaxLength(3000).IsRequired();
