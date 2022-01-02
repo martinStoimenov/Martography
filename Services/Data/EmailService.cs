@@ -20,17 +20,20 @@ namespace Services.Data
                 Configuration.Default.ApiKey.Add("api-key", apiKey);
         }
 
-        public async Task<bool> CreateContact(string email)
+        public async Task<bool> CreateContact(string email, string name)
         {
+            // Add checks to prevent malicious code
             var apiInstance = new ContactsApi();
             List<long?> listIds = new List<long?>();
             listIds.Add(2);
+            var attributes = new Newtonsoft.Json.Linq.JObject();
+            attributes.Add("FULLNAME", name);
             bool emailBlacklisted = false;
             bool smsBlacklisted = false;
             bool updateEnabled = false;
             try
             {
-                var createContact = new CreateContact(email, null, emailBlacklisted, smsBlacklisted, listIds, updateEnabled, null);
+                var createContact = new CreateContact(email, attributes, emailBlacklisted, smsBlacklisted, listIds, updateEnabled, null);
                 CreateUpdateContactModel result = await apiInstance.CreateContactAsync(createContact);
             }
             catch (Exception e)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Data.Interfaces;
+using System;
 using System.Threading.Tasks;
 using ViewModels.Contact;
 
@@ -24,17 +25,6 @@ namespace Martography.Controllers
             var isSuccessfull = await emailService.Send(model.Email, model.Subject, model.Message, model.Name);
 
             return View("ContactFormSubmissionConfirmation", isSuccessfull);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Subscribe(string email)
-        {
-            if (string.IsNullOrEmpty(email))
-                return RedirectToAction("Index", "Home");
-
-            var isSuccessfull = await emailService.CreateContact(email);
-
-            return Content($"{isSuccessfull}");
         }
     }
 }

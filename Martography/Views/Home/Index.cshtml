@@ -2,7 +2,6 @@
     ViewData["Title"] = "Home page";
     @model ViewModels.HomePage.HomePageViewModel;
 }
-
 <div class="wrapper white-wrapper">
     <div class="flickity-carousel-container">
         <div class="flickity flickity-carousel flickity-viewport-mode">
@@ -88,17 +87,43 @@
     </div>
 </div>
 
+<div class="wrapper light-wrapper">
+    @*<div style="height: 55px;"></div>*@
+    <div class="row justify-content-center">
+        <form method="post">
+            <div id="error-email-alert" class="alert alert-danger fade row col justify-content-center" role="alert"> Sorry there was an error or you are already subscribed. </div>
+            <div id="success-email-alert" class="alert alert-success fade row col justify-content-center" role="alert"> Yaay you successfully subscribed. Check your inbox to find your first gift. </div>
+            <label class="col-form-label-sm d-block text-center" style="font-size: x-large;">Subscribe to my email</label>
+            <div class="row" style="padding-inline: 7%;">
+                <div class="col-md-6">
+                    <label class="col-form-label-sm">Name</label>
+                    <input id="email-name" class="form-control" type="text" name="name" placeholder="John Doe" />
+                </div>
+                <div class="col-md-6">
+                    <label class="col-form-label-sm">E-mail address</label>
+                    <input id="email-input" class="form-control" type="email" name="email" placeholder="example@@mymail.com" />
+                </div>
+                <span class="col text-muted small d-block text-center">With your subscriprion you consent to receive emails</span>
+            </div>
+            <input type="hidden" />
+            <div class="row col justify-content-center">
+                <button id="email-sub-btn" class="btn btn-success" style="margin-top: 3%; max-width: 35%; min-width: 25%;">Subscribe</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="wrapper light-wrapper" id="portfolio">
     <div class="container inner">
         <div class="space20"></div>
         <div id="cube-grid-filter" class="cbp-filter-container text-center">
             <div data-filter="*" class="cbp-filter-item-active cbp-filter-item">All</div>
             @foreach (var image in Model.CarouselImages
-               .Where(x => x.ShowOnHomePageCarousel == false)
-               .GroupBy(x => x.ProjectId)
-               .Select(x => x.First())
-               .OrderByDescending(i => i.Position.HasValue)
-               .ThenBy(i => i.Position))
+           .Where(x => x.ShowOnHomePageCarousel == false)
+           .GroupBy(x => x.ProjectId)
+           .Select(x => x.First())
+           .OrderByDescending(i => i.Position.HasValue)
+           .ThenBy(i => i.Position))
             {
                 <div data-filter=".@image.ProjectId" class="cbp-filter-item">@image.ProjectName</div>
             }
@@ -130,20 +155,6 @@
             </div>*@
     </div>
     <!-- /.container -->
-</div>
-
-<div class="wrapper light-wrapper">
-    <div class="space30"></div>
-    <div class="form-container">
-        <div class="row justify-content-center">
-            <form method="post">
-                <label class="col-form-label-sm d-block text-center" style="font-size: x-large;">Subscribe to my email</label>
-                <input class="form-control" type="email" name="email" placeholder="example@@mymail.com" />
-                <button class="btn btn-success w-50" style="margin-left: 25%; margin-top: 5%;" type="submit" asp-controller="Contact" asp-action="Subscribe">Subscribe</button>
-            </form>
-        </div>
-    </div>
-    <div class="space30"></div>
 </div>
 
 <div class="wrapper image-wrapper bg-image inverse-text" data-image-src="style/images/art/bg3.jpg">
@@ -198,4 +209,37 @@
                 }, 3000)
             })
         </script>*@
+    <script>
+        $('#email-sub-btn').on('click', function (e) {
+            e.preventDefault();
+            let emailInput = $('#email-input');
+            let nameInput = $('#email-name');
+
+            let data = {
+                email: emailInput.val(),
+                name: nameInput.val()
+            };
+
+            var token = $("#adminForm input[name=__RequestVerificationToken]").val();
+
+            $.ajax({
+                url: 'api/Contact/Subscribe',
+                type: "POST",
+                headers: { 'RequestVerificationToken': token },
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data) {
+                    console.log(data)
+
+                    $('#success-email-alert').addClass('show');
+                    emailInput.val('');
+                    nameInput.val('');
+                },
+                error: function (req, status, error) {
+                    console.log(error);
+                    $('#error-email-alert').addClass('show');
+                }
+            });
+        })
+    </script>
 } 
