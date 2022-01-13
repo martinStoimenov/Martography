@@ -11,46 +11,48 @@
                 <div class="item mr-15"><img src="~/@image.ThumbnailImageUrl" alt="" /></div>
             }
         </div>
-        <!-- /.flickity-carousel -->
         @*<p class="flickity-status"></p>*@
     </div>
 </div>
 
-<div class="wrapper light-wrapper">
-    <div class="container inner">
-        <h2 class="title-color color-dark mb-20 text-center">Photographer</h2>
-        <h3 class="sub-heading2 text-center">Based in Sofia <span class="small_thin_grey font-italic">(but not limited to)</span>.</h3>
-        <div class="space30"></div>
-        <div class="tiles">
-            <div class="items row boxed grid-view text-center">
-                <div class="item col-md-4" data-aos="fade-right">
-                    <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.First()?.ProjectGalleryId">
-                        <div class="box bg-white shadow p-30">
-                            <figure class="main mb-25"><img src="~/@Model.GalleryCards.First()?.ThumbnailImageUrl" alt="" /></figure>
-                            <h4 class="text-uppercase mb-5">@Model.GalleryCards.First()?.ProjectGalleryName</h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="item col-md-4" data-aos="fade-up">
-                    <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryId">
-                        <div class="box bg-white shadow p-30">
-                            <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(1)?.ThumbnailImageUrl" alt="" /></figure>
-                            <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryName</h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="item col-md-4" data-aos="fade-left">
-                    <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryId">
-                        <div class="box bg-white shadow p-30">
-                            <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(2)?.ThumbnailImageUrl" alt="" /></figure>
-                            <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryName</h4>
-                        </div>
-                    </a>
+@if (Model.GalleryCards.Count() > 0)
+{
+    <div class="wrapper light-wrapper">
+        <div class="container inner">
+            <h2 class="title-color color-dark mb-20 text-center">Photographer</h2>
+            <h3 class="sub-heading2 text-center">Based in Sofia <span class="small_thin_grey font-italic">(but not limited to)</span>.</h3>
+            <div class="space30"></div>
+            <div class="tiles">
+                <div class="items row boxed grid-view text-center">
+                    <div class="item col-md-4">
+                        <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.First()?.ProjectGalleryId">
+                            <div class="box bg-white shadow p-30">
+                                <figure class="main mb-25"><img src="~/@Model.GalleryCards.First()?.ThumbnailImageUrl" alt="" /></figure>
+                                <h4 class="text-uppercase mb-5">@Model.GalleryCards.First()?.ProjectGalleryName</h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="item col-md-4">
+                        <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryId">
+                            <div class="box bg-white shadow p-30">
+                                <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(1)?.ThumbnailImageUrl" alt="" /></figure>
+                                <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryName</h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="item col-md-4">
+                        <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryId">
+                            <div class="box bg-white shadow p-30">
+                                <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(2)?.ThumbnailImageUrl" alt="" /></figure>
+                                <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryName</h4>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}
 
 <div class="wrapper image-wrapper bg-image inverse-text" data-image-src="style/images/home-page-testimonials.jpg">
     <div class="container inner pt-150 pb-150">
@@ -87,29 +89,32 @@
     </div>
 </div>
 
-<div class="wrapper light-wrapper">
-    @*<div style="height: 55px;"></div>*@
+<div class="container">
     <div class="row justify-content-center">
-        <form method="post">
-            <div id="error-email-alert" class="alert alert-danger fade row col justify-content-center" role="alert"> Sorry there was an error or you are already subscribed. </div>
-            <div id="success-email-alert" class="alert alert-success fade row col justify-content-center" role="alert"> Yaay you successfully subscribed. Check your inbox to find your first gift. </div>
-            <label class="col-form-label-sm d-block text-center" style="font-size: x-large;">Subscribe to my email</label>
-            <div class="row" style="padding-inline: 7%;">
-                <div class="col-md-6">
-                    <label class="col-form-label-sm">Name</label>
-                    <input id="email-name" class="form-control" type="text" name="name" placeholder="John Doe" />
+        <div class="col-lg-7">
+            <form id="subscribeForm" method="post" style="width:auto;">
+                <div id="error-email-alert" class="alert alert-danger fade row col justify-content-center" role="alert"> Sorry there was an error or you are already subscribed. </div>
+                <div id="success-email-alert" class="alert alert-success fade row col justify-content-center" role="alert"> Yaay you successfully subscribed. Check your inbox to find your first gift. </div>
+                <label class="col-form-label-sm d-block text-center" style="font-size: x-large;">Subscribe to my email</label>
+                <div class="row" style="padding-inline: 7%;">
+                    <div class="col-md-6">
+                        <label class="col-form-label-sm">Name</label>
+                        <input id="email-name" asp-for="SubscribeModel.Name" class="form-control" type="text" placeholder="John Doe" />
+                        <span id="subscribe-name-error" class="text-danger col-6"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="col-form-label-sm">E-mail address</label>
+                        <input id="email-input" asp-for="SubscribeModel.Email" class="form-control" type="email" placeholder="example@@mymail.com" />
+                        <span id="subscribe-email-error" class="text-danger col-6"></span>
+                    </div>
+                    <span class="col text-muted small d-block text-center">With your subscriprion you consent to receive emails from Martography</span>
                 </div>
-                <div class="col-md-6">
-                    <label class="col-form-label-sm">E-mail address</label>
-                    <input id="email-input" class="form-control" type="email" name="email" placeholder="example@@mymail.com" />
+                <input type="hidden" />
+                <div class="row justify-content-center">
+                    <button id="email-sub-btn" style="background-color: black;margin-top: 3%;" class="btn btn-l">Subscribe</button>
                 </div>
-                <span class="col text-muted small d-block text-center">With your subscriprion you consent to receive emails</span>
-            </div>
-            <input type="hidden" />
-            <div class="row col justify-content-center">
-                <button id="email-sub-btn" class="btn btn-success" style="margin-top: 3%; max-width: 35%; min-width: 25%;">Subscribe</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -119,11 +124,11 @@
         <div id="cube-grid-filter" class="cbp-filter-container text-center">
             <div data-filter="*" class="cbp-filter-item-active cbp-filter-item">All</div>
             @foreach (var image in Model.CarouselImages
-           .Where(x => x.ShowOnHomePageCarousel == false)
-           .GroupBy(x => x.ProjectId)
-           .Select(x => x.First())
-           .OrderByDescending(i => i.Position.HasValue)
-           .ThenBy(i => i.Position))
+        .Where(x => x.ShowOnHomePageCarousel == false)
+        .GroupBy(x => x.ProjectId)
+        .Select(x => x.First())
+        .OrderByDescending(i => i.Position.HasValue)
+        .ThenBy(i => i.Position))
             {
                 <div data-filter=".@image.ProjectId" class="cbp-filter-item">@image.ProjectName</div>
             }
@@ -157,7 +162,7 @@
     <!-- /.container -->
 </div>
 
-<div class="wrapper image-wrapper bg-image inverse-text" data-image-src="style/images/art/bg3.jpg">
+<div class="wrapper image-wrapper bg-image inverse-text" data-image-src="style/images/counter-img.jpg">
     <div class="container inner pt-150 pb-150">
         <div class="row counter">
             <div class="col-md-4">
@@ -196,7 +201,7 @@
         <h2 class="title-color color-dark mb-20 text-center">If you like what you see</h2>
         <h3 class="sub-heading2 text-center">Work with Me</h3>
         <div class="space10"></div>
-        <a asp-controller="Contact" class="btn btn-white shadow magic-hover magic-hover__square">Get in Touch</a>
+        <a asp-controller="Contact" asp-action="Send" style="background-color: black;" class="btn btn-l shadow magic-hover magic-hover__square">Get in Touch</a>
     </div>
 </div>
 
@@ -214,13 +219,42 @@
             e.preventDefault();
             let emailInput = $('#email-input');
             let nameInput = $('#email-name');
+            let valid = true;
+
+            let email = emailInput.val();
+            if (email == "") {
+                $('#subscribe-email-error').text('E-mail is required')
+                valid = false;
+            }
+
+            let emailRegEx = new RegExp("^[-!#$%&'*+/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z{|}~])*@@[a-zA-Z](-?[a-zA-Z0-9])*(\.[a-zA-Z](-?[a-zA-Z0-9])*)+$");
+            if (email != "" && emailRegEx.test(email) == false) {
+                $('#subscribe-email-error').text('Must be valid e-mail')
+                valid = false;
+            }
+
+            let name = nameInput.val();
+            if (name == "") {
+                $('#subscribe-name-error').text('Name is required')
+                valid = false;
+            }
+
+            if (name != "" && name.length < 3) {
+                $('#subscribe-name-error').text('Name must be between 3 and 100 characters')
+                if (name.length > 100) {
+                    $('#subscribe-name-error').text('Name must be between 3 and 100 characters')
+                }
+                valid = false;
+            }
+
+            if (valid == false) { return; }
 
             let data = {
                 email: emailInput.val(),
                 name: nameInput.val()
             };
 
-            var token = $("#adminForm input[name=__RequestVerificationToken]").val();
+            var token = $("#subscribeForm input[name=__RequestVerificationToken]").val();
 
             $.ajax({
                 url: 'api/Contact/Subscribe',
@@ -234,6 +268,8 @@
                     $('#success-email-alert').addClass('show');
                     emailInput.val('');
                     nameInput.val('');
+                    $('#subscribe-email-error').text('')
+                    $('#subscribe-name-error').text('')
                 },
                 error: function (req, status, error) {
                     console.log(error);

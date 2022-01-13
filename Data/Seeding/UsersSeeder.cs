@@ -21,8 +21,8 @@
             {
                 var user = new ApplicationUser
                 {
-                    UserName = "admin",
-                    Email = "admin@gmail.com",
+                    UserName = "admin@martographyph.com",
+                    Email = "admin@martographyph.com",
                     EmailConfirmed = true
                 };
 

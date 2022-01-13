@@ -2,7 +2,7 @@
 
 namespace ViewModels.Contact
 {
-    public class ContactFormViewModel
+    public class SubscribeModel
     {
         [Required]
         [EmailAddress]
@@ -11,10 +11,5 @@ namespace ViewModels.Contact
         [Required]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "Your Name must be between 3 and 100 characters long")]
         public string Name { get; set; }
-        [Required]
-        [StringLength(2500, MinimumLength = 3, ErrorMessage = "Your Message must be between 3 and 2500 characters long")]
-        public string Message { get; set; }
-        [MaxLength(250, ErrorMessage = "Subject must be below 250 characters")]
-        public string Subject { get; set; }
     }
 }

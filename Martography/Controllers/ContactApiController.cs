@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Data.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using ViewModels.Contact;
 
 namespace Martography.Controllers
 {
@@ -22,7 +21,7 @@ namespace Martography.Controllers
         [HttpPost(nameof(Subscribe))]
         public async Task<IActionResult> Subscribe(SubscribeModel model)
         {
-            if (string.IsNullOrEmpty(model.Email) | string.IsNullOrEmpty(model.Name))
+            if (!ModelState.IsValid)
                 throw new Exception();
 
             var isSuccessfull = await emailService.CreateContact(model.Email, model.Name);
@@ -32,11 +31,5 @@ namespace Martography.Controllers
             else
                 throw new Exception();
         }
-    }
-
-    public class SubscribeModel
-    {
-        public string Email { get; set; }
-        public string Name { get; set; }
     }
 }

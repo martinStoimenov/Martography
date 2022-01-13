@@ -2,7 +2,6 @@
     var urlPath = Context.Request.Path;
     string classContent = urlPath == "/" ? "navbar wide transparent absolute inverse-text navbar-expand-lg" : "navbar wide transparent absolute text navbar-expand-lg";
     
-    @using Data.Models;
     @model IEnumerable<ViewModels.GalleryModels.GalleryDropDownViewModel>
 }
 
@@ -34,7 +33,7 @@
                     <a class="nav-link" asp-controller="About">About me</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link dropdown-toggle" asp-controller="Contact" asp-action="Index">Contact</a>
+                    <a class="nav-link dropdown-toggle" asp-controller="Contact" asp-action="Send">Contact</a>
                 </li>
             </ul>
         </div>

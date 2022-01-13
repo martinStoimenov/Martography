@@ -20,6 +20,7 @@ namespace Services.Data
         private readonly IRepository<Image> imageRepository;
 
         private static readonly int ThumbnailWidth = 700;
+        private static readonly int FullSizeWidth = 1600;
 
         public ImageService(IRepository<Image> imageRepository)
         {
@@ -57,7 +58,7 @@ namespace Services.Data
 
                     CheckIfGalleryAndProjectDirectoriesExist(image);
 
-                    await SaveImage(imageResult, Path.Combine(path, image.Name), imageResult.Width);
+                    await SaveImage(imageResult, Path.Combine(path, image.Name), FullSizeWidth);
                     await SaveImage(imageResult, Path.Combine(path, $"{Common.GlobalConstants.ThumbnailPrefix}{image.Name}"), ThumbnailWidth);
                 }
             }
@@ -71,7 +72,7 @@ namespace Services.Data
 
         private async Task SaveImage(SixLabors.ImageSharp.Image image, string path, int resizeWidth)
         {
-            var quality = 100;
+            var quality = 95;
             var width = image.Width;
             var height = image.Height;
 
@@ -79,7 +80,8 @@ namespace Services.Data
             {
                 height = (int)((double)resizeWidth / width * height);
                 width = resizeWidth;
-                quality = 80;
+                if(resizeWidth < FullSizeWidth)
+                    quality = 80;
             }
 
             image.Mutate(i => i.Resize(new Size(width, height)));

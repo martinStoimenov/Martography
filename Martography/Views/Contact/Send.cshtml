@@ -1,0 +1,61 @@
+﻿@model ViewModels.Contact.ContactFormViewModel
+
+<div class="wrapper light-wrapper">
+    <div class="container inner pt-70">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h2 class="section-title text-center">Get in Touch</h2>
+                @*<p class="text-center">Drop me an email</p>*@
+                <div class="space20"></div>
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <span class="icon icon-color color-default fs-48 mb-10"><i class="si-camping_map"></i></span>
+                        <p>Slatina Avenue<br> 14/05 Jupiter, JP 80630</p>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="icon icon-color color-default fs-48 mb-10"><i class="si-phone_phone-ringing"></i></span>
+                        <p>0882721995</p>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="icon icon-color color-default fs-48 mb-10"><i class="si-mail_mail-2"></i></span>
+                        <p>
+                            <a class="nocolor" href="mailto:#">martography@email.com</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="space30"></div>
+                <div class="form-container">
+                    <form asp-action="Send" method="post">
+                        <div class="row text-center">
+                            <div class="col-md-6 pr-10">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" asp-for="Name" placeholder="Your name" required="required">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 pl-10">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" asp-for="Email" placeholder="Your e-mail" required="required">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12 pl-10">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" asp-for="Subject" placeholder="Subject">
+                                    <span asp-validation-for="Subject" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <textarea asp-for="Message" class="form-control" rows="3" placeholder="Type your message here..." required="required"></textarea>
+                                <span asp-validation-for="Message" class="text-danger"></span>
+                                <div class="space20"></div>
+                                <button type="submit" class="btn" data-error="Fix errors" data-processing="Sending..." data-success="Thank you!">Submit</button>
+                                <footer class="notification-box"></footer>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

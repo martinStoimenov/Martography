@@ -20,15 +20,12 @@ namespace Martography.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // return model with images that should be on the home screen carousel first (and/or images from a project)
+            // Testimonials
             var viewModel = new HomePageViewModel()
             {
                 CarouselImages = await imageService.GetAllHomePageImages<ImageViewModel>(),
                 GalleryCards = await imageService.GetRandomImagesForHomePageCards<HomePageCardImageViewModel>()
             };
-            // 3 projects (galleries) get random image from the current gallery
-            // gallery of the images below the home screen
-            // Testimonials
             return View(viewModel);
         }
     }

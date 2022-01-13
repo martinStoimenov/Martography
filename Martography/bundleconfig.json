@@ -1,0 +1,42 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/lib/bootstrap/dist/css/bootstrap.css",
+      "wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css",
+      "wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css",
+      "wwwroot/style/type/icons.css",
+      "wwwroot/style/css/plugins.css",
+      "wwwroot/style/css/color/lavender.css",
+      "wwwroot/style/css/font/font2.css",
+      "wwwroot/style/css/style.css",
+      "wwwroot/style/revolution/css/settings.css",
+      "wwwroot/style/revolution/css/layers.css",
+      "wwwroot/style/revolution/css/navigation.css",
+      "wwwroot/css/site.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }//,
+  //{
+  //  "outputFileName": "wwwroot/js/site.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/js/site.js",
+  //    //"wwwroot/lib/bootstrap/dist/js/bootstrap.js",
+  //    //"wwwroot/lib/jquery/dist/jquery.js",
+  //    //"wwwroot/lib/jquery-validation/dist/jquery.validate.js",
+  //    //"wwwroot/lib/jquery-validation/dist/additional-methods.js",
+  //    //"wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+  //    "wwwroot/style/js/scripts.js",
+  //    "wwwroot/style/js/plugins.js"
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  },
+  //  "sourceMap": false
+  //}
+]
