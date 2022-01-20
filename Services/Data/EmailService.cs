@@ -1,11 +1,11 @@
-﻿using sib_api_v3_sdk.Api;
+﻿using System;
 using System.Threading.Tasks;
 using Services.Data.Interfaces;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
-using sib_api_v3_sdk.Client;
+using sib_api_v3_sdk.Api;
 using sib_api_v3_sdk.Model;
-using System;
+using sib_api_v3_sdk.Client;
 
 namespace Services.Data
 {
@@ -43,7 +43,7 @@ namespace Services.Data
             return true;
         }
 
-        public async Task<bool> Send(string from, string subject, string message, string name, string to = "martin.hj15@gmail.com")
+        public async Task<bool> Send(string from, string subject, string message, string name, string to)
         {
             if (string.IsNullOrEmpty(from) || string.IsNullOrEmpty(subject) || string.IsNullOrEmpty(name))
                 return false;
@@ -55,7 +55,7 @@ namespace Services.Data
             emailModel.Sender.Email = from;
             emailModel.Sender.Name = name;
 
-            emailModel.To = new List<SendSmtpEmailTo>() { new SendSmtpEmailTo(to, "Martin")};
+            emailModel.To = new List<SendSmtpEmailTo>() { new SendSmtpEmailTo(to, "Martography")};
             emailModel.ReplyTo = new SendSmtpEmailReplyTo(from, name);
 
             emailModel.Subject = subject;

@@ -19,8 +19,8 @@ namespace Services.Data
     {
         private readonly IRepository<Image> imageRepository;
 
-        private static readonly int ThumbnailWidth = 700;
-        private static readonly int FullSizeWidth = 1600;
+        private static readonly int ThumbnailWidth = 600;
+        private static readonly int FullSizeWidth = 1800;
 
         public ImageService(IRepository<Image> imageRepository)
         {
@@ -72,7 +72,7 @@ namespace Services.Data
 
         private async Task SaveImage(SixLabors.ImageSharp.Image image, string path, int resizeWidth)
         {
-            var quality = 95;
+            var quality = 90;
             var width = image.Width;
             var height = image.Height;
 
@@ -81,10 +81,10 @@ namespace Services.Data
                 height = (int)((double)resizeWidth / width * height);
                 width = resizeWidth;
                 if(resizeWidth < FullSizeWidth)
-                    quality = 80;
+                    quality = 75;
             }
 
-            image.Mutate(i => i.Resize(new Size(width, height)));
+            image.Mutate(i => i.Resize(width, height, KnownResamplers.Lanczos2));
 
             image.Metadata.ExifProfile = null;
 
