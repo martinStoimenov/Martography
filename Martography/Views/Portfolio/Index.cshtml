@@ -4,7 +4,7 @@
 <div class="wrapper light-wrapper">
     <div class="inner pt-70 pb-0">
         <div class="container">
-            <h2 class="heading text-center">Check all projects in one place</h2>
+            <h2 class="heading text-center">All projects</h2>
         </div>
         <div class="space50"></div>
         <div id="cube-inline-5-filter" class="cbp-filter-container text-center">
@@ -19,10 +19,10 @@
         <div id="cube-inline-5" class="cbp cbp-images cube-inline-5">
             @foreach (var project in Model)
             {
-                var imageUrl = project.Images.ToList().Where(x => x.IsProjectThumbnail == true).FirstOrDefault().ThumbnailImageUrl;
+                var image = project.Images.ToList().Where(x => x.IsProjectThumbnail == true).FirstOrDefault();
                 <div class="cbp-item text-center @project.GalleryId">
                     <figure class="overlay overlay2 light rounded">
-                        <a asp-controller="Gallery" asp-route-id="@project.GalleryId"><img src="@imageUrl" alt="" /></a>
+                        <a asp-controller="Gallery" asp-route-id="@project.GalleryId"><img src="@(image?.ThumbnailImageUrl)" alt="" /></a>
                         <figcaption>
                             <h5 class="text-uppercase from-top mb-0">@project.GalleryName</h5>
                             <p class="from-bottom">@project.Name</p>

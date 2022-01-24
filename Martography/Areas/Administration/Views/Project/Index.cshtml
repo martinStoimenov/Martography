@@ -28,18 +28,24 @@
         {
             <div><a class="btn" asp-action="Edit" asp-route-projectId="@Model.Id">Edit Images</a></div>
         }
-
         <div class="row">
             <div class="col">
                 <form id="changeGalleryForm" method="post">
                     <input type="hidden" />
                     <input type="hidden" name="projectId" value="@Model.Id" />
-                        <label class="custom-control-label" for="galleryId">Change to gallery:</label>
+                    <label class="custom-control-label" for="galleryId">Change to gallery:</label>
                     <div class="form-group custom-select-wrapper">
                         <select class="custom-select w-25" name="galleryId">
                             @foreach (var gallery in Model.AllGalleries)
                             {
-                                <option value="@gallery.Id">@gallery.Name</option>
+                                if (Model.GalleryId == gallery.Id)
+                                {
+                                    <option value="@gallery.Id" selected>@gallery.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@gallery.Id">@gallery.Name</option>
+                                }
                             }
                         </select>
                     </div>
@@ -52,14 +58,12 @@
                         {
                             <label for="setDeletedProj" class="text-danger">Set as DELETED</label>
                         }
-                            <input id="setDeletedProj" type="checkbox" name="setDeleted" asp-for="@Model.IsDeleted" />
+                        <input id="setDeletedProj" type="checkbox" name="setDeleted" asp-for="@Model.IsDeleted" />
                     </div>
                 </form>
             </div>
         </div>
         <div><button form="changeGalleryForm" type="submit" class="btn" asp-controller="Project" asp-action="ChangeToGallery">Submit changes</button></div>
-
-
 
         <h1 class="post-title">@Model.Name<span class="small"><i> in @Model.GalleryName</i></span></h1>
         <p>
@@ -104,12 +108,10 @@
                 </div>
             }
         </div>
-        <!--/.cbp -->
 
         @if (Model.Images.Count() <= 0)
         {
             <div class="text-center"><span class="text-danger font-italic">No images found in the current project</span></div>
         }
     </div>
-    <!-- /.container -->
 </div>

@@ -22,7 +22,7 @@ namespace Services.Data
 
         public async Task<bool> CreateContact(string email, string name)
         {
-            // Add checks to prevent malicious code
+            // Send first email on subscribe (ask them to confirm if they want to subscribe with link.)
             var apiInstance = new ContactsApi();
             List<long?> listIds = new List<long?>();
             listIds.Add(2);
@@ -60,7 +60,7 @@ namespace Services.Data
 
             emailModel.Subject = subject;
             emailModel.TextContent = message;
-            emailModel.HtmlContent = $"<html><head></head><body><h1>Hello this is a test email from sib</h1><p>{message}</p></body></html>";
+            emailModel.HtmlContent = $"<html><head></head><body><p>{message}</p></body></html>";
 
             try
             {

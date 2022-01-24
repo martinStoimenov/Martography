@@ -17,37 +17,46 @@
 
 @if (Model.GalleryCards.Count() > 0)
 {
-    <div class="wrapper light-wrapper">
+<div class="wrapper light-wrapper">
         <div class="container inner">
             <h2 class="title-color color-dark mb-20 text-center">Photographer</h2>
-            <h3 class="sub-heading2 text-center">Based in Sofia <span class="small_thin_grey font-italic">(but not limited to)</span>.</h3>
+            <h3 class="sub-heading2 text-center">Based in Sofia, Bulgaria@*<span class="small_thin_grey font-italic">(but not limited to)</span>.*@</h3>
             <div class="space30"></div>
             <div class="tiles">
                 <div class="items row boxed grid-view text-center">
-                    <div class="item col-md-4">
-                        <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.First()?.ProjectGalleryId">
-                            <div class="box bg-white shadow p-30">
-                                <figure class="main mb-25"><img src="~/@Model.GalleryCards.First()?.ThumbnailImageUrl" alt="" /></figure>
-                                <h4 class="text-uppercase mb-5">@Model.GalleryCards.First()?.ProjectGalleryName</h4>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="item col-md-4">
-                        <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryId">
-                            <div class="box bg-white shadow p-30">
-                                <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(1)?.ThumbnailImageUrl" alt="" /></figure>
-                                <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryName</h4>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="item col-md-4">
-                        <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryId">
-                            <div class="box bg-white shadow p-30">
-                                <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(2)?.ThumbnailImageUrl" alt="" /></figure>
-                                <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryName</h4>
-                            </div>
-                        </a>
-                    </div>
+                    @if (Model.GalleryCards.First() != null) 
+                    {
+                        <div class="item col-md">
+                            <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.First()?.ProjectGalleryId">
+                                <div class="box bg-white shadow p-30">
+                                    <figure class="main mb-25"><img src="~/@Model.GalleryCards.First()?.ThumbnailImageUrl" alt="" /></figure>
+                                    <h4 class="text-uppercase mb-5">@Model.GalleryCards.First()?.ProjectGalleryName</h4>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    @if (Model.GalleryCards.ElementAtOrDefault(1) != null)
+                    {
+                        <div class="item col-md">
+                            <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryId">
+                                <div class="box bg-white shadow p-30">
+                                    <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(1)?.ThumbnailImageUrl" alt="" /></figure>
+                                    <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryName</h4>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    @if (Model.GalleryCards.ElementAtOrDefault(2) != null)
+                    {
+                        <div class="item col-md">
+                            <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryId">
+                                <div class="box bg-white shadow p-30">
+                                    <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(2)?.ThumbnailImageUrl" alt="" /></figure>
+                                    <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryName</h4>
+                                </div>
+                            </a>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

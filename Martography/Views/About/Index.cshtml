@@ -14,9 +14,7 @@
                         <li><a href="#"><i class="fa fa-flickr"></i></a></li>
                     </ul>
                 </div>
-                <!-- /.box -->
             </div>
-            <!--/column -->
             <div class="col-md-6 col-lg">
                 <div class="box bg-white shadow p-30">
                     <figure class="main"><img src="style/images/about-3.jpg" alt="" /></figure>
@@ -29,9 +27,7 @@
                         <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
                     </ul>
                 </div>
-                <!-- /.box -->
             </div>
-            <!--/column -->
             <div class="space30 d-lg-none"></div>
             <div class="col-md-6 col-lg">
                 <div class="box bg-white shadow p-30">
@@ -45,13 +41,15 @@
                         <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                     </ul>
                 </div>
-                <!-- /.box -->
             </div>
-            <!--/column -->
         </div>
-        <!--/.row -->
+        <div class="space100"></div>
+        <div class="row">
+            <div class="col">
+                <p class="lead larger text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </div>
     </div>
-    <!-- /.container -->
 </div>
 
 <div class="wrapper image-wrapper bg-image inverse-text" data-image-src="style/images/home-page-testimonials.jpg">
@@ -65,36 +63,71 @@
                             <footer class="blockquote-footer">Connor Gibson</footer>
                         </blockquote>
                     </div>
-                    <!-- /.cbp-item -->
                     <div class="cbp-item">
                         <blockquote class="icon icon-top larger text-center pl-60 pr-60">
                             <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper eget quam integer. </p>
                             <footer class="blockquote-footer">Coriss Ambady</footer>
                         </blockquote>
                     </div>
-                    <!-- /.cbp-item -->
                     <div class="cbp-item">
                         <blockquote class="icon icon-top larger text-center pl-60 pr-60">
                             <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras justo odio, dapibus ac facilisis.</p>
                             <footer class="blockquote-footer">Barclay Widerski</footer>
                         </blockquote>
                     </div>
-                    <!-- /.cbp-item -->
                     <div class="cbp-item">
                         <blockquote class="icon icon-top larger text-center pl-60 pr-60">
                             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam aenean lacinia. Curabitur blandit tempus in egestas consectetur.</p>
                             <footer class="blockquote-footer">Nikola Brooten</footer>
                         </blockquote>
                     </div>
-                    <!-- /.cbp-item -->
                 </div>
-                <!-- /.cbp -->
             </div>
-            <!-- /column -->
         </div>
-        <!-- /.row -->
     </div>
-    <!-- /.container -->
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <form id="testimonialsForm" method="post" style="width:auto;">
+                <div id="error-email-alert" class="alert alert-danger fade row col justify-content-center" role="alert"> Sorry there was an error or you are already subscribed. </div>
+                <label class="col-form-label-sm d-block text-center" style="font-size: x-large;">Leave testimonial</label>
+                <div class="row text-center">
+                    <div class="col-md-6 pr-10">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your name" required="required">
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-10">
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Your e-mail">
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-10">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Company">
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-10">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Position">
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <textarea class="form-control" rows="3" placeholder="Leave your thoughts here..." required="required"></textarea>
+                        <div class="space20"></div>
+                        <button type="submit" style="background-color: black;" class="btn" data-error="Fix errors" data-processing="Sending..." data-success="Thank you!">Submit</button>
+                        <div id="success-email-alert" class="alert alert-success fade row col justify-content-center" role="alert"> Thank you. </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <div class="wrapper gray-wrapper">
@@ -104,5 +137,4 @@
         <div class="space20"></div>
         <a asp-controller="Contact" asp-action="Send" style="background-color: black;" class="btn btn-l">Get in Touch</a>
     </div>
-    <!-- /.container -->
 </div>

@@ -50,7 +50,7 @@ namespace Services.Data
             {
                 var res = await galleryRepository.All().FirstOrDefaultAsync(g => g.Id == galleryId);
 
-                if (res.Name.ToLower() != name)
+                if (res.Name.ToLower() != name.ToLower())
                     ChangeGalleryFolderName(res, name);
 
                 res.Name = name;
