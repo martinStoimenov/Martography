@@ -1,4 +1,6 @@
-﻿<div class="wrapper light-wrapper">
+﻿@model ViewModels.Testimonials.TestimonialViewModel
+
+<div class="wrapper light-wrapper">
     <div class="container inner pt-70">
         <h2 class="section-title mb-40 text-center">Meet the Team</h2>
         <div class="row boxed grid-view">
@@ -96,30 +98,30 @@
                 <div class="row text-center">
                     <div class="col-md-6 pr-10">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your name" required="required">
+                            <input asp-for="@Model.PersonName" type="text" class="form-control" placeholder="Your name" required="required">
                             <span class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6 pl-10">
                         <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Your e-mail">
+                            <input asp-for="@Model.EmailAddress" type="email" class="form-control" placeholder="Your e-mail">
                             <span class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6 pl-10">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Company">
+                            <input asp-for="@Model.Company" type="text" class="form-control" placeholder="Company">
                             <span class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6 pl-10">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Position">
+                            <input asp-for="@Model.Position" type="text" class="form-control" placeholder="Position">
                             <span class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-12">
-                        <textarea class="form-control" rows="3" placeholder="Leave your thoughts here..." required="required"></textarea>
+                        <textarea asp-for="@Model.Content" class="form-control" rows="3" placeholder="Leave your thoughts here..." required="required"></textarea>
                         <div class="space20"></div>
                         <button type="submit" style="background-color: black;" class="btn" data-error="Fix errors" data-processing="Sending..." data-success="Thank you!">Submit</button>
                         <div id="success-email-alert" class="alert alert-success fade row col justify-content-center" role="alert"> Thank you. </div>

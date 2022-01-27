@@ -13,13 +13,13 @@ namespace Martography.Controllers
         {
             this.emailService = emailService;
         }
-        public IActionResult Send()
+        public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Send(ContactFormViewModel model)
+        public async Task<IActionResult> Index(ContactFormViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);

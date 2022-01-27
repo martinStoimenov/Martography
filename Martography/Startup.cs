@@ -64,6 +64,7 @@ namespace Martography
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IBlogService, BlogService>();
             services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<ITestimonialService, TestimonialService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
