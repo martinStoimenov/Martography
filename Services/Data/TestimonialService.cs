@@ -6,14 +6,15 @@ using Services.Mapping;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ViewModels.Testimonials;
 
 namespace Services.Data
 {
     public class TestimonialService : ITestimonialService
     {
-        private readonly IRepository<Testimonials> repository;
+        private readonly IDeletableEntityRepository<Testimonials> repository;
 
-        public TestimonialService(IRepository<Testimonials> repository)
+        public TestimonialService(IDeletableEntityRepository<Testimonials> repository)
         {
             this.repository = repository;
         }
@@ -31,6 +32,19 @@ namespace Services.Data
             await repository.SaveChangesAsync();
         }
 
+        public async Task EditForAdmin(List<TestimonialsAdminModel> model)
+        {
+            var testimonials = await repository.AllWithDeleted().Where(x=> model.Select(model=>model.Id).Contains(x.Id)).ToListAsync();
+
+            foreach (var item in testimonials)
+            {
+                item.IsApproved = model.FirstOrDefault(x=>x.Id == item.Id).IsApproved;
+                item.IsVisible = model.FirstOrDefault(x=>x.Id == item.Id).IsVisible;
+                repository.Update(item);
+            }
+            await repository.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<T>> GetAllApproved<T>()
             => await repository.All().Where(
                 x => x.IsDeleted == false &&
@@ -39,6 +53,6 @@ namespace Services.Data
             .To<T>().ToListAsync();
 
         public async Task<IEnumerable<T>> GetAllForAdmin<T>()
-            => await repository.All().To<T>().ToListAsync();
+            => await repository.AllWithDeleted().To<T>().ToListAsync();
     }
 }

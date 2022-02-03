@@ -19,7 +19,7 @@
                 <input type="hidden" value="@Model.Name" name="projectName" />
                 <input type="hidden" value="@Model.GalleryName" name="galleryName" />
                 <div class="col">
-                    <button type="submit" class="btn btn-outline-primary float-left mb-0">Upload</button>
+                    <button type="submit" style="background-color: black;" class="btn btn-outline-primary float-left mb-0">Upload</button>
                 </div>
             </div>
         </form>
@@ -63,7 +63,7 @@
                 </form>
             </div>
         </div>
-        <div><button form="changeGalleryForm" type="submit" class="btn" asp-controller="Project" asp-action="ChangeToGallery">Submit changes</button></div>
+        <div><button form="changeGalleryForm" type="submit" class="btn" style="background-color: black;" asp-controller="Project" asp-action="ChangeToGallery">Submit changes</button></div>
 
         <h1 class="post-title">@Model.Name<span class="small"><i> in @Model.GalleryName</i></span></h1>
         <p>
@@ -104,7 +104,7 @@
             @foreach (var image in Model.Images)
             {
                 <div class="cbp-item">
-                    <figure class="overlay overlay3 rounded"><a href="~/@(image.ImageBaseUrl)"><img src="~/@(image.ThumbnailImageUrl)" alt="" /></a></figure>
+                    <figure class="overlay overlay3 rounded"><a href="~/@(image.FullSizeImageUrl)"><img src="~/@(image.ThumbnailImageUrl)" alt="" /></a></figure>
                 </div>
             }
         </div>

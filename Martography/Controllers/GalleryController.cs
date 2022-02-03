@@ -14,10 +14,13 @@ namespace Martography.Controllers
         {
             this.galleryService = galleryService;
         }
-        public async Task<IActionResult> Index(string id)
+        
+        [HttpGet("[controller]/[action]/{id}/{slug?}")]
+        public async Task<IActionResult> Index(string id, string slug)
         {
             var gallery = await galleryService.GetGallery<SingleGalleryViewModel>(id);
             gallery.GalleryDropDowns = galleryService.GetAllGalleriesCached<GalleryDropDownViewModel>();
+            gallery.Slug = slug;
 
             TempData["PreviousGalleryId"] = Request.Headers["Referer"].ToString().Split("/").Last();
 

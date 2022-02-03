@@ -1,21 +1,21 @@
-﻿using Data.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc;
 using Services.Data.Interfaces;
 using System.Threading.Tasks;
 using ViewModels.HomePage;
 using ViewModels.Images;
+using ViewModels.Testimonials;
 
 namespace Martography.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IImageService imageService;
+        private readonly ITestimonialService testimonialsService;
 
-        public HomeController(IImageService imageService)
+        public HomeController(IImageService imageService, ITestimonialService testimonialsService)
         {
             this.imageService = imageService;
+            this.testimonialsService = testimonialsService;
         }
 
         public async Task<IActionResult> Index()
@@ -24,7 +24,8 @@ namespace Martography.Controllers
             var viewModel = new HomePageViewModel()
             {
                 CarouselImages = await imageService.GetAllHomePageImages<ImageViewModel>(),
-                GalleryCards = await imageService.GetRandomImagesForHomePageCards<HomePageCardImageViewModel>()
+                GalleryCards = await imageService.GetRandomImagesForHomePageCards<HomePageCardImageViewModel>(),
+                AllTestimonials = await testimonialsService.GetAllApproved<TestimonialViewModel>()
             };
             return View(viewModel);
         }

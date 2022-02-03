@@ -22,7 +22,7 @@
                 var image = project.Images.ToList().Where(x => x.IsProjectThumbnail == true).FirstOrDefault();
                 <div class="cbp-item text-center @project.GalleryId">
                     <figure class="overlay overlay2 light rounded">
-                        <a asp-controller="Gallery" asp-route-id="@project.GalleryId"><img src="@(image?.ThumbnailImageUrl)" alt="" /></a>
+                        <a asp-controller="Gallery" asp-route-id="@project.GalleryId"><img src="@(image?.FullSizeImageUrl)" alt="" /></a>
                         <figcaption>
                             <h5 class="text-uppercase from-top mb-0">@project.GalleryName</h5>
                             <p class="from-bottom">@project.Name</p>
@@ -39,6 +39,6 @@
         <h2 class="title-color color-dark mb-20 text-center">If you like what you see</h2>
         <h3 class="sub-heading2 text-center">Work with Me</h3>
         <div class="space10"></div>
-        <a asp-controller="Contact" asp-action="Send" class="btn btn-white shadow magic-hover magic-hover__square">Get in Touch</a>
+        <a asp-controller="Contact" asp-action="Send" class="btn btn-dark shadow magic-hover magic-hover__square" style="background-color: black;">Get in Touch</a>
     </div>
 </div>

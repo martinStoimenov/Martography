@@ -16,5 +16,6 @@ namespace ViewModels.GalleryModels
         public bool IsDeleted { get; set; }
         public IEnumerable<ProjectViewModel> Projects { get; set; }
         public IEnumerable<GalleryDropDownViewModel> GalleryDropDowns { get; set; }
+        public string Slug { get; set; }
     }
 }

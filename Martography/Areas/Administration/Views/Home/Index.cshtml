@@ -10,9 +10,10 @@
     <div class="row">
 
         <div class="col text-center">
-            <a data-toggle="modal" data-target="#createGalleryModal" class="btn btn-pastel-green">Create Gallery</a>
-            <a data-toggle="modal" data-target="#createProjectModal" class="btn btn-pastel-green">Create Project</a>
-            <a asp-controller="Blog" asp-action="Create" class="btn btn-pastel-green">Create Blog post</a>
+            <a data-toggle="modal" data-target="#createGalleryModal" class="btn text-white" style="background-color: black;">Create Gallery</a>
+            <a data-toggle="modal" data-target="#createProjectModal" class="btn text-white" style="background-color: black;">Create Project</a>
+            <a asp-controller="Blog" asp-action="Create" class="btn" style="background-color: black;">Create Blog post</a>
+            <a asp-controller="Testimonials" class="btn" style="background-color: black;">Testimonials</a>
         </div>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -20,7 +21,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" style="background-color: black;" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -51,8 +52,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" id="saveBtn" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" style="background-color: black;" data-dismiss="modal">Close</button>
+                        <button type="button" id="saveBtn" class="btn btn-primary" style="background-color: black;">Save</button>
                     </div>
                 </div>
             </div>
@@ -63,7 +64,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="createGalleryModalLabel">Create Gallery</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" style="background-color: black;" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -88,8 +89,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" form="createGalleryForm" id="saveBtn" class="btn btn-primary">Create</button>
+                        <button type="button" style="background-color: black;" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" style="background-color: black;" form="createGalleryForm" id="saveBtn" class="btn btn-primary">Create</button>
                     </div>
                 </div>
             </div>
@@ -100,7 +101,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="createProjectModalLabel">Create Project</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" style="background-color: black;" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -126,8 +127,8 @@
                             @*<input type="hidden" name="controllerAction" id="controllerAction" />*@
                             <input type="hidden" />
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" form="createProjectForm" id="saveBtn" class="btn btn-primary">Create</button>
+                        <button type="button" style="background-color: black;" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" style="background-color: black;" form="createProjectForm" id="saveBtn" class="btn btn-primary">Create</button>
                     </div>
                         </form>
                     </div>
@@ -143,7 +144,7 @@
             <div class="text-center">
                 <h5>All Galleries</h5>
             </div>
-            <table class="table table-bordered table-responsive-lg table-hover">
+            <table class="table table-bordered table-responsive-lg table-hover table-striped">
                 <thead>
                     <tr>
                         <th scope="col">Name</th>
@@ -188,7 +189,7 @@
             <div class="text-center">
                 <h5>All Projects</h5>
             </div>
-            <table class="table table-bordered table-responsive-lg table-hover">
+            <table class="table table-bordered table-responsive-lg table-hover table-striped">
                 <thead>
                     <tr>
                         <th scope="col"> </th>
@@ -201,14 +202,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var proj in Model.Projects)
+                    @foreach (var proj in Model.Projects.OrderBy(x=>x.Name))
                     {
                         <tr>
                             <td>
                                 <a class="hover pe-auto" data-toggle="modal" data-target="#exampleModal" data-id="@proj.Id" data-name="@proj.Name"
                                    data-action="UpdateProject" data-deleted="@proj.IsDeleted" data-description="@proj.Description">Edit</a>
                             </td>
-                            <td><a asp-controller="Project" asp-action="Index" asp-route-id="@proj.Id">@proj.Name</a></td>
+                            <td><a asp-area="Administration" asp-controller="Project" asp-action="Index" asp-route-id="@proj.Id">@proj.Name</a></td>
                             <td>@proj.GalleryName</td>
                             <td>@proj.Description</td>
                             <td>@proj.CreatedOn.ToShortDateString()</td>
@@ -234,7 +235,7 @@
             <div class="text-center">
                 <h5>All Blog posts</h5>
             </div>
-            <table class="table table-bordered table-responsive-lg table-hover">
+            <table class="table table-bordered table-responsive-lg table-hover table-striped">
                 <thead>
                     <tr>
                         <th scope="col">Title</th>

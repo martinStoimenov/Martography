@@ -13,10 +13,12 @@ namespace Services.Data
     public class ProjectsService : IProjectsService
     {
         private readonly IDeletableEntityRepository<Project> projectRepository;
+        private readonly IGalleryService galleryService;
 
-        public ProjectsService(IDeletableEntityRepository<Project> projectRepository)
+        public ProjectsService(IDeletableEntityRepository<Project> projectRepository, IGalleryService galleryService)
         {
             this.projectRepository = projectRepository;
+            this.galleryService = galleryService;
         }
 
         public async Task CreateProject(string name, string descriptiom, string galleryId)
@@ -42,10 +44,10 @@ namespace Services.Data
 
         public async Task Edit(string projectId, string name, string description, bool isDeleted)
         {
-            var proj = await projectRepository.All().Where(x => x.Id == projectId).Include(x=>x.Gallery).FirstOrDefaultAsync();
+            var proj = await projectRepository.All().Where(x => x.Id == projectId).Include(x => x.Gallery).FirstOrDefaultAsync();
 
             if (proj.Name.ToLower() != name.ToLower())
-                ChangeProjectFolderName(proj, name);
+                RenameFolder(proj, name);
 
             proj.Name = name;
             proj.Description = description;
@@ -77,13 +79,18 @@ namespace Services.Data
 
         public async Task MoveProjectToGalleryForAdmin(string galleryId, string projectId)
         {
-            var project = await projectRepository.AllWithDeleted().FirstOrDefaultAsync(x => x.Id == projectId);
+            var project = await projectRepository.AllWithDeleted().Include(x => x.Gallery).FirstOrDefaultAsync(x => x.Id == projectId);
 
-            if (project.GalleryId != galleryId)
+            if (project?.GalleryId != galleryId)
             {
-                project.GalleryId = galleryId;
-                projectRepository.Update(project);
-                await projectRepository.SaveChangesAsync();
+                var newGallery = await galleryService.GetGallery<ViewModels.GalleryModels.SingleGalleryViewModel>(galleryId);
+
+                if (MoveFolder(project, newGallery?.Name))
+                {
+                    project.GalleryId = galleryId;
+                    projectRepository.Update(project);
+                    await projectRepository.SaveChangesAsync();
+                }
             }
         }
 
@@ -95,13 +102,32 @@ namespace Services.Data
             await projectRepository.SaveChangesAsync();
         }
 
-        private void ChangeProjectFolderName(Project project, string newName)
+        private void RenameFolder(Project project, string newName)
         {
             var basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", Common.GlobalConstants.BaseImagesFolder, project.Gallery.Name);
             var oldPath = Path.Combine(basePath, project.Name);
             var newPath = Path.Combine(basePath, newName);
 
-            Directory.Move(oldPath, newPath);
+            if (Directory.Exists(oldPath))
+            {
+                Directory.Move(oldPath, newPath);
+            }
+        }
+
+        private bool MoveFolder(Project project, string galleryName)
+        {
+            bool isMoved = false;
+
+            var basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", Common.GlobalConstants.BaseImagesFolder);
+            var oldPath = Path.Combine(basePath, project.Gallery.Name, project.Name);
+            var newPath = Path.Combine(basePath, galleryName, project.Name);
+
+            if (Directory.Exists(oldPath))
+            {
+                Directory.Move(oldPath, newPath);
+                isMoved = true;
+            }
+            return isMoved;
         }
     }
 }

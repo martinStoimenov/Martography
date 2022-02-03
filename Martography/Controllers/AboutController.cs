@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ViewModels.About;
 using ViewModels.Testimonials;
 
 namespace Martography.Controllers
@@ -16,7 +17,14 @@ namespace Martography.Controllers
         {
             this.service = service;
         }
-        public IActionResult Index() => View();
+        public async Task<IActionResult> Index()
+        {
+            var model = new AboutPageViewModel()
+            {
+                AllTestimonials = await service.GetAllApproved<TestimonialViewModel>()
+            };
+            return this.View(model);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Index(TestimonialViewModel model)

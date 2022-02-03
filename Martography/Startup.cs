@@ -119,11 +119,11 @@ namespace Martography
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapControllerRoute("MyareaRoute", "Administration", "api/{controller}/{action}/{id?}");
+                //endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapAreaControllerRoute("adminRoute", "Administration", "Administration/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

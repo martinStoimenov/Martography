@@ -7,7 +7,9 @@
     <div class="row justify-content-around">
         <div class="dropdown">
             <button class="btn btn-success
-                    dropdown-toggle" type="button"
+                    dropdown-toggle" 
+                    style="background-color: black;"
+                    type="button"
                     id="dropdownMenuButton"
                     data-toggle="dropdown"
                     aria-haspopup="true"
@@ -30,7 +32,7 @@
 
         <input asp-for="Author" type="text" value="@Model.Author" />
 
-        <select asp-for="GalleryId" asp-items="Model.AllGalleries" style="width:15%"></select>
+        <select asp-for="GalleryId" asp-items="@Model.AllGalleries" style="width:15%"></select>
     </div>
     <div class="space20"></div>
     <input id="hiddenImageId" asp-for="ImageId" type="hidden" value="@Model.ImageId" />
@@ -43,7 +45,7 @@
 
 <div class="space20"></div>
 <div class="row justify-content-center">
-    <button asp-action="Edit" type="submit" class="btn" form="asd">Save</button>
+    <button asp-action="Edit" type="submit" class="btn" style="background-color: black;" form="asd">Save</button>
 </div>
 
 @section Scripts{

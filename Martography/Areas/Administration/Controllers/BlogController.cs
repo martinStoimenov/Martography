@@ -24,7 +24,23 @@ namespace Martography.Areas.Administration.Controllers
             this.galleryService = galleryService;
         }
 
-        public IActionResult Create() => View();
+        public async Task<IActionResult> Create()
+        {
+            var blogpost = new BlogPostAdminViewModel();
+            var galleries = galleryService.GetAllGalleriesCached<GalleryDropDownViewModel>();
+
+            blogpost.AllGalleries = galleries.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id, Selected = x.Id == blogpost.Id }).ToList();
+            blogpost.AllImages = await imageService.GetAll<AdminImageDropdownViewModel>();
+            return View(blogpost);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(string Content, string Title, string Author, string GalleryId, string ImageId)
+        {
+            // TODO: Finish the view (add author input images etc. like edit)
+            var postId = await blogService.CreatePost(Content, Title, Author, GalleryId, ImageId);
+            return await this.Edit(postId);
+        }
 
         public async Task<IActionResult> Edit(string id)
         {
@@ -41,14 +57,6 @@ namespace Martography.Areas.Administration.Controllers
         public async Task<IActionResult> Edit(string Id, string Content, string Title, string Author, string GalleryId, string ImageId)
         {
             var postId = await blogService.EditPost(Id, Content, Title, Author, GalleryId, ImageId);
-            return await this.Edit(postId);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(string Content, string Title, string Author, string GalleryId, string ImageId)
-        {
-            // TODO: Finish the view (add author input images etc. like edit)
-            var postId = await blogService.CreatePost(Content, Title, Author, GalleryId, ImageId);
             return await this.Edit(postId);
         }
     }

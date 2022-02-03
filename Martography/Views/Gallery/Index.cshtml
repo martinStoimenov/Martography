@@ -2,10 +2,6 @@
     @using ViewModels.GalleryModels;
     @model SingleGalleryViewModel
 }
-                                           @*ADD URL SLUG TO SHOW CERTAIN PROJECT (OR SOMETHING ELSE) (WHEN COMING FROM ANOTHER PAGE)*@
-
-
-
 <div class="wrapper light-wrapper">
     <div class="inner pt-70 pb-15 pl-15 pr-15">
         <h1 class="heading text-center">@Model.Name</h1>
@@ -52,7 +48,7 @@
                 {
                     <div class="cbp-item @project.Id">
                         <figure class="overlay overlay3 rounded">
-                            <a href="~/@image.ImageBaseUrl">
+                            <a href="~/@image.FullSizeImageUrl">
                                 <img src="~/@image.ThumbnailImageUrl" alt="" />
                             </a>
                         </figure>
@@ -71,3 +67,22 @@
     </div>
     <div class="space10"></div>
 </div>
+
+@*@section Scripts{
+    <script>
+        $(document).ready(function(){
+
+            if("@Model.Slug" != ""){
+
+                let allItem = $('.cbp-filter-item-active')
+                allItem.removeClass('cbp-filter-item-active')
+
+                let searchFor = 'div.cbp-filter-item:contains' + "('@Model.Slug')"
+                let projectToDisplay = $(searchFor);
+
+                projectToDisplay.addClass('cbp-filter-item-active');
+                $(searchFor).click();
+            }
+        })
+    </script>
+}*@

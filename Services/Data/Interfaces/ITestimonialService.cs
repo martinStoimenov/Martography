@@ -9,5 +9,6 @@ namespace Services.Data.Interfaces
         Task Create(string name, string company, string jobTitle, string emailAddress, string content);
         Task<IEnumerable<T>> GetAllApproved<T>();
         Task<IEnumerable<T>> GetAllForAdmin<T>();
+        Task EditForAdmin(List<TestimonialsAdminModel> model);
     }
 }

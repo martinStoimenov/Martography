@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ViewModels.Contact;
 using ViewModels.Images;
+using ViewModels.Testimonials;
 
 namespace ViewModels.HomePage
 {
@@ -8,6 +9,7 @@ namespace ViewModels.HomePage
     {
         public IEnumerable<ImageViewModel> CarouselImages { get; set; }
         public IEnumerable<HomePageCardImageViewModel> GalleryCards { get; set; }
+        public IEnumerable<TestimonialViewModel> AllTestimonials { get; set; }
         public SubscribeModel SubscribeModel { get; set; }
     }
 }
