@@ -1,7 +1,9 @@
-﻿ using Microsoft.AspNetCore.Http;
+﻿using Martography.Areas.Administration.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Data.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ViewModels.Testimonials;
 
@@ -10,17 +12,23 @@ namespace Martography.Areas.Administration.Controllers
     public class TestimonialsController : AdministrationController
     {
         private readonly ITestimonialService service;
+        private readonly IImageService imageService;
 
-        public TestimonialsController(ITestimonialService service)
+        public TestimonialsController(ITestimonialService service, IImageService imageService)
         {
             this.service = service;
+            this.imageService = imageService;
         }
 
         // GET: TestimonialsController
         public async Task<ActionResult> Index()
         {
+            var viewModel = new TestimonialAdminPageModel();
             var testimonials = await service.GetAllForAdmin<TestimonialsAdminModel>();
-            return View(testimonials);
+            viewModel.Testimonials = testimonials.ToList();
+            viewModel.AllImages = await imageService.GetAll<AdminImageDropdownViewModel>();
+
+            return View(viewModel);
         }
 
         // GET: TestimonialsController/Details/5
@@ -59,11 +67,11 @@ namespace Martography.Areas.Administration.Controllers
         // POST: TestimonialsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(List<TestimonialsAdminModel> model)
+        public async Task<ActionResult> Edit(TestimonialUpdateModel testimonial)
         {
             try
             {
-                await service.EditForAdmin(model);
+                await service.EditForAdmin(testimonial.Id,testimonial.IsVisible,testimonial.IsApproved, testimonial.IsDeleted, testimonial.ImageId);
                 return RedirectToAction(nameof(Index));
             }
             catch

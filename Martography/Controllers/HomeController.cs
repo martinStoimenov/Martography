@@ -24,7 +24,7 @@ namespace Martography.Controllers
             var viewModel = new HomePageViewModel()
             {
                 CarouselImages = await imageService.GetAllHomePageImages<ImageViewModel>(),
-                GalleryCards = await imageService.GetRandomImagesForHomePageCards<HomePageCardImageViewModel>(),
+                //GalleryCards = await imageService.GetProjectThumbnails<HomePageCardImageViewModel>(4),
                 AllTestimonials = await testimonialsService.GetAllApproved<TestimonialViewModel>()
             };
             return View(viewModel);

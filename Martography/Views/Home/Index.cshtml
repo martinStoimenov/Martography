@@ -16,86 +16,123 @@
     </div>
 </div>
 
-@if (Model.GalleryCards.Count() > 0)
-{
+@*@if (Model.GalleryCards.Count() > 0)
+    {
     <div class="wrapper light-wrapper">
-        <div class="container inner">
-            <h2 class="title-color color-dark mb-20 text-center">Photographer</h2>
-            <h3 class="sub-heading2 text-center">Based in Sofia, Bulgaria@*<span class="small_thin_grey font-italic">(but not limited to)</span>.*@</h3>
-            <div class="space80"></div>
-            <div class="tiles">
-                <div class="items row boxed grid-view text-center">
-                    @if (Model.GalleryCards.First() != null)
-                    {
-                        <div class="item col-md">
-                            <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.First()?.ProjectGalleryId">
-                                <div class="box bg-white shadow p-30">
-                                    <figure class="main mb-25"><img src="~/@Model.GalleryCards.First()?.ThumbnailImageUrl" alt="" /></figure>
-                                    <h4 class="text-uppercase mb-5">@Model.GalleryCards.First()?.ProjectGalleryName</h4>
-                                </div>
-                            </a>
-                        </div>
-                    }
-                    @if (Model.GalleryCards.ElementAtOrDefault(1) != null)
-                    {
-                        <div class="item col-md">
-                            <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryId">
-                                <div class="box bg-white shadow p-30">
-                                    <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(1)?.ThumbnailImageUrl" alt="" /></figure>
-                                    <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryName</h4>
-                                </div>
-                            </a>
-                        </div>
-                    }
-                    @if (Model.GalleryCards.ElementAtOrDefault(2) != null)
-                    {
-                        <div class="item col-md">
-                            <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryId">
-                                <div class="box bg-white shadow p-30">
-                                    <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(2)?.ThumbnailImageUrl" alt="" /></figure>
-                                    <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryName</h4>
-                                </div>
-                            </a>
-                        </div>
-                    }
+    <div class="container inner">
+    <h2 class="title-color color-dark mb-20 text-center">Photographer</h2>
+    <h3 class="sub-heading2 text-center">Based in Sofia, Bulgaria<span class="small_thin_grey font-italic">(but not limited to)</span>.</h3>
+    <div class="space80"></div>
+    <div class="tiles">
+    <div class="items row boxed grid-view text-center">
+    @if (Model.GalleryCards.First() != null)
+    {
+    <div class="item col-md">
+    <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.First()?.ProjectGalleryId">
+    <div class="box bg-white shadow p-30">
+    <figure class="main mb-25"><img src="~/@Model.GalleryCards.First()?.ThumbnailImageUrl" alt="" /></figure>
+    <h4 class="text-uppercase mb-5">@Model.GalleryCards.First()?.ProjectGalleryName</h4>
+    </div>
+    </a>
+    </div>
+    }
+    @if (Model.GalleryCards.ElementAtOrDefault(1) != null)
+    {
+    <div class="item col-md">
+    <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryId">
+    <div class="box bg-white shadow p-30">
+    <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(1)?.ThumbnailImageUrl" alt="" /></figure>
+    <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(1)?.ProjectGalleryName</h4>
+    </div>
+    </a>
+    </div>
+    }
+    @if (Model.GalleryCards.ElementAtOrDefault(2) != null)
+    {
+    <div class="item col-md">
+    <a asp-controller="Gallery" asp-action="Index" asp-route-id="@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryId">
+    <div class="box bg-white shadow p-30">
+    <figure class="main mb-25"><img src="~/@Model.GalleryCards.ElementAtOrDefault(2)?.ThumbnailImageUrl" alt="" /></figure>
+    <h4 class="text-uppercase mb-5">@Model.GalleryCards.ElementAtOrDefault(2)?.ProjectGalleryName</h4>
+    </div>
+    </a>
+    </div>
+    }
+    </div>
+    </div>
+    <div class="space30"></div>
+    </div>
+    </div>
+    }*@
+
+<div class="space80"></div>
+<div>
+    <h2 class="title-color color-dark mb-10 text-center">Photographer</h2>
+    <i class="si-camping_place-map text-center d-block" style="font-size: xxx-large;"></i>
+    <h3 class="sub-heading2 text-center">Based in Sofia, Bulgaria.</h3>
+</div>
+<div class="space80"></div>
+
+@*<div class="blog grid-view text-center">
+    <div class="isotope row no-gutter text-center">
+    @foreach (var image in Model.GalleryCards)
+    {
+    <div class="item grid-sizer col-sm-6 col-md-6 col-lg mb-0">
+    <figure class="overlay caption caption-overlay mb-0"><a href="#"> <img src="~/@image.ThumbnailImageUrl" alt="" /></a>
+    <figcaption class="d-flex">
+    <div class="align-self-center mx-auto">
+    <h3 class="text-uppercase mb-0">@image.ProjectGalleryName</h3>
+    </div>
+    </figcaption>
+    </figure>
+    </div>
+    }
+    @*<div class="item grid-sizer col-sm-6 col-md-6 col-lg-3 mb-0">
+    <figure class="overlay caption caption-overlay mb-0"><a href="#"> <img src="style/images/art/si16.jpg" alt="" /></a>
+    <figcaption class="d-flex">
+    <div class="align-self-center mx-auto">
+    <h3 class="text-uppercase mb-0">Couples</h3>
+    </div>
+    </figcaption>
+    </figure>
+    </div>*@
+@*</div>
+    </div>*@
+
+    <div class="wrapper image-wrapper bg-image inverse-text" data-image-src="style/images/counter-img.jpg">
+    <div class="container inner pt-150 pb-150">
+        <div class="row counter">
+            <div class="col-md-4">
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="icon fs-58 icon-color color-dark mr-25"><i class="si-photo_camera"></i></div>
+                    <div>
+                        <h3 class="value">23,735</h3>
+                        <p>Shutter clicks</p>
+                    </div>
                 </div>
             </div>
-            <div class="space30"></div>
-        </div>
-    </div>
-}
-
-<div class="wrapper image-wrapper bg-image inverse-text" data-image-src="style/images/home-page-testimonials.jpg">
-    <div class="container inner pt-150 pb-150">
-        <div class="row">
-            <div class="col-lg-10 offset-lg-1">
-                <div class="cube-slider cbp-slider-edge cbp">
-                    @if (Model.AllTestimonials.Count() == 0)
-                    {
-                        <div class="cbp-item">
-                            <blockquote class="icon icon-top larger text-center pl-60 pr-60">
-                                <p>Sed posuere consectetur est at lobortis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis, est non commodo luctus.</p>
-                                <footer class="blockquote-footer">Connor Gibson</footer>
-                            </blockquote>
-                        </div>
-                    }
-                    else
-                    {
-                        @foreach (var testimonial in Model.AllTestimonials)
-                        {
-                            <div class="cbp-item">
-                                <blockquote class="icon icon-top larger text-center pl-60 pr-60">
-                                    <p>@testimonial.Content</p>
-                                    <footer class="blockquote-footer">@testimonial.PersonName</footer>
-                                </blockquote>
-                            </div>
-                        }
-                    }
+            <div class="col-md-4">
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="icon fs-58 icon-color color-dark mr-25"> <i class="si-photo_image-review"></i> </div>
+                    <div>
+                        <h3 class="value">457</h3>
+                        <p>Edited pictures</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="icon fs-58 icon-color color-dark mr-25"> <i class="si-education_planet-orbit"></i> </div>
+                    <div>
+                        <h3 class="value">16</h3>
+                        <p>Projects</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 @*<div class="container">
     <div class="row justify-content-center">
@@ -362,34 +399,47 @@
 <!-- END - We recommend to place the above code in footer or bottom of your website html  -->
 <!-- End Sendinblue Form -->
 
-<div class="wrapper image-wrapper bg-image inverse-text" data-image-src="style/images/counter-img.jpg">
+
+<div class="wrapper image-wrapper bg-image inverse-text" style="content:normal;" data-image-src="style/images/home-page-testimonials.jpg">
     <div class="container inner pt-150 pb-150">
-        <div class="row counter">
-            <div class="col-md-4">
-                <div class="d-flex flex-row justify-content-center">
-                    <div class="icon fs-58 icon-color color-dark mr-25"><i class="si-photo_camera"></i></div>
-                    <div>
-                        <h3 class="value">23,735</h3>
-                        <p>Shots Taken</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="d-flex flex-row justify-content-center">
-                    <div class="icon fs-58 icon-color color-dark mr-25"> <i class="si-photo_image-review"></i> </div>
-                    <div>
-                        <h3 class="value">457</h3>
-                        <p>Edited shots</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="d-flex flex-row justify-content-center">
-                    <div class="icon fs-58 icon-color color-dark mr-25"> <i class="si-education_planet-orbit"></i> </div>
-                    <div>
-                        <h3 class="value">16</h3>
-                        <p>Projects</p>
-                    </div>
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="cube-slider cbp-slider-edge cbp">
+                    @if (Model.AllTestimonials.Count() == 0)
+                    {
+                        <div class="cbp-item pl-60 pr-60 pb-10">
+                            <div class="row d-flex">
+                                <div class="col-md-6 pr-35 pr-sm-15">
+                                    <figure><img src="~/style/images/counter-img.jpg" alt="" /></figure>
+                                </div>
+                                <div class="col-md-6 align-self-center">
+                                    <blockquote class="icon icon-left">
+                                        <p>Consectetur adipiscing elit. Duis mollis, est non commodo luctus gestas eget quam integer. Curabitur blandit tempus rutrum faucibus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+                                        <footer class="blockquote-footer">Mildred & Austin</footer>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var testimonial in Model.AllTestimonials)
+                        {
+                            <div class="cbp-item pl-60 pr-60 pb-10">
+                                <div class="row d-flex">
+                                    <div class="col-md-6 pr-35 pr-sm-15">
+                                        <figure><img src="~/@testimonial.Image.ThumbnailImageUrl" alt="" /></figure>@*style/images/counter-img.jpg*@
+                                    </div>
+                                    <div class="col-md-6 align-self-center">
+                                        <blockquote class="icon icon-left">
+                                            <p>@testimonial.Content</p>
+                                            <footer class="blockquote-footer">@testimonial.PersonName</footer>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </div>

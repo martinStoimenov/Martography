@@ -3,9 +3,9 @@ using System;
 
 namespace Data.Models
 {
-    public class Testimonials : BaseDeletableModel<string>
+    public class Testimonial : BaseDeletableModel<string>
     {
-        public Testimonials()
+        public Testimonial()
         {
             this.Id = Guid.NewGuid().ToString();
         }
@@ -16,8 +16,7 @@ namespace Data.Models
         public bool IsVisible { get; set; }
         public string EmailAddress { get; set; }
         public bool IsApproved { get; set; }
-
-        //public string ImageId { get; set; }
-        //public Image Image { get; set; }
+        public string ImageId { get; set; }
+        public Image Image { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Data.Models;
 using Services.Mapping;
 
-namespace ViewModels.Images
+namespace Martography.Areas.Administration.ViewModels
 {
     public class AdminImageDropdownViewModel : IMapFrom<Image>
     {
@@ -11,7 +11,7 @@ namespace ViewModels.Images
         public string ProjectGalleryId { get; set; }
         public string ProjectName { get; set; }
         public string ProjectId { get; set; }
-        public string ImageBaseUrl { get => string.Join("/", new string[] { Common.GlobalConstants.BaseImagesFolder, ProjectGalleryName, ProjectName, Name }); set { } }
+        public string FullSizeImageUrl { get => string.Join("/", new string[] { Common.GlobalConstants.BaseImagesFolder, ProjectGalleryName, ProjectName, Name }); set { } }
         public string ThumbnailImageUrl { get => string.Join("/", new string[] { Common.GlobalConstants.BaseImagesFolder, ProjectGalleryName, ProjectName, $"{Common.GlobalConstants.ThumbnailPrefix}{Name}" }); set { } }
     }
 }

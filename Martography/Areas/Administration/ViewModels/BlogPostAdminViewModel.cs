@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Services.Mapping;
 using System;
 using System.Collections.Generic;
-using ViewModels.Images;
 
-namespace ViewModels.Blog
+namespace Martography.Areas.Administration.ViewModels
 {
     public class BlogPostAdminViewModel : IMapFrom<BlogPost>
     {

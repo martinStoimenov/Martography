@@ -12,15 +12,15 @@ namespace Services.Data
 {
     public class TestimonialService : ITestimonialService
     {
-        private readonly IDeletableEntityRepository<Testimonials> repository;
+        private readonly IDeletableEntityRepository<Testimonial> repository;
 
-        public TestimonialService(IDeletableEntityRepository<Testimonials> repository)
+        public TestimonialService(IDeletableEntityRepository<Testimonial> repository)
         {
             this.repository = repository;
         }
         public async Task Create(string name, string company, string jobTitle, string emailAddress, string content)
         {
-            var testimonial = new Testimonials()
+            var testimonial = new Testimonial()
             {
                 Company = company,
                 Content = content,
@@ -32,23 +32,24 @@ namespace Services.Data
             await repository.SaveChangesAsync();
         }
 
-        public async Task EditForAdmin(List<TestimonialsAdminModel> model)
+        public async Task EditForAdmin(string Id, bool isVisible, bool isApproved, bool isDeleted, string imageId)
         {
-            var testimonials = await repository.AllWithDeleted().Where(x=> model.Select(model=>model.Id).Contains(x.Id)).ToListAsync();
+            var databaseTestimonial = await repository.AllWithDeleted().FirstOrDefaultAsync(x => x.Id == Id);
 
-            foreach (var item in testimonials)
-            {
-                item.IsApproved = model.FirstOrDefault(x=>x.Id == item.Id).IsApproved;
-                item.IsVisible = model.FirstOrDefault(x=>x.Id == item.Id).IsVisible;
-                repository.Update(item);
-            }
+            databaseTestimonial.ImageId = imageId;
+            databaseTestimonial.IsVisible = isVisible;
+            databaseTestimonial.IsApproved = isApproved;
+            databaseTestimonial.IsDeleted = isDeleted;
+
+            repository.Update(databaseTestimonial);
+
             await repository.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllApproved<T>()
             => await repository.All().Where(
                 x => x.IsDeleted == false &&
-                x.IsApproved == true &&
+                x.IsApproved == true ||
                 x.IsVisible == true)
             .To<T>().ToListAsync();
 

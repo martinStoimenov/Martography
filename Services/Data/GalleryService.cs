@@ -37,6 +37,9 @@ namespace Services.Data
                 };
                 await galleryRepository.AddAsync(gallery);
                 await galleryRepository.SaveChangesAsync();
+
+                var galleryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", Common.GlobalConstants.BaseImagesFolder, galleryName);
+                Directory.CreateDirectory(galleryPath);
             }
             catch (Exception)
             {

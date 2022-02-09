@@ -62,6 +62,6 @@ namespace Services.Data
             return res;
         }
 
-        public async Task<T> GetPost<T>(string id) => await deletableBlogRepository.AllWithDeleted().Where(x => x.Id == id).To<T>().FirstOrDefaultAsync();
+        public async Task<T> GetPostById<T>(string id) => await deletableBlogRepository.AllWithDeleted().Where(x => x.Id == id).To<T>().FirstOrDefaultAsync();
     }
 }

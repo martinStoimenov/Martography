@@ -28,7 +28,7 @@ namespace Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<Gallery> Galleries { get; set; }
         public DbSet<BlogPost> BlogPosts { get; set; }
-        public DbSet<Testimonials> Testimonials { get; set; }
+        public DbSet<Testimonial> Testimonials { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -89,11 +89,11 @@ namespace Data
             builder.Entity<BlogPost>().Property(x => x.Title).HasMaxLength(500).IsRequired();
             builder.Entity<BlogPost>().Property(x => x.GalleryId).IsRequired(false);
 
-            builder.Entity<Testimonials>().Property(x => x.PersonName).HasMaxLength(300);
-            builder.Entity<Testimonials>().Property(x => x.Content).HasMaxLength(3000).IsRequired();
-            builder.Entity<Testimonials>().Property(x => x.Position).HasMaxLength(300);
-            builder.Entity<Testimonials>().Property(x => x.Company).HasMaxLength(300);
-            builder.Entity<Testimonials>().Property(x => x.EmailAddress).HasMaxLength(350);
+            builder.Entity<Testimonial>().Property(x => x.PersonName).HasMaxLength(300);
+            builder.Entity<Testimonial>().Property(x => x.Content).HasMaxLength(3000).IsRequired();
+            builder.Entity<Testimonial>().Property(x => x.Position).HasMaxLength(300);
+            builder.Entity<Testimonial>().Property(x => x.Company).HasMaxLength(300);
+            builder.Entity<Testimonial>().Property(x => x.EmailAddress).HasMaxLength(350);
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)

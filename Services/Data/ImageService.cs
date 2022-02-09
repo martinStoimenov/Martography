@@ -80,7 +80,7 @@ namespace Services.Data
             {
                 height = (int)((double)resizeWidth / width * height);
                 width = resizeWidth;
-                if(resizeWidth < FullSizeWidth)
+                if (resizeWidth < FullSizeWidth)
                     quality = 75;
             }
 
@@ -195,5 +195,9 @@ namespace Services.Data
         }
 
         public async Task<IEnumerable<T>> GetAll<T>() => await imageRepository.All().To<T>().ToListAsync();
+
+        public async Task<IEnumerable<T>> GetProjectThumbnails<T>(int imagesCount)
+            => await imageRepository.All().Where(x => x.IsProjectThumbnail == true).Take(imagesCount).To<T>().ToListAsync();
+            
     }
 }

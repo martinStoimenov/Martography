@@ -14,9 +14,10 @@ namespace Martography.Controllers
         {
             this.galleryService = galleryService;
         }
-        
-        [HttpGet("[controller]/[action]/{id}/{slug?}")]
-        public async Task<IActionResult> Index(string id, string slug)
+
+#nullable enable
+        //[HttpGet("/{id}/{slug?}")]
+        public async Task<IActionResult> Index(string id, string? slug)
         {
             var gallery = await galleryService.GetGallery<SingleGalleryViewModel>(id);
             gallery.GalleryDropDowns = galleryService.GetAllGalleriesCached<GalleryDropDownViewModel>();

@@ -1,9 +1,10 @@
 ﻿using Services.Mapping;
 using System.ComponentModel.DataAnnotations;
+using ViewModels.Images;
 
 namespace ViewModels.Testimonials
 {
-    public class TestimonialViewModel : IMapFrom<Data.Models.Testimonials>
+    public class TestimonialViewModel : IMapFrom<Data.Models.Testimonial>
     {
         [Required]
         public string Content { get; set; }
@@ -15,5 +16,6 @@ namespace ViewModels.Testimonials
         [EmailAddress]
         public string EmailAddress { get; set; }
         public bool IsApproved { get; set; }
+        public ImageViewModel Image { get; set; }
     }
 }

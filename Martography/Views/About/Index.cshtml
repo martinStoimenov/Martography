@@ -60,14 +60,40 @@
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
                 <div class="cube-slider cbp-slider-edge cbp">
-                    @foreach (var testimonial in Model.AllTestimonials)
+                    @if (Model.AllTestimonials.Count() == 0)
                     {
-                    <div class="cbp-item">
-                        <blockquote class="icon icon-top larger text-center pl-60 pr-60">
-                            <p>@testimonial.Content</p>
-                            <footer class="blockquote-footer">@testimonial.PersonName</footer>
-                        </blockquote>
-                    </div>
+                        <div class="cbp-item pl-60 pr-60 pb-10">
+                            <div class="row d-flex">
+                                <div class="col-md-6 pr-35 pr-sm-15">
+                                    <figure><img src="~/style/images/counter-img.jpg" alt="" /></figure>
+                                </div>
+                                <div class="col-md-6 align-self-center">
+                                    <blockquote class="icon icon-left">
+                                        <p>Consectetur adipiscing elit. Duis mollis, est non commodo luctus gestas eget quam integer. Curabitur blandit tempus rutrum faucibus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+                                        <footer class="blockquote-footer">Mildred & Austin</footer>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var testimonial in Model.AllTestimonials)
+                        {
+                            <div class="cbp-item pl-60 pr-60 pb-10">
+                                <div class="row d-flex">
+                                    <div class="col-md-6 pr-35 pr-sm-15">
+                                        <figure><img src="~/@testimonial.Image.ThumbnailImageUrl" alt="" /></figure>@*style/images/counter-img.jpg*@
+                                    </div>
+                                    <div class="col-md-6 align-self-center">
+                                        <blockquote class="icon icon-left">
+                                            <p>@testimonial.Content</p>
+                                            <footer class="blockquote-footer">@testimonial.PersonName</footer>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     }
                 </div>
             </div>

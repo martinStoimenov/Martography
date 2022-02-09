@@ -1,6 +1,6 @@
 ﻿@{
-    string currentUrl = Context.Request.Scheme + "://" + Context.Request.Host + Context.Request.Path;
-    string enc = System.Net.WebUtility.UrlEncode(currentUrl);
+    //string currentUrl = Context.Request.Scheme + "://" + Context.Request.Host + Context.Request.Path;
+    //string enc = System.Net.WebUtility.UrlEncode(currentUrl);
     @model ViewModels.Blog.BlogPostViewModel
 }
 <div class="wrapper light-wrapper">
@@ -14,11 +14,11 @@
                         <h1 class="post-title">@Model.Title</h1>
                         <div class="meta"><span class="date">@Model.CreatedOn.ToString("d")</span><span class="author">By @Model.Author</span><span class="category"><a asp-controller="Gallery" asp-route-id="@Model.GalleryId">@Model.GalleryName</a></span></div>
                         <div>@(Html.Raw(Model.Content))</div>
-                        @*<div class="meta tags mb-10 text-center"><a href="#">journal</a>, <a href="#">illustration</a>, <a href="#">design</a>, <a href="#">daily</a></div>*@
+                        @*<div class="meta tags mb-10 text-center"><a href="#">journal</a>, <a href="#">illustration</a>, <a href="#">design</a>, <a href="#">daily</a></div>
                         <ul class="social social-mute social-s text-center">
                             <li><a href="https://www.facebook.com/sharer/sharer.php?u=@enc" target="_blank" rel="noopener noreferrer nofollow"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="https://plus.google.com/share?url=@enc" target="_blank" rel="noopener noreferrer nofollow"><i class="fa fa-google-plus"></i></a></li>
-                        </ul>
+                        </ul>*@
                     </div>
                 </div>
             </div>

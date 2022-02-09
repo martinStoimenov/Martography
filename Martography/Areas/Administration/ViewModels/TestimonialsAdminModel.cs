@@ -1,9 +1,9 @@
 ﻿using Services.Mapping;
 using System;
 
-namespace ViewModels.Testimonials
+namespace Martography.Areas.Administration.ViewModels
 {
-    public class TestimonialsAdminModel : IMapFrom<Data.Models.Testimonials>
+    public class TestimonialsAdminModel : IMapFrom<Data.Models.Testimonial>
     {
         public string Id { get; set; }
         public string Content { get; set; }
@@ -17,5 +17,6 @@ namespace ViewModels.Testimonials
         public DateTime? DeletedOn { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
+        public string ImageId { get; set; }
     }
 }

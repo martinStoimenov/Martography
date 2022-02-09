@@ -1,65 +1,180 @@
 ﻿@{
-    @model List<ViewModels.Testimonials.TestimonialsAdminModel>
+    @using Martography.Areas.Administration.ViewModels
+    @model TestimonialAdminPageModel
 
 }
 
-<div class="container">
+@*<div class="container">
     <div class="space50"></div>
     <div class="text-center">
-        <h5>All Blog posts</h5>
+    <h5>All Blog posts</h5>
     </div>
     <form method="post" asp-action="Edit">
-        <table class="table table-bordered table-responsive-lg table-hover table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Company</th>
-                    <th scope="col">Content</th>
-                    <th scope="col">Created on</th>
-                    <th scope="col">Is Approved</th>
-                    <th scope="col">Is Visible</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (var i = 0; i < Model.Count(); i++)
-                {
-                    <tr>
-                        <input type="hidden" asp-for="@Model[i].Id" />
-                        <td>
-                            @Model[i].PersonName
-                        </td>
-                        <td>
-                            @Model[i].EmailAddress
-                        </td>
-                        <td>
-                            @Model[i].Position
-                        </td>
-                        <td>
-                            @Model[i].Company
-                        </td>
-                        <td>
-                            @Model[i].Content
-                        </td>
-                        <td>
-                            @Model[i].CreatedOn.ToShortDateString()
-                        </td>
-                        <td>
-                            <input type="checkbox" asp-for="@Model[i].IsApproved" />
-                            <label>Approved</label>
-                        </td>
-                        <td>
-                            <input type="checkbox" asp-for="@Model[i].IsVisible" />
-                            <label>Visible</label>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        <div class="text-center">
-            <button class="btn" style="background-color: black;" type="submit">Save</button>
-        </div>
-        <div class="space50"></div>
+    <table class="table table-bordered table-responsive-lg table-hover table-striped">
+    <thead>
+    <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Email</th>
+    <th scope="col">Position</th>
+    <th scope="col">Company</th>
+    <th scope="col">Content</th>
+    <th scope="col">Created on</th>
+    <th scope="col">Is Approved</th>
+    <th scope="col">Is Visible</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (var i = 0; i < Model.Testimonials.Count(); i++)
+    {
+    <tr>
+    <input type="hidden" asp-for="@Model.Testimonials[i].Id" />
+    <td>
+    @Model.Testimonials[i].PersonName
+    </td>
+    <td>
+    @Model.Testimonials[i].EmailAddress
+    </td>
+    <td>
+    @Model.Testimonials[i].Position
+    </td>
+    <td>
+    @Model.Testimonials[i].Company
+    </td>
+    <td>
+    @Model.Testimonials[i].Content
+    </td>
+    <td>
+    @Model.Testimonials[i].CreatedOn.ToShortDateString()
+    </td>
+    <td>
+    <input type="checkbox" asp-for="@Model.Testimonials[i].IsApproved" />
+    <label>Approved</label>
+    </td>
+    <td>
+    <input type="checkbox" asp-for="@Model.Testimonials[i].IsVisible" />
+    <label>Visible</label>
+    </td>
+    <td>
+    <input id="hiddenImageId @Model.Testimonials[i].Id" asp-for="@Model.Testimonials[i].ImageId" type="hidden" />
+    <div class="dropdown">
+    <button class="btn btn-success
+    dropdown-toggle"
+    style="background-color: black;"
+    type="button"
+    id="dropdownMenuButton"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false">
+    All Images
+    </button>
+
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="max-height: 800%; overflow-y:auto;">
+    @foreach (var image in Model.AllImages.OrderBy(x => x.ProjectGalleryName).ThenBy(x => x.ProjectName))
+    {
+    <li class="dropdown-item">
+    <label style="display:none;">@image.Id</label>
+    <img src="~/@image.ThumbnailImageUrl" width="60" height="85"> @(image.ProjectGalleryName + "-" + image.ProjectName)
+    </li>
+    }
+    </ul>
+    </div>
+    </td>
+    </tr>
+    }
+    </tbody>
+    </table>
+    <div class="text-center">
+    <button class="btn" style="background-color: black;" type="submit">Save</button>
+    </div>
+    <div class="space50"></div>
     </form>
+    </div>*@
+
+<div class="container">
+    @foreach (var testimonial in Model.Testimonials)
+    {
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <form method="post" asp-action="Edit" style="width:auto;">
+                    <input type="hidden" asp-for="@testimonial.Id" />
+                    <div class="row border border-dark rounded">
+                        <div class="col-lg-2 text-center">
+                            <label class="col-form-label-sm d-block">Name:</label>
+                            @testimonial.PersonName
+                        </div>
+                        <div class="col-lg-2 text-center">
+                            <label class="col-form-label-sm d-block">Email:</label>
+                            @testimonial.EmailAddress
+                        </div>
+                        <div class="col-lg-2 text-center">
+                            <label class="col-form-label-sm d-block">Position:</label>
+                            @testimonial.Position
+                        </div>
+                        <div class="col-lg-2 text-center">
+                            <label class="col-form-label-sm d-block">Company:</label>
+                            @testimonial.Company
+                        </div>
+                        <div class="col-lg-1 text-center">
+                            <label class="col-form-label-sm d-block">Created:</label>
+                            @testimonial.CreatedOn.ToShortDateString()
+                        </div>
+                        <div class="col-lg-1 text-center">
+                            <label class="col-form-label-sm d-block">Approved:</label>
+                            <input type="checkbox" asp-for="@testimonial.IsApproved" />
+                        </div>
+                        <div class="col-lg-1 text-center">
+                            <label class="col-form-label-sm d-block">Visible:</label>
+                            <input type="checkbox" asp-for="@testimonial.IsVisible" />
+                        </div>
+                        <div class="col-lg-1 text-center">
+                            <label class="col-form-label-sm d-block">Deleted:</label>
+                            <input type="checkbox" asp-for="@testimonial.IsDeleted" />
+                        </div>
+                        <div class="col-lg-12 text-center">
+                            <label class="col-form-label-sm d-block">Content:</label>
+                            @testimonial.Content
+                        </div>
+                        <div class="space20"></div>
+                        <div class="dropdown col-lg-12 text-center">
+                            <button class="btn btn-success dropdown-toggle"
+                                style="background-color: black;"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                                All Images
+                            </button>
+                            <input id="hiddenImageId @testimonial.Id" asp-for="@testimonial.ImageId" type="hidden" />
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="max-height: 800%; overflow-y:auto;">
+                                @foreach (var image in Model.AllImages.OrderBy(x => x.ProjectGalleryName).ThenBy(x => x.ProjectName))
+                                {
+                                    <li class="dropdown-item">
+                                        <label style="display:none;">@image.Id</label>
+                                        <img src="~/@image.ThumbnailImageUrl" width="60" height="85"> @(image.ProjectGalleryName + "-" + image.ProjectName)
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button class="btn" style="background-color: black;" type="submit">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
 </div>
+
+@section Scripts{
+<script>
+    $(".dropdown-item").on("click", function () {
+        //console.log($(this).children()[0].innerHTML);
+        let chosenImageId = $(this).find('label')[0].innerHTML;
+        //$('#hiddenImageId').val(chosenImageId);
+        //$(this).parent().parent().find('input')[0].val(chosenImageId);
+        let input = $(this).parent().parent().find('input')[0];
+        input.value = chosenImageId;
+    })
+</script>
+}

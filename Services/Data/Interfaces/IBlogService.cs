@@ -7,7 +7,7 @@ namespace Services.Data.Interfaces
     {
         Task<string> CreatePost(string htmlContent, string title, string author, string galleryId, string imageId);
         Task<string> EditPost(string id, string htmlContent, string title, string author, string galleryId ,string imageId);
-        Task<T> GetPost<T>(string id);
+        Task<T> GetPostById<T>(string id);
         Task<IEnumerable<T>> GetAllPostsWithDeletedForAdmin<T>();
         Task<IEnumerable<T>> GetAll<T>();
     }

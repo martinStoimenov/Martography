@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Martography.Areas.Administration.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Services.Data.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
-using ViewModels.Blog;
 using ViewModels.GalleryModels;
-using ViewModels.Images;
 
 namespace Martography.Areas.Administration.Controllers
 {
@@ -44,7 +43,7 @@ namespace Martography.Areas.Administration.Controllers
 
         public async Task<IActionResult> Edit(string id)
         {
-            var blogpost = await blogService.GetPost<BlogPostAdminViewModel>(id);
+            var blogpost = await blogService.GetPostById<BlogPostAdminViewModel>(id);
             var galleries = galleryService.GetAllGalleriesCached<GalleryDropDownViewModel>();
 
             blogpost.AllGalleries =  galleries.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id, Selected = x.Id == blogpost.Id }).ToList();
