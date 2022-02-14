@@ -27,21 +27,7 @@ namespace Services.Data
             this.imageRepository = imageRepository;
         }
 
-        public async Task InsertImage(string imageName, string projectId, bool showOnHomePage = false, bool isProjectThumbnail = false)
-        {
-            var image = new Image()
-            {
-                ProjectId = projectId,
-                Name = imageName,
-                ShowOnHomePageCarousel = showOnHomePage,
-                IsProjectThumbnail = isProjectThumbnail
-            };
-
-            await imageRepository.AddAsync(image);
-            await imageRepository.SaveChangesAsync();
-        }
-
-        public async Task SaveImagesToFileSystem(IEnumerable<ImageUploadViewModel> images)
+        public async Task SaveImages(IEnumerable<ImageUploadViewModel> images, string projectId)
         {
             try
             {
@@ -49,6 +35,13 @@ namespace Services.Data
                 {
                     using var imageResult = await SixLabors.ImageSharp.Image.LoadAsync(image.Content);
 
+                    //insert in database
+                    int GCD = this.gcd(imageResult.Width, imageResult.Height);
+                    int widthRatio = imageResult.Width / GCD;
+                    int heightRatio = imageResult.Height / GCD;
+                    await this.InsertImage(image.Name, projectId, widthRatio, heightRatio);
+
+                    //save to file system
                     var path = Path.Combine(
                         Directory.GetCurrentDirectory(),
                         "wwwroot",
@@ -67,65 +60,6 @@ namespace Services.Data
                 var b = error.Message;
                 var a = 0;
                 throw;
-            }
-        }
-
-        private async Task SaveImage(SixLabors.ImageSharp.Image image, string path, int resizeWidth)
-        {
-            var quality = 90;
-            var width = image.Width;
-            var height = image.Height;
-
-            if (width > resizeWidth)
-            {
-                height = (int)((double)resizeWidth / width * height);
-                width = resizeWidth;
-                if (resizeWidth < FullSizeWidth)
-                    quality = 75;
-            }
-
-            image.Mutate(i => i.Resize(width, height, KnownResamplers.Lanczos2));
-
-            image.Metadata.ExifProfile = null;
-
-            await image.SaveAsJpegAsync(path, new JpegEncoder() { Quality = quality });
-        }
-
-        /// <summary>
-        /// Checks if the paths doesn't exist and creates them.
-        /// </summary>
-        /// <param name="image"></param>
-        private static void CheckIfGalleryAndProjectDirectoriesExist(ImageUploadViewModel image)
-        {
-            // Gallery
-            if (Directory.Exists(Path.Combine(
-                        Directory.GetCurrentDirectory(),
-                        "wwwroot",
-                        Common.GlobalConstants.BaseImagesFolder,
-                        image.GalleryName)) == false)
-            {
-                Directory.CreateDirectory(Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    "wwwroot",
-                    Common.GlobalConstants.BaseImagesFolder,
-                    image.GalleryName,
-                    image.ProjectName));
-            }
-
-            //Project
-            if (Directory.Exists(Path.Combine(
-                        Directory.GetCurrentDirectory(),
-                        "wwwroot",
-                        Common.GlobalConstants.BaseImagesFolder,
-                        image.GalleryName,
-                        image.ProjectName)) == false)
-            {
-                Directory.CreateDirectory(Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    "wwwroot",
-                    Common.GlobalConstants.BaseImagesFolder,
-                    image.GalleryName,
-                    image.ProjectName));
             }
         }
 
@@ -198,6 +132,87 @@ namespace Services.Data
 
         public async Task<IEnumerable<T>> GetProjectThumbnails<T>(int imagesCount)
             => await imageRepository.All().Where(x => x.IsProjectThumbnail == true).Take(imagesCount).To<T>().ToListAsync();
-            
+
+        private async Task InsertImage(string imageName, string projectId, int widthRatio, int heightRatio, bool showOnHomePage = false, bool isProjectThumbnail = false)
+        {
+            var image = new Image()
+            {
+                ProjectId = projectId,
+                Name = imageName,
+                ShowOnHomePageCarousel = showOnHomePage,
+                IsProjectThumbnail = isProjectThumbnail,
+                WidthRatio = widthRatio,
+                HeightRatio = heightRatio
+            };
+
+            await imageRepository.AddAsync(image);
+            await imageRepository.SaveChangesAsync();
+        }
+
+        private async Task SaveImage(SixLabors.ImageSharp.Image image, string path, int resizeWidth)
+        {
+            var quality = 90;
+            var width = image.Width;
+            var height = image.Height;
+
+            if (width > resizeWidth)
+            {
+                height = (int)((double)resizeWidth / width * height);
+                width = resizeWidth;
+                if (resizeWidth < FullSizeWidth)
+                    quality = 75;
+            }
+
+            image.Mutate(i => i.Resize(width, height, KnownResamplers.Lanczos2));
+
+            image.Metadata.ExifProfile = null;
+
+            await image.SaveAsJpegAsync(path, new JpegEncoder() { Quality = quality });
+        }
+
+        /// <summary>
+        /// Checks if the paths doesn't exist and creates them.
+        /// </summary>
+        /// <param name="image"></param>
+        private static void CheckIfGalleryAndProjectDirectoriesExist(ImageUploadViewModel image)
+        {
+            // Gallery
+            if (Directory.Exists(Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot",
+                        Common.GlobalConstants.BaseImagesFolder,
+                        image.GalleryName)) == false)
+            {
+                Directory.CreateDirectory(Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    Common.GlobalConstants.BaseImagesFolder,
+                    image.GalleryName,
+                    image.ProjectName));
+            }
+
+            //Project
+            if (Directory.Exists(Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot",
+                        Common.GlobalConstants.BaseImagesFolder,
+                        image.GalleryName,
+                        image.ProjectName)) == false)
+            {
+                Directory.CreateDirectory(Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    Common.GlobalConstants.BaseImagesFolder,
+                    image.GalleryName,
+                    image.ProjectName));
+            }
+        }
+
+        private int gcd(int a, int b)
+        {
+            if (b == 0)
+                return a;
+            return gcd(b, a % b);
+        }
     }
 }

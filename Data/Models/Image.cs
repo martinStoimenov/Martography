@@ -15,6 +15,8 @@ namespace Data.Models
         public bool ShowOnHomePageCarousel { get; set; }
         public bool ShowOnHomePageGallery { get; set; }
         public int? Position { get; set; }
+        public int? WidthRatio { get; set; }
+        public int? HeightRatio { get; set; }
         public string ProjectId { get; set; }
         public Project Project { get; set; }
     }

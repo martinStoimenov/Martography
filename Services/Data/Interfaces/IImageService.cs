@@ -6,8 +6,8 @@ namespace Services.Data.Interfaces
 {
     public interface IImageService
     {
-        Task InsertImage(string imageName, string projectId, bool showOnHomePage = false, bool isProjectThumbnail = false);
-        Task SaveImagesToFileSystem(IEnumerable<ImageUploadViewModel> images);
+        //Task InsertImage(string imageName, string projectId, bool showOnHomePage = false, bool isProjectThumbnail = false);
+        Task SaveImages(IEnumerable<ImageUploadViewModel> images, string projectId);
         Task<string> UpdateImages(IEnumerable<ImagesInProjectUpdateModel> images);
         Task<IEnumerable<T>> GetAllHomePageImages<T>();
         Task<IEnumerable<T>> GetRandomImagesForHomePageCards<T>();

@@ -47,13 +47,13 @@ namespace Martography.Areas.Administration.Controllers
                 });
             }
             //Upload to the File System
-            await imageService.SaveImagesToFileSystem(imagesList);
+            await imageService.SaveImages(imagesList, model.projectId);
 
-            foreach (var image in model.Images)
-            {
-                //Upload to the databse
-                await imageService.InsertImage(image.FileName, model.projectId);
-            }
+            //foreach (var image in model.Images)
+            //{
+            //    //Upload to the databse
+            //    await imageService.InsertImage(image.FileName, model.projectId);
+            //}
 
             return RedirectToAction(nameof(this.Index), new { id = model.projectId });
         }

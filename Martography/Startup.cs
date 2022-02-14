@@ -19,6 +19,7 @@ using Services.Data;
 using Microsoft.Extensions.Logging;
 using ViewModels;
 using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Martography
 {
@@ -55,6 +56,8 @@ namespace Martography
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             }).AddRazorRuntimeCompilation();
+
+            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
