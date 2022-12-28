@@ -372,3 +372,4 @@ appsettings.json
 *.jpg
 Martography/appsettings.json
 /Martography/appsettings.Development.json
+/.git.bfg-report/2022-11-14

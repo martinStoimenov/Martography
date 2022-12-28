@@ -27,12 +27,14 @@ namespace Martography.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(TestimonialViewModel model)
+        public async Task<IActionResult> Index(AboutPageViewModel aboutPageModel)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            await service.Create(model.PersonName, model.Company, model.Position, model.EmailAddress, model.Content);
+            await service.Create(aboutPageModel.TestimonialFormModel.PersonName, 
+                aboutPageModel.TestimonialFormModel.Company, aboutPageModel.TestimonialFormModel.Position, 
+                aboutPageModel.TestimonialFormModel.EmailAddress, aboutPageModel.TestimonialFormModel.Content);
 
             return RedirectToAction(nameof(this.Index));
         }
