@@ -1,4 +1,7 @@
 
+![alt text](https://github.com/martinStoimenov/Martography/blob/main/Martography.gif)
+
+
 ![Logo](https://martographyph.com/style/images/Martography%20Logo-A-black.png)
 
 
